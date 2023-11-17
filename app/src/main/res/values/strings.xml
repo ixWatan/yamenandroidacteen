@@ -1,5 +1,36 @@
 <resources>
     <string name="app_name">Acteen</string>
+    <string name="title_activity_profile_signup">ProfileSignupActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="user_profile">User Profile</string>
+    <string name="checkBoxText">I Agree to <b><u> Terms and Conditions </u></b> &amp; <b><u> Community Guidelines</u></b>.
+            </string>
+    <string name="default_profile_picture">URL_OR_FILE_PATH_OF_DEFAULT_PROFILE_PICTURE</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="view_pager_content_description">ViewPager</string>
+    <string name="Log_In"><b><u>Log In</u></b></string>
+    <string name="back_button_description"><b><u>back button description</u></b></string>
+
+    <string name="create_new_account"><b><u>Create New Account</u></b></string>
+    <string name="goto_login"><b><u>Go to Login</u></b></string>
+    View More
+    <string name="viewmorecomments"><u>View More</u></string>
+
+    <string name="create_new_account_organ"><b><u>Create New Organization Account</u></b></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="privacy_policy">https://docs.google.com/document/d/1iXlhoRO3WtEPY7Zf8q7gLHtFwgXpz4JZCXxA8PjMsvc/edit?usp=sharing</string>
+    <string name="profile_pic_watan"> https://firebasestorage.googleapis.com/v0/b/meet-workshop.appspot.com/o/profile_pictures%2Frj2pEdoeJpMS5651NakJdjBkjdc2.jpg?alt=media&amp;token=666755ab-0274-41c8-a9e4-a4d355c5b986.jpg
+</string>
+    <string name="title_activity_search_org">SearchActivityOrg</string>
+    <string name="edittext_hint_region"><font size="14sp">Region</font></string>
+    <string name="descreption_dummy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nisi ligula, interdum a tristique id, porta quis leo. Donec bibendum tellus vitae mauris tempus porta. Donec iaculis auctor quam vitae porttitor. Aenean ut risus pretium nulla congue varius sed a elit. Sed viverra purus ac dolor tincidunt rhoncus a et leo. Aliquam erat volutpat. Etiam mattis lacus turpis</string>
+
+
 </resources>

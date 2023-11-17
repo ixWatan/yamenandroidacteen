@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.yamenandroidacteen.auth.LoginFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -22,13 +24,9 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState != null) {
                 return;
             }
-
             LoginFragment loginFragment = new LoginFragment();
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, loginFragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, loginFragment).commit();
         }
     }
 
-    // Other methods from the original MainActivity can remain unchanged
 }
