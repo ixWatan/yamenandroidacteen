@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/frameLayout"
+    android:id="@+id/frameLayoutLogin"
     tools:context=".auth.LoginFragment">
 
     <LinearLayout
@@ -138,7 +138,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:onClick="goToOrgOrActActivity"
                 android:paddingTop="20dp"
                 android:text="@string/create_new_account"
                 android:paddingBottom="20dp"

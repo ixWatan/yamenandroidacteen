@@ -41,10 +41,12 @@ public class LoginFragment extends Fragment {
 
     private FirebaseAuth mAuth;
 
-    private Button loginBtn;
+
     private EditText email;
     private EditText password;
     private TextView TvCreateAccount;
+
+    private Button loginBtn;
 
     private ProgressDialog pd;
 
@@ -84,8 +86,18 @@ public class LoginFragment extends Fragment {
     }
 
     public void goToOrgOrActActivity() {
+        // Create a new fragment instance
+        Fragment newFragment = new OrgOrActivistFragment();
+
+        // Begin the transaction
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayout,new OrgOrActivistFragment());
+
+        ft.replace(R.id.frameLayout, newFragment);
+
+        // Add the transaction to the back stack (optional)
+        ft.addToBackStack(null);
+
+        // Commit the transaction
         ft.commit();
     }
 

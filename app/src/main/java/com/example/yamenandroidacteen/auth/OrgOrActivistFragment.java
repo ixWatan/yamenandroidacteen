@@ -3,12 +3,17 @@ package com.example.yamenandroidacteen.auth;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.yamenandroidacteen.R;
+import com.example.yamenandroidacteen.auth.activist.SignupActivistFragment;
+import com.example.yamenandroidacteen.auth.organization.SignupOrganizationFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +30,13 @@ public class OrgOrActivistFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private TextView TvCreateAccount;
+
+    private Button goToSignupActivistBtn;
+    private Button goToSignupOrganizationBtn;
+
+    private TextView TvGoToLogin;
 
     public OrgOrActivistFragment() {
         // Required empty public constructor
@@ -62,5 +74,64 @@ public class OrgOrActivistFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_org_or_activist, container, false);
+
+     /*   TvGoToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToHome();
+            }
+        });
+*/
+        /*goToSignupActivistBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToSignUpActivist();
+            }
+        });*/
+    }
+
+    public void goToSignUpActivist(View view) {
+        Fragment newFragment = new SignupActivistFragment();
+
+        // Begin the transaction
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+        ft.replace(R.id.frameLayout, newFragment);
+
+        // Add the transaction to the back stack (optional)
+        ft.addToBackStack(null);
+
+        // Commit the transaction
+        ft.commit();
+    }
+
+    public void goToLogin() {
+        Fragment newFragment = new LoginFragment();
+
+        // Begin the transaction
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+        ft.replace(R.id.frameLayout, newFragment);
+
+        // Add the transaction to the back stack (optional)
+        ft.addToBackStack(null);
+
+        // Commit the transaction
+        ft.commit();
+    }
+
+    public void SignUpOrganization() {
+        Fragment newFragment = new SignupOrganizationFragment();
+
+        // Begin the transaction
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+        ft.replace(R.id.frameLayout, newFragment);
+
+        // Add the transaction to the back stack (optional)
+        ft.addToBackStack(null);
+
+        // Commit the transaction
+        ft.commit();
     }
 }
