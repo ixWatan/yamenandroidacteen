@@ -37,15 +37,16 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             autoLogin(currentUser.getUid());
-        }
+        } else {
 
-        // if user is not logged in from before redirect him to login page like normal
-        if (findViewById(R.id.frameLayout) != null) {
-            if (savedInstanceState != null) {
-                return;
+            // if user is not logged in from before redirect him to login page like normal
+            if (findViewById(R.id.frameLayout) != null) {
+                if (savedInstanceState != null) {
+                    return;
+                }
+                LoginFragment loginFragment = new LoginFragment();
+                getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, loginFragment).commit();
             }
-            LoginFragment loginFragment = new LoginFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, loginFragment).commit();
         }
     }
 

@@ -12,5 +12,15 @@
         android:textSize="50dp"
         android:text="Activist"/>
 
+    <Button
+        android:id="@+id/signoutBtn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Sign Out"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="105dp"
+        tools:layout_editor_absoluteY="634dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
