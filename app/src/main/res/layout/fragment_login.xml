@@ -90,6 +90,16 @@
                 android:text="Show Password"
                 android:textColor="@android:color/black" />-->
 
+            <TextView
+                android:id="@+id/forgotpassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:clickable="true"
+                android:text="Forgot Password?"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
         </LinearLayout>
 
         <LinearLayout

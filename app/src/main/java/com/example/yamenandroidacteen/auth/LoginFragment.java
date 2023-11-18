@@ -45,6 +45,8 @@ public class LoginFragment extends Fragment {
     private EditText email;
     private EditText password;
     private TextView TvCreateAccount;
+    private TextView TvForgotPassword;
+
 
     private Button loginBtn;
 
@@ -59,7 +61,10 @@ public class LoginFragment extends Fragment {
         password = view.findViewById(R.id.signup_pass);
 
         loginBtn = view.findViewById(R.id.signin);
+
         TvCreateAccount = view.findViewById(R.id.createnewaccount);
+        TvForgotPassword= view.findViewById(R.id.forgotpassword);
+
 
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +77,14 @@ public class LoginFragment extends Fragment {
         TvCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToOrgOrActActivity();
+                goToOrgOrActFragment();
+            }
+        });
+
+        TvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToForgotPasswordFragment();
             }
         });
 
@@ -85,7 +97,7 @@ public class LoginFragment extends Fragment {
         loginUser(email.getText().toString(), password.getText().toString());
     }
 
-    public void goToOrgOrActActivity() {
+    public void goToOrgOrActFragment() {
         // Create a new fragment instance
         Fragment newFragment = new OrgOrActivistFragment();
 
@@ -100,6 +112,23 @@ public class LoginFragment extends Fragment {
         // Commit the transaction
         ft.commit();
     }
+
+    public void goToForgotPasswordFragment() {
+        // Create a new fragment instance
+        Fragment newFragment = new ForgotPasswordFragment();
+
+        // Begin the transaction
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+        ft.replace(R.id.frameLayout, newFragment);
+
+        // Add the transaction to the back stack (optional)
+        ft.addToBackStack(null);
+
+        // Commit the transaction
+        ft.commit();
+    }
+
 
 
     private void loginUser(String email, String password) {
