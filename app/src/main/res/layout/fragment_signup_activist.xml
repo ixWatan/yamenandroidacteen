@@ -212,10 +212,10 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/signup"
+                android:id="@+id/continueBtn"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Sign Up"
+                android:text="Continue"
                 app:iconGravity="textEnd"
                 app:iconTint="@color/white"
                 app:iconPadding="10dp"
