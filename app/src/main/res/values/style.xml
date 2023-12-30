@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize20Percent" parent="">
+        <item name="cornerSize">24%</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize20PercentFeedPost" parent="">
+        <item name="cornerSizeTopLeft">5%</item>
+        <item name="cornerSizeTopRight">5%</item>
+
+
+    </style>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.App.CornerSize20PercentShowPost" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10%</item>
+    </style>
+    <style name="editProfileButton" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">#DBDBDB</item>
+        <item name="colorButtonNormal">#5552f1</item>
+    </style>
+    <style name="MyTextInputLayout_overlay">
+        <item name="colorOnSurface">@color/gray</item>
+        <item name="colorPrimary">@color/gray</item>
+    </style>
+</resources>

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yamenandroidacteen.R;
+import com.example.yamenandroidacteen.auth.LoginFragment;
 import com.example.yamenandroidacteen.classes.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,11 +47,15 @@ public class SignupActivistFragment extends Fragment {
 
     private Button ContinueBtn;
 
+
     private Boolean checkBoxState;
 
     private TextView checkBoxText;
 
     private TextView guideLinesTv;
+
+    private View goToLoginBtn;
+
 
     private EditText passwordEditText;
     private EditText nameEditText;
@@ -88,6 +93,15 @@ public class SignupActivistFragment extends Fragment {
                 Toast.makeText(getActivity(), "Region:" + selectedRegion, Toast.LENGTH_SHORT).show();
 
 
+            }
+        });
+
+        goToLoginBtn = view.findViewById(R.id.goToLoginLayout);
+
+        goToLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToLogin();
             }
         });
 
@@ -179,4 +193,19 @@ public class SignupActivistFragment extends Fragment {
         ft.commit();
     }
 
+    public void goToLogin() {
+        Fragment newFragment = new LoginFragment();
+
+        // Begin the transaction
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+        ft.replace(R.id.frameLayout, newFragment);
+
+        // Add the transaction to the back stack (optional)
+        ft.addToBackStack(null);
+
+        // Commit the transaction
+        ft.commit();
+    }
 }
+

@@ -188,6 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:gravity="center"
+                    android:id="@+id/goToLoginLayout2"
                     android:orientation="horizontal">
 
                     <TextView
@@ -205,7 +206,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:clickable="true"
-                        android:onClick="GoMain"
                         android:paddingTop="20dp"
                         android:text="@string/Log_In"
                         android:paddingBottom="20dp"

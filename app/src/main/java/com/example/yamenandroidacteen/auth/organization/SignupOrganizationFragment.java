@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yamenandroidacteen.R;
+import com.example.yamenandroidacteen.auth.LoginFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -63,6 +65,10 @@ public class SignupOrganizationFragment extends Fragment {
 
     private TextView checkBoxText;
 
+    private TextView guideLinesTv;
+
+    private View goToLoginBtn;
+
     private EditText password1;
 
 
@@ -84,6 +90,7 @@ public class SignupOrganizationFragment extends Fragment {
 
 
 
+
         // drop down menu for regions
         autoCompleteTextView = view.findViewById(R.id.autocomplete_Tv);
         adapterItems = new ArrayAdapter<String>( view.getContext() , R.layout.list_item, typeList);
@@ -96,6 +103,23 @@ public class SignupOrganizationFragment extends Fragment {
 
         ProgressDialog pd;
 
+        goToLoginBtn = view.findViewById(R.id.goToLoginLayout2);
+
+        goToLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToLogin();
+            }
+        });
+
+        guideLinesTv = view.findViewById(R.id.checkBoxText);
+        guideLinesTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OpenTermsAndGuidelines();
+            }
+        });
+
 
 
 
@@ -104,6 +128,27 @@ public class SignupOrganizationFragment extends Fragment {
     }
 
     public void OpenTermsAndGuidelines(View view) {
+        String url = getString(R.string.privacy_policy);
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
+    }
+
+    public void goToLogin() {
+        Fragment newFragment = new LoginFragment();
+
+        // Begin the transaction
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+
+        ft.replace(R.id.frameLayout, newFragment);
+
+        // Add the transaction to the back stack (optional)
+        ft.addToBackStack(null);
+
+        // Commit the transaction
+        ft.commit();
+    }
+
+    public void OpenTermsAndGuidelines() {
         String url = getString(R.string.privacy_policy);
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
