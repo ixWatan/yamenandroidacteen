@@ -13,6 +13,8 @@ import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,141 +31,92 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class AdapterPosts extends RecyclerView.Adapter<CustomViewHolder> {
+public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHolder> {
 
-    private SelectListener listener;
+    private List<ModelPost> posts;
+    private OnPostClickListener onPostClickListener;
 
-
-    Context context;
-    List<ModelPost> postList;
-    String pLocationLinkReal;
-    String pLocationLink;
-
-    public AdapterPosts(Context context, List<ModelPost> postList, SelectListener selectListener) {
-        this.context = context;
-        this.postList = postList;
-        this.listener = selectListener;
+    public AdapterPosts(List<ModelPost> posts, OnPostClickListener onPostClickListener) {
+        this.posts = posts;
+        this.onPostClickListener = onPostClickListener;
     }
 
-
-
-    @androidx.annotation.NonNull
+    @NonNull
     @Override
-    public CustomViewHolder onCreateViewHolder(@androidx.annotation.NonNull ViewGroup viewGroup, int i) {
-
-        // inflate layout row_post.xml
-        View view = LayoutInflater.from(context).inflate(R.layout.row_posts, viewGroup, false);
-        return new CustomViewHolder(view, listener);
+    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_posts, parent, false);
+        return new PostViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@androidx.annotation.NonNull CustomViewHolder myHolder, int i) {
-
-        pLocationLinkReal = postList.get(i).getpLocationLinkReal();
-        SpannableString spannableString = new SpannableString(pLocationLinkReal);
-
-        ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View widget) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pLocationLink));
-                context.startActivity(browserIntent);
-            }
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setUnderlineText(true);    // To give the link an underline
-                ds.setColor(Color.BLUE);      // Optional: To change the link color
-            }
-        };
-
-        spannableString.setSpan(clickableSpan, 0, pLocationLinkReal.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        myHolder.pLocationTv.setText(spannableString);
-        myHolder.pLocationTv.setMovementMethod(LinkMovementMethod.getInstance());
-
-        myHolder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onItemClicked(postList.get(i));
-            }
-        });
-
-
-        // get data
-        String uid = postList.get(i).getUid();
-        String uEmail = postList.get(i).getuEmail();
-        String uName = postList.get(i).getuName();
-        String uDp = postList.get(i).getuDp();
-        String pId = postList.get(i).getpId();
-        String pTitle = postList.get(i).getpTitle();
-        String pDescreption = postList.get(i).getpDescription();
-        String pImage = postList.get(i).getpImage();
-        String pTimeStamp = postList.get(i).getpTime();
-        pLocationLink = postList.get(i).getpLocationLink();
-        pLocationLinkReal = postList.get(i).getpLocationLinkReal();
-        String pDate = postList.get(i).getpDate();
-
-
-
-
-
-
-
-
-
-
-        // convert timestamp to date format
-        Calendar calendar = Calendar.getInstance(Locale.getDefault());
-        calendar.setTimeInMillis(Long.parseLong(pTimeStamp));
-        android.text.format.DateFormat df = new android.text.format.DateFormat();
-        String pTime = df.format("dd/MM/yyyy hh:mm aa", calendar).toString();
-
-        // set data
-
-/*
-       myHolder.uNameTv.setText(uName);
-*/
-/*
-       myHolder.pTimeTv.setText(pTime);
-
-*/
-
-
-        myHolder.pTitleTv.setText(pTitle);
-        //myHolder.pLocationTv.setText(pLocationLinkReal);
-        myHolder.pDateTv.setText(deleteFirstFiveLetters(pDate));
-        // set user profile pic
-
-        try {
-            Picasso.get().load(uDp).placeholder(R.drawable.icon_account).into(myHolder.uPictureIv);
-        } catch (Exception e) {
-
-        }
-
-        // set post image
-
-        // if there is no image dont show it
-        if(pImage.equals("noImage")) {
-
-            // hide imageView
-            myHolder.pImageIv.setVisibility(View.GONE);
-
-        }
-        else {
-            try {
-                Picasso.get().load(pImage).into(myHolder.pImageIv);
-
-            } catch (Exception e ) {
-
-            }
-        }
-
-
+    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
+        ModelPost post = posts.get(position);
+        holder.bind(post);
     }
 
     @Override
     public int getItemCount() {
-        return postList.size();
+        return posts.size();
+    }
+
+    public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private ImageView pImageIv;
+
+        private TextView pTitleTv, pDateTv, pLocationTv;
+
+        public PostViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            pImageIv = itemView.findViewById(R.id.pImageIv);
+            pTitleTv = itemView.findViewById(R.id.pTitleTv);
+            pDateTv = itemView.findViewById(R.id.pDateTv);
+            pLocationTv = itemView.findViewById(R.id.pLocationTv);
+
+
+            itemView.setOnClickListener(this);
+        }
+
+        public void bind(ModelPost post) {
+            pTitleTv.setText(post.getpTitle());
+            pDateTv.setText(deleteFirstFiveLetters(post.getpDate()));
+
+
+            pLocationTv.setText(post.getpLocationLinkReal());
+
+
+            // set post image
+
+            // if there is no image dont show it
+            if(post.getpImage().equals("noImage")) {
+
+                // hide imageView
+                pImageIv.setVisibility(View.GONE);
+
+            }
+            else {
+                try {
+                    Picasso.get().load(post.getpImage()).into(pImageIv);
+
+                } catch (Exception e ) {
+
+                }
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (onPostClickListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    onPostClickListener.onPostClick(position);
+                }
+            }
+        }
+    }
+
+    public interface OnPostClickListener {
+        void onPostClick(int position);
     }
 
     public static String deleteFirstFiveLetters(String inputString) {
@@ -173,8 +126,9 @@ public class AdapterPosts extends RecyclerView.Adapter<CustomViewHolder> {
             return inputString.substring(5);
         }
     }
-
 }
+
+
 
 
 
