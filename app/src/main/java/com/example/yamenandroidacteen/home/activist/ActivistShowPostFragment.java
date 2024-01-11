@@ -217,8 +217,6 @@ public class ActivistShowPostFragment extends Fragment {
 
 
         FirebaseUser user = mAuth.getCurrentUser();
-        Toast.makeText(getActivity(), user.toString(), Toast.LENGTH_SHORT).show();
-
 
 
 

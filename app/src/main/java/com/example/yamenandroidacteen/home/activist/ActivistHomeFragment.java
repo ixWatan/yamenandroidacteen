@@ -82,14 +82,6 @@ public class ActivistHomeFragment extends Fragment implements SelectListener {
 
         View view = inflater.inflate(R.layout.fragment_activist_home, container, false);
 
-        signOutBtn = view.findViewById(R.id.signoutBtn);
-
-        signOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
 
 
         //profile pic on top init
@@ -269,18 +261,4 @@ public class ActivistHomeFragment extends Fragment implements SelectListener {
 
 
 
-    private void signOut() {
-        // Sign out from Firebase Authentication
-        FirebaseAuth.getInstance().signOut();
-
-        // Show a toast message
-        Toast.makeText(getActivity(), "Signed out successfully", Toast.LENGTH_SHORT).show();
-
-
-        // need to transition to fragment
-
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        startActivity(intent);
-
     }
-}

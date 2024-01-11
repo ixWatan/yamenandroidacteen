@@ -61,28 +61,17 @@
         </LinearLayout>
 
 
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/postRecyclerView"
-            android:layout_marginTop="70dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_marginBottom="70dp"/>
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="70dp" />
 
 
-        <Button
-            android:id="@+id/signoutBtn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="Sign Out"
-            android:textColor="@color/black"
-            tools:layout_editor_absoluteX="105dp"
-            tools:layout_editor_absoluteY="634dp" />
 
 
 
