@@ -64,15 +64,15 @@ import java.util.List;
 public class ActivistHomeActivity extends AppCompatActivity {
 
 
+    private ActivityActivistHomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-        ActivityActivistHomeBinding binding = ActivityActivistHomeBinding.inflate(getLayoutInflater());
+        binding = ActivityActivistHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         replaceFragment(new ActivistHomeFragment());
 
 
@@ -104,15 +104,12 @@ public class ActivistHomeActivity extends AppCompatActivity {
     }
 
     public void hideSystemNavigationBar() {
-        ActivityActivistHomeBinding binding = ActivityActivistHomeBinding.inflate(getLayoutInflater());
+        binding.bottomNavMenuActivist.setVisibility(View.GONE);
 
-        binding.bottomNavMenuActivist.setVisibility(View.INVISIBLE);
-        Toast.makeText(this, "hide navbar", Toast.LENGTH_SHORT).show();
 
     }
 
     public void showSystemNavigationBar() {
-        ActivityActivistHomeBinding binding = ActivityActivistHomeBinding.inflate(getLayoutInflater());
 
         binding.bottomNavMenuActivist.setVisibility(View.VISIBLE);
 

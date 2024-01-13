@@ -37,9 +37,12 @@
             android:layout_width="match_parent"
             android:layout_alignBottom="@id/frameLayoutActivist"
             android:layout_height="60dp"
-            app:itemBackground="@color/white"
             app:itemIconSize="26dp"
+            app:itemBackground="@color/white"
+            android:backgroundTint="@color/white"
             app:menu="@menu/bottom_nav_menu_activist"
+            app:itemActiveIndicatorStyle="@color/red"
+            android:background="@drawable/bg_bottom_nav_item"
             android:id="@+id/bottomNavMenuActivist"/>
 
     </RelativeLayout>

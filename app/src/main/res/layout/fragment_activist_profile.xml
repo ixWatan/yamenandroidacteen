@@ -1,28 +1,307 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".home.activist.ActivistProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Profile" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:gravity="center_horizontal">
-        <Button
-            android:id="@+id/signoutBtn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Sign Out"
-            android:textColor="@color/black"
-            />
-    </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F3F3F3"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="350dp"
+                            android:background="@drawable/profile_top_bg"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/bgprofileactivist"
+                                android:layout_width="413dp"
+                                android:layout_height="296dp"
+                                android:tintMode="screen"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/circles" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <TextView
+                            android:id="@+id/activistEmailTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="username@gmail.com"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="@+id/activistUsernameTv"
+                            app:layout_constraintStart_toStartOf="@+id/activistUsernameTv"
+                            app:layout_constraintTop_toBottomOf="@+id/activistUsernameTv" />
+
+                        <TextView
+                            android:id="@+id/activistUsernameTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Username"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@+id/profileImageView"
+                            app:layout_constraintStart_toStartOf="@+id/profileImageView"
+                            app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/profileImageView"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_marginTop="24dp"
+                            android:padding="3dp"
+                            android:src="@drawable/icon_account"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                            app:strokeColor="#725000"
+                            app:strokeWidth="2dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="320dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/profile_white_bg"
+                            android:elevation="3dp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/activistEmailTv">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginHorizontal="25dp"
+                                    android:layout_marginTop="20dp"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/accountTypeTvLabel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="4"
+                                        android:text="Account Type:"
+                                        android:textColor="#B88307"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:id="@+id/accountTypeTvAnswer"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0"
+                                        android:text="Activist"
+                                        android:textAlignment="viewEnd"
+                                        android:textSize="18sp" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginTop="15dp"
+                                    android:background="@color/lightGrayWatan">
+
+                                </View>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="25dp"
+                                    android:layout_marginTop="20dp"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/userCityTvLabel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="4"
+                                        android:text="City:"
+                                        android:textColor="#B88307"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:id="@+id/userCityTvAnswer"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0"
+                                        android:text="Iksal"
+                                        android:textAlignment="viewEnd"
+                                        android:textSize="18sp" />
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginTop="15dp"
+                                    android:background="@color/lightGrayWatan">
+
+                                </View>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="25dp"
+                                    android:layout_marginTop="20dp"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/userRegionTvLabel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="4"
+                                        android:text="Region:"
+                                        android:textColor="#B88307"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:id="@+id/userRegionTvAnswer"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0"
+                                        android:text="North District"
+                                        android:textAlignment="viewEnd"
+                                        android:textSize="18sp" />
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginTop="15dp"
+                                    android:background="@color/lightGrayWatan">
+
+                                </View>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="25dp"
+                                    android:layout_marginTop="20dp"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/savedPostsTvLabel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="4"
+                                        android:text="Saved Posts"
+                                        android:textColor="#B88307"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:id="@+id/savedPostsTvAnswer"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0"
+                                        android:text=">"
+                                        android:textAlignment="viewEnd"
+                                        android:textSize="18sp" />
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginTop="15dp"
+                                    android:background="@color/lightGrayWatan">
+
+                                </View>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="25dp"
+                                    android:layout_marginTop="20dp"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/settingsTvLabel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="4"
+                                        android:text="Settings"
+                                        android:textColor="#B88307"
+                                        android:textSize="18sp" />
+
+                                    <TextView
+                                        android:id="@+id/settingsTvAnswer"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0"
+                                        android:text=">"
+                                        android:textAlignment="viewEnd"
+                                        android:textSize="18sp" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                     <Button
+                        android:id="@+id/signoutBtn"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Sign Out"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

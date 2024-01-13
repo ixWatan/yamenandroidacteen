@@ -101,7 +101,7 @@ public class ActivistShowPostFragment extends Fragment {
     String postTags;
 
 
-    String postLocation;
+    String postLocationString, DateAndTime;
 
 
     String locationLinkReal;
@@ -111,7 +111,7 @@ public class ActivistShowPostFragment extends Fragment {
     String postTimeE, postId;
 
 
-    String postDate, postLikes, postComments;;
+    String postDateString, postLikes, postComments;;
 
 
     String LocationAndTime, UserProfilePictureUrl;
@@ -187,8 +187,8 @@ public class ActivistShowPostFragment extends Fragment {
         Date startDate = null;
         Date endDate = null;
         try {
-            startDate = dateFormat.parse(postDate + " " + postTimeS);
-            endDate = dateFormat.parse(postDate + " " + postTimeE);
+            startDate = dateFormat.parse(postDateString + " " + postTimeS);
+            endDate = dateFormat.parse(postDateString + " " + postTimeE);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -307,7 +307,8 @@ public class ActivistShowPostFragment extends Fragment {
         ImageView postImageIv = (ImageView) view.findViewById(R.id.showImagePost);
         TextView postTitleTv = (TextView) view.findViewById(R.id.showPostTitle);
         ImageView postPorfileIv = (ImageView) view.findViewById(R.id.showPostProfileImg);
-        TextView postLocationAndTime = (TextView) view.findViewById(R.id.showLocationAndDateAndTime);
+        TextView postLocation = (TextView) view.findViewById(R.id.locationTvShowPost);
+        TextView postDate = (TextView) view.findViewById(R.id.DateTvShowPost);
 
 
 
@@ -318,11 +319,11 @@ public class ActivistShowPostFragment extends Fragment {
         postTimePosted = getArguments().getString("post_timePosted");
         postTitle = getArguments().getString("post_title");
         postTags = getArguments().getString("post_tags");
-        postLocation = getArguments().getString("post_locationLink");
+        postLocationString = getArguments().getString("post_locationLink");
         locationLinkReal = getArguments().getString("post_location");
         postTimeS = getArguments().getString("post_startT");
         postTimeE = getArguments().getString("post_endT");
-        postDate = getArguments().getString("post_date");
+        postDateString = getArguments().getString("post_date");
         postId = getArguments().getString("post_id");
         postComments = getArguments().getString("post_comments");
         postLikes =  getArguments().getString("post_likes");
@@ -337,7 +338,7 @@ public class ActivistShowPostFragment extends Fragment {
         String pTime = df.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 
 
-        LocationAndTime = locationLinkReal + "," + postDate + "," + postTimeS + "-" + postTimeE;
+        DateAndTime = postDateString + ", " + postTimeS + "-" + postTimeE;
 
         // end of calendar stuff
 
@@ -349,7 +350,8 @@ public class ActivistShowPostFragment extends Fragment {
 
         nameOrgTv.setText(orgName);
         postDescreptionTv.setText(postDescreption);
-        postLocationAndTime.setText(LocationAndTime);
+        postLocation.setText(locationLinkReal);
+        postDate.setText(DateAndTime);
         postTitleTv.setText(postTitle);
         postTimePostedTv.setText(pTime);
         try {

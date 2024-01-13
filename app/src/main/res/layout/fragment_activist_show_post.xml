@@ -38,19 +38,50 @@
                 android:paddingBottom="10dp"
                 android:text="Post Title"
                 android:textColor="@android:color/black"
-                android:textSize="28sp"
+                android:textSize="25sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/showLocationAndDateAndTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:maxLines="2"
-                android:text="Locatiom + Date + Start and end time"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                />
+            <!-- location + time + date -->
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/locationTvShowPost"
+
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:maxLines="2"
+                    android:drawableStart="@drawable/icon_location"
+                    android:drawableTint="@color/gray"
+                    android:textColor="@android:color/darker_gray"
+                    android:text="Locatiom"
+                    android:textSize="12sp"
+                    />
+                <!-- Empty view to fill the space and push the right TextView to the far right -->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/DateTvShowPost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:maxLines="2"
+                    android:gravity="center_vertical"
+                    android:drawableStart="@drawable/icon_calendar"
+                    android:drawableTint="@color/gray"
+                    android:textColor="@android:color/darker_gray"
+                    android:text="Date"
+                    android:textSize="12sp"
+
+                    />
+            </LinearLayout>
+
+            <!-- location + time + date -->
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -129,7 +160,8 @@
             <TextView
                 android:id="@+id/showDescreption"
                 android:layout_width="wrap_content"
-                android:layout_height="110dp"
+                android:layout_height="wrap_content"
+                android:minLines="3"
                 android:paddingBottom="10dp"
                 android:text="@string/descreption_dummy"
                 android:lineSpacingExtra="4sp"
