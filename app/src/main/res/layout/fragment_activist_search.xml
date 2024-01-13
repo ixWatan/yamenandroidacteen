@@ -3,12 +3,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".home.activist.ActivistSearchFragment">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+
+        <android.widget.SearchView
+            android:layout_width="match_parent"
+            android:id="@+id/simpleSearchView"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search"
+            android:layout_height="35dp"
+            android:closeIcon="@null"
+            android:theme="@style/SearchViewStyle"
+            android:queryBackground="@android:color/transparent"
+            app:submitBackground="@drawable/rounded_search_gray"
+            android:background="@drawable/rounded_search_gray"
+            />
+
+
+
+        <!--<TextView
+            android:id="@+id/textView"
+            android:layout_width="235dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="0dp"
+            android:background="@color/lightGrayWatan"
+            android:drawableLeft="@drawable/icon_search"
+            android:drawablePadding="10dp"
+            android:padding="5dp"
+            android:text="Search"
+            android:textColor="@color/DarkGray"
+            android:textSize="17sp"
+            android:textStyle="bold" />-->
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="50dp"
+        android:id="@+id/postRecyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="70dp"/>
+
+
+</LinearLayout>
+
+
 
 </FrameLayout>

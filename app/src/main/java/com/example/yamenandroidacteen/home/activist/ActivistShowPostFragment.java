@@ -4,7 +4,10 @@ package com.example.yamenandroidacteen.home.activist;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.text.TextUtils;
 import android.view.Display;
@@ -13,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -21,7 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.yamenandroidacteen.MainActivity;
 import com.example.yamenandroidacteen.R;
 import com.example.yamenandroidacteen.classes.adapters.AdapterPosts;
 
@@ -116,6 +124,8 @@ public class ActivistShowPostFragment extends Fragment {
 
     private FirebaseAuth mAuth;
 
+    private View nav;
+
 
 
 
@@ -136,6 +146,8 @@ public class ActivistShowPostFragment extends Fragment {
         initViewsAndData(view);
 
         loadUserData(view);
+
+
 
 
         // Get a reference to the button
@@ -159,6 +171,7 @@ public class ActivistShowPostFragment extends Fragment {
 
         return view;
     }
+
 
 
 
@@ -396,6 +409,22 @@ public class ActivistShowPostFragment extends Fragment {
         } else {
             Tag3.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Hide the system navigation bar when the fragment is displayed
+        ((ActivistHomeActivity) requireActivity()).hideSystemNavigationBar();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Show the system navigation bar when the fragment is destroyed
+        ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
     }
 
 

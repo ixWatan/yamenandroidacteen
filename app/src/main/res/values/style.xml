@@ -32,4 +32,10 @@
         <item name="colorOnSurface">@color/gray</item>
         <item name="colorPrimary">@color/gray</item>
     </style>
+    <style name="SearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
+        <item name="android:textSize">15sp</item>
+        
+        <item name="colorControlActivated">@color/gray</item>
+    </style>
+
 </resources>

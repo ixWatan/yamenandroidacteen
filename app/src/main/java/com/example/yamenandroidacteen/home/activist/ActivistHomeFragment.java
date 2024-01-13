@@ -138,8 +138,7 @@ public class ActivistHomeFragment extends Fragment implements SelectListener {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
-                                String userName = document.getString("name");
-                                String email = document.getString("email");
+
                                 profilePictureUrl = document.getString("profilePictureUrl");
 
 

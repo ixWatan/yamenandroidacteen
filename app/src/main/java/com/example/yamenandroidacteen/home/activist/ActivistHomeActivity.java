@@ -4,9 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -38,6 +41,7 @@ import com.example.yamenandroidacteen.classes.interfaces.SelectListener;
 import com.example.yamenandroidacteen.classes.models.ModelPost;
 import com.example.yamenandroidacteen.databinding.ActivityActivistHomeBinding;
 import com.example.yamenandroidacteen.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -64,6 +68,7 @@ public class ActivistHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         ActivityActivistHomeBinding binding = ActivityActivistHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -96,6 +101,21 @@ public class ActivistHomeActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutActivist, fragment);
         fragmentTransaction.commit();
+    }
+
+    public void hideSystemNavigationBar() {
+        ActivityActivistHomeBinding binding = ActivityActivistHomeBinding.inflate(getLayoutInflater());
+
+        binding.bottomNavMenuActivist.setVisibility(View.INVISIBLE);
+        Toast.makeText(this, "hide navbar", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void showSystemNavigationBar() {
+        ActivityActivistHomeBinding binding = ActivityActivistHomeBinding.inflate(getLayoutInflater());
+
+        binding.bottomNavMenuActivist.setVisibility(View.VISIBLE);
+
     }
 
 
