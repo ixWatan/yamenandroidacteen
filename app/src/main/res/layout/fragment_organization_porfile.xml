@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.activist.ActivistProfileFragment">
+    tools:context=".home.organization.OrganizationHomeActivity">
 
 
 
@@ -57,19 +57,19 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
-                            android:id="@+id/activistEmailTv"
+                            android:id="@+id/orgEmailTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="username@gmail.com"
                             android:textColor="@color/white"
                             android:textSize="16sp"
-                            app:layout_constraintEnd_toEndOf="@+id/activistUsernameTv"
-                            app:layout_constraintStart_toStartOf="@+id/activistUsernameTv"
-                            app:layout_constraintTop_toBottomOf="@+id/activistUsernameTv" />
+                            app:layout_constraintEnd_toEndOf="@+id/orgUsernameTv"
+                            app:layout_constraintStart_toStartOf="@+id/orgUsernameTv"
+                            app:layout_constraintTop_toBottomOf="@+id/orgUsernameTv" />
 
                         <TextView
-                            android:id="@+id/activistUsernameTv"
+                            android:id="@+id/orgUsernameTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -108,7 +108,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/activistEmailTv">
+                            app:layout_constraintTop_toBottomOf="@+id/orgEmailTv">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -136,7 +136,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="0"
-                                        android:text="Activist"
+                                        android:text="Organization"
                                         android:textAlignment="viewEnd"
                                         android:textSize="18sp" />
 
@@ -158,20 +158,20 @@
                                     android:orientation="horizontal">
 
                                     <TextView
-                                        android:id="@+id/userCityTvLabel"
+                                        android:id="@+id/orgTypeTvLabel"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
-                                        android:text="City:"
+                                        android:text="Specialization:"
                                         android:textColor="#B88307"
                                         android:textSize="18sp" />
 
                                     <TextView
-                                        android:id="@+id/userCityTvAnswer"
+                                        android:id="@+id/orgTypeTvAnswer"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="0"
-                                        android:text="Iksal"
+                                        android:text="Environment"
                                         android:textAlignment="viewEnd"
                                         android:textSize="18sp" />
                                 </LinearLayout>
@@ -192,20 +192,20 @@
                                     android:orientation="horizontal">
 
                                     <TextView
-                                        android:id="@+id/userRegionTvLabel"
+                                        android:id="@+id/orgPhoneTvLabel"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
-                                        android:text="Region:"
+                                        android:text="Phone:"
                                         android:textColor="#B88307"
                                         android:textSize="18sp" />
 
                                     <TextView
-                                        android:id="@+id/userRegionTvAnswer"
+                                        android:id="@+id/orgPhoneTvAnswer"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="0"
-                                        android:text="North District"
+                                        android:text="0527005695"
                                         android:textAlignment="viewEnd"
                                         android:textSize="18sp" />
                                 </LinearLayout>
@@ -230,7 +230,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
-                                        android:text="Saved Posts"
+                                        android:text="My Posts"
                                         android:textColor="#B88307"
                                         android:textSize="18sp" />
 
@@ -262,7 +262,7 @@
 
                                     <TextView
                                         android:id="@+id/settingsTvLabel"
-                                        android:layout_width="20dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
                                         android:text="Settings"
@@ -276,7 +276,6 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="0"
                                         android:text=">"
-                                        android:textAlignment="viewEnd"
                                         android:textSize="18sp" />
                                 </LinearLayout>
 
