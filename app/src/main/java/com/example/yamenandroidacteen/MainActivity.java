@@ -18,6 +18,7 @@ import com.example.yamenandroidacteen.home.organization.OrganizationHomeActivity
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+        FirebaseMessaging.getInstance().subscribeToTopic("notification");
 
         // Check if the user is already logged in
         FirebaseUser currentUser = mAuth.getCurrentUser();
