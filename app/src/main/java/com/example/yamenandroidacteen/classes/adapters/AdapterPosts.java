@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +85,10 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.PostViewHold
             pDateTv.setText(deleteFirstFiveLetters(post.getpDate()));
 
 
-            pLocationTv.setText(post.getpLocationLinkReal());
+
+            String text = "<font color=#FFFFFF>x</font> <font color=#808080>" + post.getpLocationLinkReal() + "</font>";
+            pLocationTv.setText(Html.fromHtml( text, Html.FROM_HTML_MODE_LEGACY));
+            pLocationTv.setGravity(Gravity.START);
 
 
             // set post image

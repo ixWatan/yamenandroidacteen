@@ -50,6 +50,12 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.android.libraries.places:places:3.1.0")
     implementation("com.google.android.gms:play-services-places:17.0.0")
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
+    implementation("com.google.firebase:firebase-storage:20.3.0")
+    implementation("com.afollestad.material-dialogs:core:3.3.0")
+
+
+
 
 
 

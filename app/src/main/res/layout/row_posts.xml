@@ -91,9 +91,11 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
             android:text="Location"
-            android:autoLink="all"
+                android:textAlignment="viewEnd"
+
+                android:autoLink="all"
                 android:maxLines="1"
-            android:textColor="@color/gray"/>
+            />
         </LinearLayout>
     </LinearLayout>
 

@@ -31,6 +31,9 @@
     <string name="title_activity_search_org">SearchActivityOrg</string>
     <string name="my_map_api_key">AIzaSyCcc7K7iw-PxnLtcgCNFbnqSpV5EskmBjM</string>
 
+    <string name="ltr_letter_invisible"><font fgcolor='#FFFFFF'>.</font></string> <!--red-->
+
+
     <string name="edittext_hint_region"><font size="14sp">Region</font></string>
     <string name="descreption_dummy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nisi ligula, interdum a tristique id, porta quis leo. Donec bibendum tellus vitae mauris tempus porta. Donec iaculis auctor quam vitae porttitor. Aenean ut risus pretium nulla congue varius sed a elit. Sed viverra purus ac dolor tincidunt rhoncus a et leo. Aliquam erat volutpat. Etiam mattis lacus turpis</string>
 

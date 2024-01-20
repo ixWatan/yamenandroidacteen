@@ -32,6 +32,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="false"
+        tools:replace="android:supportsRtl"
         android:theme="@style/Theme.Yamenandroidacteen"
         tools:targetApi="31">
 

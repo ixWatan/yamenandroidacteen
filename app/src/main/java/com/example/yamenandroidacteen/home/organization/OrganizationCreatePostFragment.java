@@ -48,6 +48,7 @@ import android.widget.Toast;
 
 import com.example.yamenandroidacteen.R;
 import com.example.yamenandroidacteen.classes.other.CropperActivity;
+import com.example.yamenandroidacteen.home.activist.ActivistShowPostFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -69,75 +70,22 @@ import java.util.List;
 public class OrganizationCreatePostFragment extends Fragment {
 
 
-    FirebaseAuth firebaseAuth;
-    ActionBar actionBar;
-
-    AutoCompleteTextView hashtagsAutoCompleteTextView;
-
-
-    //permissions
-    private static final int UCROP_REQUEST_CODE = 942;
-
-    private static final int AUTOCOMPLETE_REQUEST_CODE = 1;
-
-    //picked image will be saved in this uri
-    Uri image_uri = null;
-
-
 
     //views
     EditText titleEt, descripionEt;
     ImageButton backButton;
 
 
-    //Date, Start Time, End Time
-    EditText editTextDate, editTextStart, editTextEnd;
-
-    String selectedDate;
-    String selectedStartTime;
-    String selectedEndTime;
-
     ImageView imageIv;
-    Button uploadbtn, pLocationBtn;
-
-    //show location TV
-    TextView locationTagTextView, nextTv;
-
-    //user info
-    String name, email, uid, dp;
-
-    //progress bar
-    ProgressDialog pd;
-
-    private String locationAddressInAddEvent;
-
-    private double latitude;
-    private double longitude;
-    private String mapsUri;
-
-    SpannableString locationLink;
+    TextView  nextTv;
 
 
-    private static final int PICK_IMAGE = 1;
-
-    //#
-
-    String[] hashTagsList = {"#Environment", "#Volunteering", "#Protests", "#Women's Rights", "#Human Rights", "#Racism", "#LGBTQ+", "#Animals", "#Petitions", "#Education"};
-
-    AutoCompleteTextView autoCompleteTextView;
-
-    ArrayAdapter<String> adapterItems;
-
-    String selectHashTag;
-
-    TextView selectedHashtagsTv;
-    List<String> selectedHashtags;
-
-    LinearLayout hashtagsContainer;
 
     ActivityResultLauncher<String> mGetContent;
 
     private String lastClickedButton = ""; // Variable to store the last clicked button
+
+    Uri resultUri;
 
 
 
@@ -152,6 +100,8 @@ public class OrganizationCreatePostFragment extends Fragment {
 
 
         imageIv = view.findViewById(R.id.imageIvNewPost);
+        titleEt = view.findViewById(R.id.addPostTitleTv);
+        descripionEt = view.findViewById(R.id.addPostDescreptionTv);
         backButton = view.findViewById(R.id.backButton);
         nextTv = view.findViewById(R.id.NextTv);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -165,9 +115,7 @@ public class OrganizationCreatePostFragment extends Fragment {
         nextTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lastClickedButton = "Button Next";
-
-                navigateToFragment(new OrganizationCreatePostSecondFragment());
+                checkForEmptyInputAndMoveToNextStep();
             }
         });
 
@@ -181,16 +129,58 @@ public class OrganizationCreatePostFragment extends Fragment {
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
-                Intent intent = new Intent(getContext(), CropperActivity.class);
-                intent.putExtra("DATA", result.toString());
-                startActivityForResult(intent, 101);
+                if (result != null) {
+                    Intent intent = new Intent(getContext(), CropperActivity.class);
+                    intent.putExtra("DATA", result.toString());
+                    startActivityForResult(intent, 101);
+                } else {
+
+                    Toast.makeText(getContext(), "No image selected", Toast.LENGTH_SHORT).show();
                 }
             }
-        );
+        });
+
 
 
 
         return view;
+    }
+
+    private void checkForEmptyInputAndMoveToNextStep() {
+        //get data(title, description) from EditText
+        String title = titleEt.getText().toString().trim();
+        String description = descripionEt.getText().toString().trim();
+
+
+        if (TextUtils.isEmpty(title)) {
+            Toast.makeText(getActivity(), "Title Is Empty ....", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(description)) {
+            Toast.makeText(getActivity(), "Description is empty ...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (resultUri == null) {
+            Toast.makeText(getActivity(), "Add an image ...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        lastClickedButton = "Button Next";
+
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("pImage", String.valueOf(resultUri));
+        bundle.putSerializable("post_description", description);
+        bundle.putSerializable("post_title", title);
+
+        Fragment organizationCreatePostSecondFragment = new OrganizationCreatePostSecondFragment();
+        organizationCreatePostSecondFragment.setArguments(bundle);
+
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutOrg, organizationCreatePostSecondFragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     public void navigateToFragment(Fragment fragment) {
@@ -232,7 +222,7 @@ public class OrganizationCreatePostFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == -1 && requestCode == 101) {
             String result = data.getStringExtra("RESULT");
-            Uri resultUri = null;
+            resultUri = null;
             if(result != null) {
                 resultUri = Uri.parse(result);
             }

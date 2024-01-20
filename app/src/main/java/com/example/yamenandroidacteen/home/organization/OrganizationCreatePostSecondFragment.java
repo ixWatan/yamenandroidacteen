@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
@@ -163,7 +164,7 @@ public class OrganizationCreatePostSecondFragment extends Fragment implements  O
         nextTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToFragment(new OrganizationCreatePostThirdFragment());
+                checkForEmptyInputAndMoveToNextStep();
             }
         });
 
@@ -205,6 +206,8 @@ public class OrganizationCreatePostSecondFragment extends Fragment implements  O
             }
         });
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -304,4 +307,31 @@ public class OrganizationCreatePostSecondFragment extends Fragment implements  O
                      });
                  }
              }
+
+             private void checkForEmptyInputAndMoveToNextStep() {
+
+
+
+                 if (mapsUri == null || mapsUri.isEmpty()) {
+                     Toast.makeText(getActivity(), "You must select a location", Toast.LENGTH_SHORT).show();
+                     return;
+                 }
+
+
+                 Bundle bundle = new Bundle();
+                 bundle.putSerializable("pLocationLinkReal", selectedLocationURL);
+                 bundle.putSerializable("pLocationLink", mapsUri);
+                 bundle.putSerializable("pImage", getArguments().getString("pImage"));
+                 bundle.putSerializable("post_description", getArguments().getString("post_description"));
+                 bundle.putSerializable("post_title", getArguments().getString("post_title"));
+
+                 Fragment organizationCreatePostThirdFragment = new OrganizationCreatePostThirdFragment();
+                 organizationCreatePostThirdFragment.setArguments(bundle);
+
+                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                 ft.replace(R.id.frameLayoutOrg, organizationCreatePostThirdFragment);
+                 ft.addToBackStack(null);
+                 ft.commit();
+             }
          }
+

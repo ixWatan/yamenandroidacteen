@@ -43,16 +43,18 @@
 
 
             <TextView
-                android:id="@+id/NextTvSecondStepSecond"
+                android:id="@+id/postTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:layout_marginEnd="10dp"
                 android:layout_gravity="center_vertical"
-                android:text="Next"
+                android:text="Post"
                 android:textColor="#0488B4"
                 android:textSize="18dp"
                 android:textStyle="bold" />
+
+
 
         </LinearLayout>
         <View
@@ -69,6 +71,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginHorizontal="20dp"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -89,13 +92,13 @@
                     android:id="@+id/selectDateBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="10sp"
-                    android:layout_marginTop="10dp"
-                    android:text="Select Date"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="Select Date"
+                    android:textColor="@color/black"
 
-                    android:textColor="@color/black" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/showDateDataTv"
@@ -105,21 +108,20 @@
                     android:text=""
                     android:textAlignment="center"
                     android:textColor="#545454"
-                    android:textSize="14dp"
-                    />
+                    android:textSize="14dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
 
-                    android:layout_height="match_parent">
+                    android:layout_weight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -142,12 +144,12 @@
                             android:id="@+id/selectStartTimeBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:textSize="10sp"
                             android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
                             android:text="Select Time"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
 
                         <TextView
                             android:id="@+id/showStartTimeDataTv"
@@ -157,8 +159,7 @@
                             android:text=""
                             android:textAlignment="center"
                             android:textColor="#545454"
-                            android:textSize="14dp"
-                            />
+                            android:textSize="14dp" />
 
                     </LinearLayout>
 
@@ -166,8 +167,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -190,13 +191,13 @@
                             android:id="@+id/selectEndTimeBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:textSize="10sp"
-                            android:layout_marginTop="10dp"
-                            android:text="Select Time"
                             android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="Select Time"
+                            android:textColor="@color/black"
 
-                            android:textColor="@color/black" />
+                            android:textSize="10sp" />
 
                         <TextView
                             android:id="@+id/showEndTimeDataTv"
@@ -206,67 +207,72 @@
                             android:text=""
                             android:textAlignment="center"
                             android:textColor="#545454"
-                            android:textSize="14dp"
-                             />
+                            android:textSize="14dp" />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
             </LinearLayout>
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            xmlns:tools="http://schemas.android.com/tools"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-
-            android:layout_marginBottom="15dp"
-            tools:context=".MainActivity">
-
-            <com.google.android.material.textfield.TextInputLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/edittext_background"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
+                android:layout_height="match_parent">
 
-                android:hint="#HashTags"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-                <AutoCompleteTextView
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+                    android:layout_width="300dp"
                     android:layout_height="50dp"
-                    android:id="@+id/autocomplete_Tv"
-                    android:layout_width="match_parent"
-                    android:paddingTop="7dp"
-                    android:paddingLeft="50dp"
-                    android:inputType="none"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <LinearLayout
-            android:id="@+id/hashtags_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:animateLayoutChanges="true"/>
 
 
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:context=".MainActivity">
 
-        <TextView
-            android:id="@+id/selected_hashtags_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#000"
-            android:layout_marginTop="10dp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/edittext_background"
+                        android:hint=" "
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/autocomplete_Tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:inputType="none"
+                            android:hint="Select Hashtags (#)"
+
+                            android:paddingLeft="50dp"
+                            android:paddingTop="7dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/hashtags_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:alignItems="stretch"
+                app:alignContent="stretch"
+                app:flexWrap="wrap"
+                app:justifyContent="flex_start"
+                app:flexDirection="row"
+                />
 
 
 
+
+
+
+
+        </LinearLayout>
 
     </LinearLayout>
+
+
+
 
 
 
