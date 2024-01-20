@@ -11,15 +11,22 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.yamenandroidacteen.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class OrganizationCreatePostThirdFragment extends Fragment {
@@ -29,6 +36,20 @@ public class OrganizationCreatePostThirdFragment extends Fragment {
 
     ImageView backButton;
     TextView showStartTimeDataTv, showEndTimeDataTv, showDateDataTv;
+
+    String[] hashTagsList = {"#Environment", "#Volunteering", "#Protests", "#Women's Rights", "#Human Rights", "#Racism", "#LGBTQ+", "#Animals", "#Petitions", "#Education"};
+
+    AutoCompleteTextView autoCompleteTextView;
+
+    ArrayAdapter<String> adapterItems;
+
+    String selectHashTag;
+
+    TextView selectedHashtagsTv;
+    List<String> selectedHashtags;
+
+    LinearLayout hashtagsContainer;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,6 +66,13 @@ public class OrganizationCreatePostThirdFragment extends Fragment {
         showEndTimeDataTv = view.findViewById(R.id.showEndTimeDataTv);
         showDateDataTv = view.findViewById(R.id.showDateDataTv);
 
+        // drop down menu for regions
+        autoCompleteTextView = view.findViewById(R.id.autocomplete_Tv);
+        adapterItems = new ArrayAdapter<String>(getActivity(), R.layout.list_item, hashTagsList);
+        autoCompleteTextView.setAdapter(adapterItems);
+        selectedHashtagsTv = view.findViewById(R.id.selected_hashtags_tv);
+        selectedHashtags = new ArrayList<>();
+        hashtagsContainer = view.findViewById(R.id.hashtags_container);
 
         dateAndTimePickerInit();
 
@@ -127,6 +155,39 @@ public class OrganizationCreatePostThirdFragment extends Fragment {
                 picker.show();
             }
         });
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                String selectedHashtag = adapterView.getItemAtPosition(position).toString();
+
+                if (selectedHashtags.size() >= 3) {
+                    Toast.makeText(getActivity(), "You can select only 3 hashtags", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!selectedHashtags.contains(selectedHashtag)) {
+                    selectedHashtags.add(selectedHashtag);
+                    TextView hashtagTv = new TextView(getActivity());
+                    hashtagTv.setText("  " + selectedHashtag + " x");
+                    hashtagTv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            selectedHashtags.remove(selectedHashtag);
+                            hashtagsContainer.removeView(view);
+                        }
+                    });
+                    hashtagsContainer.addView(hashtagTv);
+                    autoCompleteTextView.setText("");
+                } else {
+                    Toast.makeText(getActivity(), "You have already selected this hashtag", Toast.LENGTH_SHORT).show();
+                }
+
+                // Clear the AutoCompleteTextView text
+                autoCompleteTextView.setText("");
+            }
+        });
+
     }
 
     public void navigateToFragment(Fragment fragment) {
