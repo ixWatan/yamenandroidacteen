@@ -1,83 +1,42 @@
-package com.example.yamenandroidacteen.home.activist;
+package com.example.yamenandroidacteen.home.organization;
 
-
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.provider.CalendarContract;
-import android.text.TextUtils;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowInsets;
-import android.view.WindowInsetsController;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.yamenandroidacteen.MainActivity;
 import com.example.yamenandroidacteen.R;
-import com.example.yamenandroidacteen.classes.adapters.AdapterPosts;
-
-
-/*import com.example.meet_workshop.homepage.homeactivist.HomeActivity;
-import com.example.meet_workshop.homepage.homeorganization.AddEventOrgActivity;*/
-
-
-import com.example.yamenandroidacteen.classes.models.ModelComment;
-import com.example.yamenandroidacteen.classes.models.ModelPost;
-import com.example.yamenandroidacteen.home.organization.OrganizationHomeActivity;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.example.yamenandroidacteen.home.activist.ActivistHomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 
-import okhttp3.internal.Util;
+public class OrganizationShowPostFragment extends Fragment {
 
-public class ActivistShowPostFragment extends Fragment {
 
     String orgName;
     String postImage;
@@ -140,7 +99,7 @@ public class ActivistShowPostFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.fragment_activist_show_post, container, false);
+        View view = inflater.inflate(R.layout.fragment_organization_show_post, container, false);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -150,21 +109,6 @@ public class ActivistShowPostFragment extends Fragment {
 
 
 
-
-        // Get a reference to the button
-        addToCalender = view.findViewById(R.id.addToCalenderBtn);
-
-
-        // Set an onClick listener for the button
-        addToCalender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                addToCalenderFunc();
-
-            }
-        });
-        //End
 
 
         loadTags(view);
@@ -236,7 +180,7 @@ public class ActivistShowPostFragment extends Fragment {
 
         String userId = user.getUid();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("teenActivists").document(userId).get()
+        db.collection("organizations").document(userId).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
@@ -414,7 +358,6 @@ public class ActivistShowPostFragment extends Fragment {
         }
     }
 
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -426,13 +369,8 @@ public class ActivistShowPostFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        // Show the system navigation bar when the fragment is destroyed
         ((OrganizationHomeActivity) requireActivity()).showSystemNavigationBar();
     }
 
 
 }
-
-
-
-

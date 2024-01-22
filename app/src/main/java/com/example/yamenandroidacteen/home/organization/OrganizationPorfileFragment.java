@@ -26,7 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class OrganizationPorfileFragment extends Fragment {
 
 
-    TextView usernameTv, emailTv, orgTypeTv, orgPhoneTv, settingsArrowTv;
+    TextView usernameTv, emailTv, orgTypeTv, orgPhoneTv, settingsArrowTv, myPostsArrowTv;
     ImageView profileIv;
     private FirebaseAuth mAuth;
     @Override
@@ -52,6 +52,7 @@ public class OrganizationPorfileFragment extends Fragment {
         orgPhoneTv = view.findViewById(R.id.orgPhoneTvAnswer);
         profileIv = view.findViewById(R.id.profileImageView);
         settingsArrowTv = view.findViewById(R.id.settingsTvAnswer);
+        myPostsArrowTv = view.findViewById(R.id.savedPostsTvAnswer);
 
         settingsArrowTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +60,14 @@ public class OrganizationPorfileFragment extends Fragment {
                 navigateToFragment(new OrganizationSettingsFragment());
             }
         });
+
+        myPostsArrowTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToFragment(new OrganizationMyPostsFragment());
+            }
+        });
+
 
 
 

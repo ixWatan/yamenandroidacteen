@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class OrganizationHomeFragment extends Fragment implements SelectListener {
+public class OrganizationMyPostsFragment extends Fragment implements SelectListener {
 
 
     FirebaseAuth firebaseAuth;
@@ -49,6 +50,8 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
 
 
     RecyclerView recyclerView;
+
+    FirebaseUser user;
     List<ModelPost> postList;
     AdapterPosts adapterPosts;
 
@@ -68,19 +71,19 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
     private ImageButton searchButton;
 
 
-    private String profilePictureUrl;
+    private String profilePictureUrl, orgName, orgEmail;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_organization_home, container, false);
+        View view =  inflater.inflate(R.layout.fragment_organization_my_posts, container, false);
+
+        mAuth = FirebaseAuth.getInstance();
 
 
 
         //profile pic on top init
-        profileImageView = view.findViewById(R.id.profileImageView);
-        mAuth = FirebaseAuth.getInstance();
 
 
         // post recycler view properties
@@ -122,9 +125,10 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
 
 
 
+        user = mAuth.getCurrentUser();
 
-        FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
+
             String userId = user.getUid();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("organizations").document(userId).get()
@@ -134,19 +138,10 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
                             if (document.exists()) {
 
                                 profilePictureUrl = document.getString("profilePictureUrl");
+                                orgName = document.getString("organization_name");
+                                orgEmail = document.getString("email");
 
-
-                                // Update the profile picture ImageView with the new URL
-                                if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
-                                    Glide.with(this)
-                                            .load(profilePictureUrl + "?timestamp=" + System.currentTimeMillis())
-                                            .into(profileImageView);
-                                } else {
-                                    // Display the default profile picture
-                                    Glide.with(this)
-                                            .load(R.drawable.icon_account)
-                                            .into(profileImageView);
-                                }
+                                Toast.makeText(getActivity(), orgEmail, Toast.LENGTH_SHORT).show();
 
 
                             }
@@ -157,9 +152,10 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
         }
 
 
+
+
         // Inflate the layout for this fragment
-        return view;
-    }
+        return view;    }
 
     private void loadPosts() {
         /*pd = new ProgressDialog(getActivity());
@@ -177,10 +173,17 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     ModelPost modelPost = ds.getValue(ModelPost.class);
 
+                    if (modelPost != null) {
+                        Log.d("DEBUG", "uEmail: " + modelPost.getuEmail() + ", orgEmail: " + orgEmail);
 
-                    postList.add(modelPost);
-
+                        if (modelPost.getuEmail().equals(user.getEmail())) {
+                            postList.add(modelPost);
+                            Toast.makeText(getActivity(), "sxsxsxsxsxs", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
+
+
 
                 adapterPosts = new AdapterPosts(postList, new AdapterPosts.OnPostClickListener() {
                     @Override
@@ -207,7 +210,6 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
 
         });
     }
-
 
     @Override
     public void onItemClicked(ModelPost modelPost) {
@@ -247,9 +249,6 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
 
 
     }
-
-
-
 
 
 

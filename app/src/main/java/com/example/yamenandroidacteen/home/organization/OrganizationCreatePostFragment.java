@@ -19,6 +19,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -107,8 +108,16 @@ public class OrganizationCreatePostFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 lastClickedButton = "Button Back";
-                navigateToFragment(new OrganizationHomeFragment());
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        navigateToFragment(new OrganizationHomeFragment());
+
+                    }
+                }, 300);
             }
         });
 
@@ -139,6 +148,7 @@ public class OrganizationCreatePostFragment extends Fragment {
                 }
             }
         });
+
 
 
 

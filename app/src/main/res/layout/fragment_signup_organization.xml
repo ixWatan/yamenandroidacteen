@@ -216,13 +216,12 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/signup"
+                    android:id="@+id/signupOrg"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:text="Sign Up"
                     android:textAllCaps="false"
                     android:textColor="@android:color/black"
-                    android:onClick="goToHome"
                     android:padding="12dp"/>
 
 
