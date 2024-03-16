@@ -206,8 +206,10 @@ public class ActivistHomeFragment extends Fragment implements SelectListener {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // in case of error
-                Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                // Check if the activity is not null before showing the Toast
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
 

@@ -419,7 +419,7 @@ public class ActivistShowPostFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Hide the system navigation bar when the fragment is displayed
-        ((OrganizationHomeActivity) requireActivity()).hideSystemNavigationBar();
+        ((ActivistHomeActivity) requireActivity()).hideSystemNavigationBar();
     }
 
     @Override
@@ -427,7 +427,7 @@ public class ActivistShowPostFragment extends Fragment {
         super.onDestroyView();
 
         // Show the system navigation bar when the fragment is destroyed
-        ((OrganizationHomeActivity) requireActivity()).showSystemNavigationBar();
+        ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
     }
 
 
