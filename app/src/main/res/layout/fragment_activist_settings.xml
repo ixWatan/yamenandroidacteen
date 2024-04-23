@@ -1,25 +1,86 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- fragment_activist_settings.xml -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".home.activist.ActivistSettingsFragment">
+    android:padding="16dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Enable Notifications -->
+    <LinearLayout
+        android:id="@+id/notificationsLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="16dp"
+        >
 
-        <Button
-            android:id="@+id/signoutBtn"
-            android:layout_width="200dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Sign Out"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:text="Enable Notifications"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical"/>
 
-</FrameLayout>
+        <Switch
+            android:id="@+id/switchNotifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <!-- Enable Reminders -->
+    <LinearLayout
+        android:id="@+id/remindersLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/notificationsLayout"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="16dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enable Reminders"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_vertical"/>
+
+        <Switch
+            android:id="@+id/switchReminders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <!-- Edit Profile -->
+    <TextView
+        android:id="@+id/textViewEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Profile"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:textColor="@android:color/black"
+        android:layout_below="@id/remindersLayout"
+        android:drawableEnd="@drawable/icon_edit"/>
+
+    <!-- Sign Out -->
+    <TextView
+        android:id="@+id/textViewSignOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Out"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:textColor="@android:color/white"
+        android:layout_below="@id/textViewEditProfile"
+        android:background="@color/red"
+        android:drawableEnd="@drawable/icon_exit"/>
+
+</RelativeLayout>

@@ -178,7 +178,6 @@ public class OrganizationMyPostsFragment extends Fragment implements SelectListe
 
                         if (modelPost.getuEmail().equals(user.getEmail())) {
                             postList.add(modelPost);
-                            Toast.makeText(getActivity(), "sxsxsxsxsxs", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

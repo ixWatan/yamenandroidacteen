@@ -200,8 +200,11 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // in case of error
-                Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                // Check if the fragment is attached to the activity
+                if (isAdded()) {
+                    // Show the toast only if the fragment is attached to the activity
+                    Toast.makeText(requireContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
 

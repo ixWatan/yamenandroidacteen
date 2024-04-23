@@ -16,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="15dp"
-
             android:orientation="vertical">
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -255,7 +254,7 @@
                             android:layout_width="30dp"
                             android:gravity="center_vertical"
                             android:layout_height="match_parent"
-                            android:src="@drawable/icon_account"
+                            android:src="@drawable/outline_favorite_border"
                             >
                         </ImageView>
                         <ImageView
@@ -264,8 +263,9 @@
                             android:layout_marginLeft="5dp"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:src="@drawable/icon_account"
+                            android:src="@drawable/baseline_bookmark_border"
                             >
+
                         </ImageView>
                     </LinearLayout>
 

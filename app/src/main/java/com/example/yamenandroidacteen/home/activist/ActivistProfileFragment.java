@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.example.yamenandroidacteen.MainActivity;
 import com.example.yamenandroidacteen.R;
 import com.example.yamenandroidacteen.auth.ForgotPasswordFragment;
+import com.example.yamenandroidacteen.auth.activist.ActivistSettingsFragment;
 import com.example.yamenandroidacteen.classes.adapters.AdapterPosts;
 import com.example.yamenandroidacteen.classes.models.ModelPost;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,7 +51,7 @@ public class ActivistProfileFragment extends Fragment {
 
 
 
-    TextView usernameTv, emailTv, cityTv, regionTv, settingsArrowTv;
+    TextView usernameTv, emailTv, cityTv, regionTv, settingsArrowTv, savedPostsTv;
     ImageView profileIv;
     private FirebaseAuth mAuth;
     @Override
@@ -78,11 +79,19 @@ public class ActivistProfileFragment extends Fragment {
         regionTv = view.findViewById(R.id.userRegionTvAnswer);
         profileIv = view.findViewById(R.id.profileImageView);
         settingsArrowTv = view.findViewById(R.id.settingsTvAnswer);
+        savedPostsTv = view.findViewById(R.id.savedPostsTvAnswer);
 
         settingsArrowTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateToFragment(new ActivistSettingsFragment());
+            }
+        });
+
+        savedPostsTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToFragment(new ActivistShowSavedPostsFragment());
             }
         });
 

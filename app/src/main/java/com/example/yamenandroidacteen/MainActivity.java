@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     // Handle Firestore query failure
                     Toast.makeText(this, "Error fetching user data!", Toast.LENGTH_SHORT).show();
+                    LoginFragment loginFragment = new LoginFragment();
+                    getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, loginFragment).commit();
                 });
     }
 

@@ -1,7 +1,6 @@
 package com.example.yamenandroidacteen.home.activist;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +17,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.yamenandroidacteen.MainActivity;
 import com.example.yamenandroidacteen.R;
-import com.example.yamenandroidacteen.auth.LoginFragment;
-import com.example.yamenandroidacteen.classes.FragmentHelper;
+import com.example.yamenandroidacteen.classes.adapters.AdapterPosts;
+import com.example.yamenandroidacteen.classes.interfaces.SelectListener;
+import com.example.yamenandroidacteen.classes.models.ModelPost;
+import com.example.yamenandroidacteen.home.organization.OrganizationShowPostFragment;
 import com.example.yamenandroidacteen.classes.adapters.AdapterPosts;
 import com.example.yamenandroidacteen.classes.interfaces.SelectListener;
 import com.example.yamenandroidacteen.classes.models.ModelPost;
@@ -40,11 +39,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ActivistHomeFragment extends Fragment implements SelectListener {
+public class ActivistShowSavedPostsFragment extends Fragment implements SelectListener {
 
 
-
-
+    FirebaseAuth firebaseAuth;
 
 
     private ImageView profileImageView;
@@ -54,6 +52,8 @@ public class ActivistHomeFragment extends Fragment implements SelectListener {
 
 
     RecyclerView recyclerView;
+
+    FirebaseUser user;
     List<ModelPost> postList;
     AdapterPosts adapterPosts;
 
@@ -73,19 +73,17 @@ public class ActivistHomeFragment extends Fragment implements SelectListener {
     private ImageButton searchButton;
 
 
-    private String profilePictureUrl;
-
+    private String profilePictureUrl, orgName, orgEmail;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view =  inflater.inflate(R.layout.fragment_activist_show_saved_posts, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_activist_home, container, false);
+        mAuth = FirebaseAuth.getInstance();
 
 
 
         //profile pic on top init
-        profileImageView = view.findViewById(R.id.profileImageView);
-        mAuth = FirebaseAuth.getInstance();
 
 
         // post recycler view properties
@@ -123,97 +121,69 @@ public class ActivistHomeFragment extends Fragment implements SelectListener {
         recyclerView.setAdapter(adapterPosts);
 
 
-        loadPosts();
+        loadSavedPosts();
 
 
 
-
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            String userId = user.getUid();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("teenActivists").document(userId).get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-
-                                profilePictureUrl = document.getString("profilePictureUrl");
+        user = mAuth.getCurrentUser();
 
 
-                                // Update the profile picture ImageView with the new URL
-                                if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
-                                    Glide.with(this)
-                                            .load(profilePictureUrl + "?timestamp=" + System.currentTimeMillis())
-                                            .into(profileImageView);
-                                } else {
-                                    // Display the default profile picture
-                                    Glide.with(this)
-                                            .load(R.drawable.icon_account)
-                                            .into(profileImageView);
-                                }
 
-
-                            }
-                        } else {
-                            Toast.makeText(getActivity(), "An error occurred. Please try again.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
 
 
         // Inflate the layout for this fragment
-        return view;
+        return view;    }
+
+    private void loadSavedPosts() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
+
+            db.collection("teenActivists").document(userId).get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            List<String> savedPostIds = (List<String>) documentSnapshot.get("savedPosts");
+                            if (savedPostIds != null) {
+                                ref.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        postList.clear();
+                                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                            ModelPost modelPost = ds.getValue(ModelPost.class);
+                                            if (modelPost != null && savedPostIds.contains(modelPost.getpId())) {
+                                                postList.add(modelPost);
+                                            }
+                                        }
+
+                                        adapterPosts = new AdapterPosts(postList, new AdapterPosts.OnPostClickListener() {
+                                            @Override
+                                            public void onPostClick(int position) {
+                                                // Handle post click, e.g., navigate to another fragment
+
+                                                onItemClicked(postList.get(position));
+
+                                            }
+                                        });
+                                        recyclerView.setAdapter(adapterPosts);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        // Handle error
+                                    }
+                                });
+                            }
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle failure
+                    });
+        }
     }
 
-    private void loadPosts() {
-        /*pd = new ProgressDialog(getActivity());
-        pd.setMessage("Loading Posts...");
-        pd.show();*/
-        //path of  all posts
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
 
-
-        // get all data from this ref
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                postList.clear();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ModelPost modelPost = ds.getValue(ModelPost.class);
-
-
-                    postList.add(modelPost);
-
-                }
-
-                adapterPosts = new AdapterPosts(postList, new AdapterPosts.OnPostClickListener() {
-                    @Override
-                    public void onPostClick(int position) {
-                        // Handle post click, e.g., navigate to another fragment
-
-                        onItemClicked(postList.get(position));
-
-                    }
-                });
-                recyclerView.setAdapter(adapterPosts);
-
-
-
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Check if the activity is not null before showing the Toast
-                if (getActivity() != null) {
-                    Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-
-        });
-    }
 
 
     @Override
@@ -256,9 +226,4 @@ public class ActivistHomeFragment extends Fragment implements SelectListener {
     }
 
 
-
-
-
-
-
-    }
+}

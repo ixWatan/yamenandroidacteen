@@ -3,8 +3,10 @@ package com.example.yamenandroidacteen.classes;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-    @IgnoreExtraProperties
+@IgnoreExtraProperties
     public class User implements Serializable {
 
         private String name;
@@ -17,6 +19,22 @@ import java.io.Serializable;
         private int followers;
         private int following;
         private int posts;
+
+        private List<String> savedPosts;
+
+
+        public User(String name, String email, String password, String city, String region, String age) {
+                this.name = name;
+                this.email = email;
+                this.password = password;
+                this.city = city;
+                this.region = region;
+                this.age = age;
+                this.following = 0;
+                this.followers = 0;
+                this.posts = 0;
+                this.savedPosts = new ArrayList<>();
+        }
 
         public int getFollowing() {
             return following;
@@ -68,19 +86,6 @@ import java.io.Serializable;
             this.region = region;
         }
 
-
-        public User(String name, String email, String password, String city, String region, String age) {
-            this.name = name;
-            this.email = email;
-            this.password = password;
-            this.city = city;
-            this.region = region;
-            this.age = age;
-            this.following = 0;
-            this.followers = 0;
-            this.posts = 0;
-        }
-
         public String getName() {
             return name;
         }
@@ -103,6 +108,16 @@ import java.io.Serializable;
 
         public void setPassword(String password) {
             this.password = password;
+        }
+
+        public void addSavedPost(String postId) {
+            // Add the post ID to the list of saved posts
+            savedPosts.add(postId);
+        }
+
+        public void removeSavedPost(String postId) {
+            // Remove the post ID from the list of saved posts
+            savedPosts.remove(postId);
         }
 
         @Override

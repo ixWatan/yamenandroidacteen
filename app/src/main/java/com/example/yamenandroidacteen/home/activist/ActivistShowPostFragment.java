@@ -60,7 +60,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -121,17 +123,29 @@ public class ActivistShowPostFragment extends Fragment {
     //Add To Calender Btn
     Button addToCalender;
 
+    boolean isPostSaved = false; // Track whether the post is saved or not
+
+
 
 
     private FirebaseAuth mAuth;
 
+
     private View nav;
 
+    ImageView saveBtn;
+    String userId;
+
+    DocumentReference userDocRef;
 
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
 
-
+    }
 
 
 
@@ -142,14 +156,15 @@ public class ActivistShowPostFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_activist_show_post, container, false);
 
-        mAuth = FirebaseAuth.getInstance();
-
         initViewsAndData(view);
 
         loadUserData(view);
 
 
-
+        FirebaseUser user = mAuth.getCurrentUser();
+        userId = user.getUid();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        userDocRef = db.collection("teenActivists").document(userId);
 
         // Get a reference to the button
         addToCalender = view.findViewById(R.id.addToCalenderBtn);
@@ -164,17 +179,40 @@ public class ActivistShowPostFragment extends Fragment {
 
             }
         });
-        //End
+
+        saveBtn = view.findViewById(R.id.saveBtn);
+        saveBtn.setImageResource(R.drawable.baseline_bookmark_border);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check if the post is saved or not
+                if (isPostSaved) {
+                    // If the post is already saved, unsave it
+                    unsavePost(postId);
+                    // Change the icon to unfilled
+                    saveBtn.setImageResource(R.drawable.baseline_bookmark_border);
+                    isPostSaved = false;
+                } else {
+                    // If the post is not saved, save it
+                    savePost(postId);
+                    // Change the icon to filled
+                    saveBtn.setImageResource(R.drawable.baseline_bookmark);
+                    isPostSaved = true;
+                }
+            }
+        });
 
 
         loadTags(view);
+        loadSaveStatus();
 
 
         return view;
     }
 
-
-
+    private void loadSaveStatus() {
+        retrieveSavedPosts();
+    }
 
 
     // --==--==--==--==--==--==--==--==--==
@@ -216,6 +254,82 @@ public class ActivistShowPostFragment extends Fragment {
             // Show an error message if no app can handle the intent
             Toast.makeText(getActivity(), "No application can handle this action.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+
+
+
+
+    // Save Post Action
+    public void savePost(String postId) {
+
+
+        userDocRef.update("savedPosts", FieldValue.arrayUnion(postId))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Post successfully saved
+                        Toast.makeText(getActivity(), "Post saved successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        Toast.makeText(getActivity(), "Failed to save post: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    // Unsave Post Action
+    public void unsavePost(String postId) {
+        userDocRef.update("savedPosts", FieldValue.arrayRemove(postId))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Post successfully unsaved
+                        Toast.makeText(getActivity(), "Post unsaved successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        Toast.makeText(getActivity(), "Failed to unsave post: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
+    // Retrieve Saved Posts
+    public void retrieveSavedPosts() {
+        userDocRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            List<String> savedPostIds = (List<String>) documentSnapshot.get("savedPosts");
+                            if (savedPostIds != null && savedPostIds.contains(postId)) {
+                                // change the icon to filled
+                                saveBtn.setImageResource(R.drawable.baseline_bookmark);
+                                isPostSaved = true;
+                            } else {
+                                // keep the icon unfilled
+                                saveBtn.setImageResource(R.drawable.baseline_bookmark_border);
+                                isPostSaved = false;
+                            }
+                        } else {
+                            // User document does not exist
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                    }
+                });
     }
 
 
@@ -300,6 +414,8 @@ public class ActivistShowPostFragment extends Fragment {
 
     }
 
+
+
     private void initViewsAndData(View view) {
 
         TextView nameOrgTv = (TextView) view.findViewById(R.id.showNameOrg);
@@ -310,6 +426,7 @@ public class ActivistShowPostFragment extends Fragment {
         ImageView postPorfileIv = (ImageView) view.findViewById(R.id.showPostProfileImg);
         TextView postLocation = (TextView) view.findViewById(R.id.locationTvShowPost);
         TextView postDate = (TextView) view.findViewById(R.id.DateTvShowPost);
+
 
 
 
