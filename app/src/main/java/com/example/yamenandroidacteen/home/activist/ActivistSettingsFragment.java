@@ -1,4 +1,4 @@
-package com.example.yamenandroidacteen.auth.activist;
+package com.example.yamenandroidacteen.home.activist;
 
 import android.content.Intent;
 import android.os.Bundle;
