@@ -69,6 +69,7 @@ public class ActivistShowSavedPostsFragment extends Fragment implements SelectLi
     private ImageButton homePageButton;
 
 
+
     private ImageButton notificationButton;
     private ImageButton searchButton;
 

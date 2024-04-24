@@ -28,7 +28,6 @@ import com.bumptech.glide.Glide;
 import com.example.yamenandroidacteen.MainActivity;
 import com.example.yamenandroidacteen.R;
 import com.example.yamenandroidacteen.auth.ForgotPasswordFragment;
-import com.example.yamenandroidacteen.auth.activist.ActivistSettingsFragment;
 import com.example.yamenandroidacteen.classes.adapters.AdapterPosts;
 import com.example.yamenandroidacteen.classes.models.ModelPost;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,6 +53,11 @@ public class ActivistProfileFragment extends Fragment {
     TextView usernameTv, emailTv, cityTv, regionTv, settingsArrowTv, savedPostsTv;
     ImageView profileIv;
     private FirebaseAuth mAuth;
+
+    private View savedPostsLayout;
+    private View settingsLayout;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,15 +84,17 @@ public class ActivistProfileFragment extends Fragment {
         profileIv = view.findViewById(R.id.profileImageView);
         settingsArrowTv = view.findViewById(R.id.settingsTvAnswer);
         savedPostsTv = view.findViewById(R.id.savedPostsTvAnswer);
+        settingsLayout = view.findViewById(R.id.settingsLayout);
+        savedPostsLayout = view.findViewById(R.id.savedPostsLayout);
 
-        settingsArrowTv.setOnClickListener(new View.OnClickListener() {
+        settingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateToFragment(new ActivistSettingsFragment());
             }
         });
 
-        savedPostsTv.setOnClickListener(new View.OnClickListener() {
+        savedPostsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateToFragment(new ActivistShowSavedPostsFragment());
@@ -122,7 +128,7 @@ public class ActivistProfileFragment extends Fragment {
                                 // Update the profile picture ImageView with the new URL
                                 if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
                                     Glide.with(this)
-                                            .load(profilePictureUrl + "?timestamp=" + System.currentTimeMillis())
+                                            .load(profilePictureUrl)
                                             .into(profileIv);
                                 } else {
                                     // Display the default profile picture

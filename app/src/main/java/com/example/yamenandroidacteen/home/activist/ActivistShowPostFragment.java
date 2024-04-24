@@ -158,7 +158,6 @@ public class ActivistShowPostFragment extends Fragment {
 
         initViewsAndData(view);
 
-        loadUserData(view);
 
 
         FirebaseUser user = mAuth.getCurrentUser();
@@ -333,86 +332,6 @@ public class ActivistShowPostFragment extends Fragment {
     }
 
 
-    private void loadUserData(View view) {
-        // load user info
-        //------
-        //---
-
-
-        ImageView userProfileIv = (ImageView) view.findViewById(R.id.showPostProfileImgComment);
-
-
-
-
-        FirebaseUser user = mAuth.getCurrentUser();
-
-
-
-        String userId = user.getUid();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("teenActivists").document(userId).get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            String userName = document.getString("name");
-                            String email = document.getString("email");
-                            String profilePictureUrl = document.getString("profilePictureUrl");
-
-
-                            // Update the profile picture ImageView with the new URL
-                            if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
-                                Glide.with(this)
-                                        .load(profilePictureUrl + "?timestamp=" + System.currentTimeMillis())
-                                        .into(userProfileIv);
-                            } else {
-                                // Display the default profile picture
-                                Glide.with(this)
-                                        .load(R.drawable.icon_account)
-                                        .into(userProfileIv);
-                            }
-
-
-                        }
-                    } else {
-                        Toast.makeText(getActivity(), "An error occurred. Please try again.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-
-
-        // Load and display the user's profile picture using a library like Glide or Picasso
-        String profilePictureUrl = getArguments().getString("profilePictureUrl");
-        if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
-            Glide.with(this)
-                    .load(profilePictureUrl)
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into(userProfileIv);
-
-
-        } else {
-            // Set the default profile picture
-            Glide.with(this)
-                    .load(R.drawable.icon_account)
-                    .into(userProfileIv);
-        }
-
-
-
-
-        //---
-        //------
-        // load user info
-
-
-
-
-
-
-
-    }
 
 
 

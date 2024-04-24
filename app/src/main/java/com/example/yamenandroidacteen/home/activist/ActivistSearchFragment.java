@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.yamenandroidacteen.R;
 import com.example.yamenandroidacteen.classes.adapters.AdapterPosts;
+import com.example.yamenandroidacteen.classes.interfaces.SelectListener;
 import com.example.yamenandroidacteen.classes.models.ModelPost;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,7 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivistSearchFragment extends Fragment {
+public class ActivistSearchFragment extends Fragment implements SelectListener {
 
 
     private FirebaseAuth mAuth;
@@ -53,7 +54,6 @@ public class ActivistSearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_activist_search, container, false);
 
         search = view.findViewById(R.id.simpleSearchView);
-        profileImageView = view.findViewById(R.id.profileImageView);
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -77,10 +77,7 @@ public class ActivistSearchFragment extends Fragment {
         adapterPosts = new AdapterPosts(postList, new AdapterPosts.OnPostClickListener() {
             @Override
             public void onPostClick(int position) {
-                // Handle post click, e.g., navigate to another fragment
-/*
-                navigateToPostDetailsFragment(postList.get(position));
-*/
+
                 Toast.makeText(getActivity(), postList.get(position).getpTitle() , Toast.LENGTH_SHORT).show();
 
             }
@@ -92,12 +89,14 @@ public class ActivistSearchFragment extends Fragment {
         // search post stuff end
         // -=-=-=-=-=-
 
+        searchPosts(""); // Empty search query to retrieve all posts
+
+
         search.setQueryHint("Search");
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-
                 //user pressed on search button
                 if(!TextUtils.isEmpty(s)) {
                     searchPosts(s);
@@ -107,15 +106,13 @@ public class ActivistSearchFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
-
                 //user presses any button
+                // Call searchPosts with the current search query
+                searchPosts(s);
                 return false;
             }
         });
 
-/*
-        loadProfilePic();
-*/
 
 
         // Inflate the layout for this fragment
@@ -139,7 +136,7 @@ public class ActivistSearchFragment extends Fragment {
                                 // Update the profile picture ImageView with the new URL
                                 if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
                                     Glide.with(this)
-                                            .load(profilePictureUrl + "?timestamp=" + System.currentTimeMillis())
+                                            .load(profilePictureUrl)
                                             .into(profileImageView);
                                 } else {
                                     // Display the default profile picture
@@ -175,9 +172,20 @@ public class ActivistSearchFragment extends Fragment {
                     if(modelPost.getpTitle().toLowerCase().contains(searchQuery.toLowerCase())
                             || modelPost.getpDescription().toLowerCase().contains(searchQuery.toLowerCase())
                             || modelPost.getpHashtags().toLowerCase().contains(searchQuery.toLowerCase())
+                            || modelPost.getpAddress().toLowerCase().contains(searchQuery.toLowerCase())
                     ){
                         postList.add(modelPost);
                     }
+
+                    adapterPosts = new AdapterPosts(postList, new AdapterPosts.OnPostClickListener() {
+                        @Override
+                        public void onPostClick(int position) {
+                            // Handle post click, e.g., navigate to another fragment
+
+                            onItemClicked(postList.get(position));
+
+                        }
+                    });
 
 
                 }
@@ -198,5 +206,44 @@ public class ActivistSearchFragment extends Fragment {
             }
 
         });
+    }
+
+    @Override
+    public void onItemClicked(ModelPost modelPost) {
+
+        // Putting data from the post into the fragment transfer
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("org_name", modelPost.getuName());
+        bundle.putSerializable("post_image", modelPost.getpImage());
+        bundle.putSerializable("post_description", modelPost.getpDescription());
+        bundle.putSerializable("post_timePosted", modelPost.getpTime());
+        bundle.putSerializable("post_title", modelPost.getpTitle());
+        bundle.putSerializable("post_user_pfp", modelPost.getuDp());
+        bundle.putSerializable("post_endT", modelPost.getpEndT());
+        bundle.putSerializable("post_startT", modelPost.getpStartT());
+        bundle.putSerializable("post_date", modelPost.getpDate());
+        bundle.putSerializable("post_tags", modelPost.getpHashtags());
+        bundle.putSerializable("post_locationLink", modelPost.getpLocationLink());
+        bundle.putSerializable("post_location", modelPost.getpLocationLinkReal());
+        bundle.putSerializable("post_id", modelPost.getpId());
+        bundle.putSerializable("post_comments", modelPost.getpComments());
+        bundle.putSerializable("post_likes", modelPost.getpLikes());
+        bundle.putSerializable("userProfilePicUrl", profilePictureUrl);
+
+        // end of Putting data from the post into the fragment transfer
+
+
+        // need to transition to fragment
+        ActivistShowPostFragment activistShowPostFragment = new ActivistShowPostFragment();
+
+        activistShowPostFragment.setArguments(bundle);
+
+        // Use FragmentManager to replace the current fragment with the details fragment
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayoutActivist, activistShowPostFragment) // Use the container ID of your fragment container
+                .addToBackStack(null)
+                .commit();
+
+
     }
 }

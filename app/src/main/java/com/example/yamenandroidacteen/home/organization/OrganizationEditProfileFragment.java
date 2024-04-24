@@ -1,4 +1,5 @@
-package com.example.yamenandroidacteen.home.activist;
+package com.example.yamenandroidacteen.home.organization;
+
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,12 +13,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 
 import com.bumptech.glide.Glide;
 import com.example.yamenandroidacteen.R;
@@ -34,49 +37,60 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActivistEditProfileFragment extends Fragment {
 
-    private EditText editTextAge;
-    private EditText editTextCity;
+public class OrganizationEditProfileFragment extends Fragment {
+
+
+    private EditText editTextPhone;
+    private EditText editTextDescription;
     private EditText editTextEmail;
     private EditText editTextName;
     private EditText editTextPassword;
-    private EditText editTextRegion;
+    private EditText editTextWeb;
     private ImageView imageViewProfilePicture;
     private Button buttonSave;
 
+
     Uri resultUri;
     ActivityResultLauncher<String> mGetContent;
+
+
 
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_activist_edit_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_organization_edit_profile, container, false);
+
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         currentUser = mAuth.getCurrentUser();
 
+
         // Initialize views
-        editTextAge = view.findViewById(R.id.editTextAge);
-        editTextCity = view.findViewById(R.id.editTextCity);
+        editTextPhone= view.findViewById(R.id.editTextPhone);
+        editTextDescription = view.findViewById(R.id.editTextDescription);
         editTextEmail = view.findViewById(R.id.editTextEmail);
         editTextName = view.findViewById(R.id.editTextName);
         editTextPassword = view.findViewById(R.id.editTextPassword);
-        editTextRegion = view.findViewById(R.id.editTextRegion);
+        editTextWeb = view.findViewById(R.id.editTextWeb);
         imageViewProfilePicture = view.findViewById(R.id.imageViewProfilePicture);
         buttonSave = view.findViewById(R.id.buttonSave);
 
+
         // Fetch and populate user data from Firestore
         fetchAndPopulateUserData();
+
 
         // Set click listener for save button
         // Set click listener for save button
@@ -84,15 +98,16 @@ public class ActivistEditProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Get updated data from EditText fields
-                String age = editTextAge.getText().toString().trim();
-                String city = editTextCity.getText().toString().trim();
+                String phone = editTextPhone.getText().toString().trim();
+                String description = editTextDescription.getText().toString().trim();
                 String email = editTextEmail.getText().toString().trim();
                 String name = editTextName.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
-                String region = editTextRegion.getText().toString().trim();
+                String web = editTextWeb.getText().toString().trim();
+
 
                 // Update user data in Firestore
-                updateUserData(age, city, email, name, password, region);
+                updateUserData(phone, description, email, name, password, web);
             }
         });
         // Inside your fragment's onCreateView() method after initializing views
@@ -104,6 +119,7 @@ public class ActivistEditProfileFragment extends Fragment {
             }
         });
 
+
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
@@ -113,29 +129,36 @@ public class ActivistEditProfileFragment extends Fragment {
                     startActivityForResult(intent, 101);
                 } else {
 
+
                     Toast.makeText(getContext(), "No image selected", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+
         return view;
     }
+
 
     private void fetchAndPopulateUserData() {
         if (currentUser != null) {
             String userId = currentUser.getUid();
-            db.collection("teenActivists").document(userId).get()
+            db.collection("organizations").document(userId).get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document != null && document.exists()) {
                                 // Populate EditTexts with user data
-                                editTextAge.setText(document.getString("age"));
-                                editTextCity.setText(document.getString("city"));
+                                // Inside fetchAndPopulateUserData() method
+                                editTextPhone.setText(document.getString("phone"));
+                                editTextDescription.setText(document.getString("description"));
                                 editTextEmail.setText(document.getString("email"));
-                                editTextName.setText(document.getString("name"));
+                                editTextName.setText(document.getString("organization_name"));
                                 editTextPassword.setText(document.getString("password"));
-                                editTextRegion.setText(document.getString("region"));
+                                editTextWeb.setText(document.getString("website Link"));
+
+
+
 
 
                                 String profilePictureUrl = document.getString("profilePictureUrl");
@@ -148,9 +171,11 @@ public class ActivistEditProfileFragment extends Fragment {
         }
     }
 
-    private void updateUserData(String age, String city, String email, String name, String password, String region) {
+
+    private void updateUserData(String phone, String description, String email, String name, String password, String web) {
         if (currentUser != null) {
             String userId = currentUser.getUid();
+
 
             // Check if there's a new profile picture to upload
             if (resultUri != null) {
@@ -159,13 +184,17 @@ public class ActivistEditProfileFragment extends Fragment {
                         .child("profile_pictures")
                         .child(userId + ".jpg");
 
+
                 // Upload the profile picture to Firebase Storage
                 profilePictureRef.putFile(resultUri)
                         .addOnSuccessListener(taskSnapshot -> {
                             Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                             while (!uriTask.isSuccessful()) ;
 
+
                             String downloadUri = uriTask.getResult().toString();
+
+
 
 
                             // Get the download URL of the uploaded image
@@ -173,8 +202,9 @@ public class ActivistEditProfileFragment extends Fragment {
                                     .addOnSuccessListener(uri -> {
                                         String profilUePictureUrl = downloadUri;
 
+
                                         // Update user data in Firestore with the new profile picture URL
-                                        updateUserDataInFirestore(userId, age, city, email, name, password, region, profilUePictureUrl);
+                                        updateUserDataInFirestore(userId, phone, description, email, name, password, web, profilUePictureUrl);
                                     })
                                     .addOnFailureListener(e -> {
                                         // Handle failure to get download URL
@@ -187,25 +217,27 @@ public class ActivistEditProfileFragment extends Fragment {
                         });
             } else {
                 // If there's no new profile picture, update user data in Firestore without uploading the image
-                updateUserDataInFirestore(userId, age, city, email, name, password, region, null);
+                updateUserDataInFirestore(userId, phone, description, email, name, password, web, null);
             }
         }
     }
 
-    private void updateUserDataInFirestore(String userId, String age, String city, String email, String name, String password, String region, String profilePictureUrl) {
+
+    private void updateUserDataInFirestore(String userId, String phone, String description, String email, String name, String password, String web, String profilePictureUrl) {
         Map<String, Object> userData = new HashMap<>();
-        userData.put("age", age);
-        userData.put("city", city);
+        userData.put("phone", phone);
+        userData.put("description", description);
         userData.put("email", email);
-        userData.put("name", name);
+        userData.put("organization_name", name);
         userData.put("password", password);
-        userData.put("region", region);
+        userData.put("website Link", web);
         if (profilePictureUrl != null) {
             userData.put("profilePictureUrl", profilePictureUrl);
         }
 
+
         // Update user data in Firestore
-        db.collection("teenActivists").document(userId)
+        db.collection("organizations").document(userId)
                 .update(userData)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(getContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
@@ -215,21 +247,27 @@ public class ActivistEditProfileFragment extends Fragment {
                 });
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         // Hide the system navigation bar when the fragment is displayed
-        ((ActivistHomeActivity) requireActivity()).hideSystemNavigationBar();
+        ((OrganizationHomeActivity) requireActivity()).hideSystemNavigationBar();
     }
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
+
         // Show the system navigation bar when the fragment is destroyed
-        ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
+        ((OrganizationHomeActivity) requireActivity()).showSystemNavigationBar();
     }
+
+
 
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -241,10 +279,15 @@ public class ActivistEditProfileFragment extends Fragment {
                 resultUri = Uri.parse(result);
             }
 
+
             imageViewProfilePicture.setImageURI(resultUri);
         }
     }
 
 
 
+
+
+
 }
+

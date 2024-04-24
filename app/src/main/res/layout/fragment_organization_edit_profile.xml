@@ -53,28 +53,28 @@
 
     <!-- Age -->
     <EditText
-        android:id="@+id/editTextAge"
+        android:id="@+id/editTextPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageViewProfilePicture"
         android:layout_marginTop="40dp"
-        android:hint="Age" />
+        android:hint="Phone" />
 
     <!-- City -->
     <EditText
-        android:id="@+id/editTextCity"
+        android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextAge"
+        android:layout_below="@id/editTextPhone"
         android:layout_marginTop="16dp"
-        android:hint="City" />
+        android:hint="Description" />
 
     <!-- Email -->
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextCity"
+        android:layout_below="@id/editTextDescription"
         android:layout_marginTop="16dp"
         android:hint="Email" />
 
@@ -99,19 +99,19 @@
 
     <!-- Region -->
     <EditText
-        android:id="@+id/editTextRegion"
+        android:id="@+id/editTextWeb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextPassword"
         android:layout_marginTop="16dp"
-        android:hint="Region" />
+        android:hint="Website Link" />
 
     <!-- Save Button -->
     <Button
         android:id="@+id/buttonSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextRegion"
+        android:layout_below="@id/editTextWeb"
         android:layout_marginTop="24dp"
         android:text="Save" />
 

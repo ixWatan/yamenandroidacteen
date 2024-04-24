@@ -92,4 +92,19 @@ public class ActivistSettingsFragment extends Fragment {
         // Commit the transaction
         ft.commit();
     }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Hide the system navigation bar when the fragment is displayed
+        ((ActivistHomeActivity) requireActivity()).hideSystemNavigationBar();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Show the system navigation bar when the fragment is destroyed
+        ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
+    }
 }

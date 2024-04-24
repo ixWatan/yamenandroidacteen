@@ -43,4 +43,9 @@
         <item name="colorControlActivated">@color/gray</item>
     </style>
 
+    <style name="AppTheme.LightMode" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Force light mode -->
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+
 </resources>

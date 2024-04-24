@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.yamenandroidacteen.R;
+import com.example.yamenandroidacteen.home.activist.ActivistSettingsFragment;
+import com.example.yamenandroidacteen.home.activist.ActivistShowSavedPostsFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,9 +27,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class OrganizationPorfileFragment extends Fragment {
 
 
-    TextView usernameTv, emailTv, orgTypeTv, orgPhoneTv, settingsArrowTv, myPostsArrowTv;
+    TextView usernameTv, emailTv, orgTypeTv, orgPhoneTv;
     ImageView profileIv;
     private FirebaseAuth mAuth;
+
+    private View myPostsLayout;
+    private View settingsLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,22 +56,24 @@ public class OrganizationPorfileFragment extends Fragment {
         orgTypeTv = view.findViewById(R.id.orgTypeTvAnswer);
         orgPhoneTv = view.findViewById(R.id.orgPhoneTvAnswer);
         profileIv = view.findViewById(R.id.profileImageView);
-        settingsArrowTv = view.findViewById(R.id.settingsTvAnswer);
-        myPostsArrowTv = view.findViewById(R.id.savedPostsTvAnswer);
+        settingsLayout = view.findViewById(R.id.settingsLayout2);
+        myPostsLayout = view.findViewById(R.id.myPostsLayout);
 
-        settingsArrowTv.setOnClickListener(new View.OnClickListener() {
+        myPostsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToFragment(new OrganizationMyPostsFragment());
+            }
+        });
+
+        settingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateToFragment(new OrganizationSettingsFragment());
             }
         });
 
-        myPostsArrowTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToFragment(new OrganizationMyPostsFragment());
-            }
-        });
+
 
 
 
@@ -95,7 +103,7 @@ public class OrganizationPorfileFragment extends Fragment {
                                 // Update the profile picture ImageView with the new URL
                                 if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
                                     Glide.with(this)
-                                            .load(profilePictureUrl + "?timestamp=" + System.currentTimeMillis())
+                                            .load(profilePictureUrl)
                                             .into(profileIv);
                                 } else {
                                     // Display the default profile picture

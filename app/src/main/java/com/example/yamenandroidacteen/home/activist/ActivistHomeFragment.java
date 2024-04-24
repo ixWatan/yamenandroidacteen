@@ -144,7 +144,7 @@ public class ActivistHomeFragment extends Fragment implements SelectListener {
                                 // Update the profile picture ImageView with the new URL
                                 if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
                                     Glide.with(this)
-                                            .load(profilePictureUrl + "?timestamp=" + System.currentTimeMillis())
+                                            .load(profilePictureUrl)
                                             .into(profileImageView);
                                 } else {
                                     // Display the default profile picture

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.LightMode" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Force light mode -->
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+</resources>
