@@ -1,19 +1,27 @@
 package com.example.yamenandroidacteen.home.activist;
 
+import android.graphics.Rect;
 import android.media.Image;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -44,10 +52,21 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
     private String profilePictureUrl;
 
 
+
+
     RecyclerView recyclerView;
     List<ModelPost> postList;
     AdapterPosts adapterPosts;
-    private SearchView search;
+    public SearchView search;
+
+    public boolean isSearchBarOpen = false;
+
+    private View rootView;
+
+    private LinearLayout filterContainer;
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,6 +74,36 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
 
         search = view.findViewById(R.id.simpleSearchView);
         mAuth = FirebaseAuth.getInstance();
+        rootView = view;
+
+        filterContainer = view.findViewById(R.id.filterContainer);
+
+// Your hashTagsList array
+        String[] hashTagsList = {"#Environment", "#Volunteering", "#Protests", "#Women's Rights", "#Human Rights", "#Racism", "#LGBTQ+", "#Animals", "#Petitions", "#Education"};
+        LayoutInflater inflater2 = LayoutInflater.from(requireContext());
+        for (String hashtag : hashTagsList) {
+            LinearLayout viewForText = (LinearLayout) inflater2.inflate(R.layout.filter_option, filterContainer, false);
+
+            // Find the TextView inside the inflated LinearLayout
+            TextView textView = viewForText.findViewById(R.id.showTagLabel1);
+
+            // Set the text of the TextView
+            textView.setText(hashtag);
+
+            // Set an onClickListener to handle filter selection
+            viewForText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Access the text from the TextView
+                    String selectedTag = textView.getText().toString();
+                    searchPosts(selectedTag);
+                }
+            });
+
+            // Add the LinearLayout (with the TextView inside) to the filter container
+            filterContainer.addView(viewForText);
+        }
+
 
 
 
@@ -83,6 +132,10 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
             }
         });
 
+
+
+
+
         recyclerView.setAdapter(adapterPosts);
 
         // -=-=-=-=-=-
@@ -94,10 +147,41 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
 
         search.setQueryHint("Search");
 
+        detectKeyboardState();
+
+
+
+        search.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                isSearchBarOpen = hasFocus;
+                if (hasFocus) {
+                    // Search bar opened, hide system navigation bar
+                    ((ActivistHomeActivity) requireActivity()).hideSystemNavigationBar();
+                }
+            }
+        });
+
+        // Assuming 'search' is your SearchView
+        search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // Check if the key event is KeyEvent.ACTION_DOWN and the keyCode is KeyEvent.KEYCODE_BACK
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
+                    // Handle the event here, for example, keyboard hiding
+                    ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
+                    return true; // Return true to consume the event
+                }
+                return false; // Return false to allow normal processing of the event
+            }
+        });
+
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 //user pressed on search button
+                search.clearFocus();
+
                 if(!TextUtils.isEmpty(s)) {
                     searchPosts(s);
                 }
@@ -115,9 +199,25 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
 
 
 
+
         // Inflate the layout for this fragment
         return view;
     }
+
+
+    private void addFilterOptions(String[] hashTagsList) {
+        for (String tag : hashTagsList) {
+            addFilterOption(tag);
+        }
+    }
+
+    private void addFilterOption(String text) {
+        LinearLayout filterOption = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.filter_option, filterContainer, false);
+        TextView filterTextView = filterOption.findViewById(R.id.filter_option);
+        filterTextView.setText(text);
+        filterContainer.addView(filterOption);
+    }
+
 
     private void loadProfilePic() {
         FirebaseUser user = mAuth.getCurrentUser();
@@ -202,7 +302,9 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // in case of error
-                Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getContext() != null){
+                    Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
         });
@@ -246,4 +348,59 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
 
 
     }
+
+    private void detectKeyboardState() {
+        View rootView = requireActivity().getWindow().getDecorView().getRootView();
+
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            private Rect r = new Rect();
+
+            @Override
+            public void onGlobalLayout() {
+                rootView.getWindowVisibleDisplayFrame(r);
+                int screenHeight = rootView.getHeight();
+                int keyboardHeight = screenHeight - r.bottom;
+
+                if (keyboardHeight > screenHeight * 0.15) {
+                    // Keyboard is open
+                    onKeyboardOpened();
+                } else {
+                    // Keyboard is closed
+                    onKeyboardClosed();
+                }
+            }
+        });
+    }
+
+    private void onKeyboardOpened() {
+        search.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                isSearchBarOpen = hasFocus;
+                if (hasFocus) {
+                    Toast.makeText(getActivity(), "keyboard opened", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void onKeyboardClosed() {
+
+        search.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                isSearchBarOpen = hasFocus;
+                if (hasFocus) {
+                    Toast.makeText(getActivity(), "keyobard closed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+
+
+
+
+
 }

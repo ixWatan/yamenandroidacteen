@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainSlide"
+    tools:context=".slideshow.MainSlideFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="189dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                app:srcCompat="@drawable/acteen_logo" />
+
+            <TextView
+                android:id="@+id/welcomeTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Welcome To Acteen!"
+                android:layout_marginHorizontal="20dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/descriptionTV"
+                android:layout_width="wrap_content"
+                android:layout_height="107dp"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginBottom="100dp"
+                android:textAlignment="center"
+                android:text="The app that connects teenagers to activism opportunities in their area, to make activism an accessible and easy to do."
+                android:textColor="@android:color/darker_gray"
+                android:textSize="18sp"
+      />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_weight="1"
+                    android:id="@+id/ActivistBtn"
+                    android:layout_width="0dp"
+                    android:textAllCaps="false"
+                    android:layout_height="wrap_content"
+                    android:text="Activist"
+                    android:textColor="@color/Black"
+                    android:textSize="15sp"
+                    android:layout_marginRight="20dp"
+                    android:padding="12dp"
+                    app:strokeColor="#FED600"
+                    app:backgroundTint="@android:color/transparent"
+                    app:cornerRadius="3dp"
+                    app:rippleColor="#33AAAAAA"
+                    android:layout_margin="10dp"
+                    app:strokeWidth="2dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_weight="1"
+                    android:id="@+id/OrganizationBtn"
+                    android:textAllCaps="false"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Organization"
+                    android:textColor="@color/Black"
+                    android:textSize="15sp"
+                    android:padding="12dp"
+                    android:layout_margin="10dp"
+                    app:strokeColor="#FED600"
+                    app:backgroundTint="@android:color/transparent"
+                    app:cornerRadius="3dp"
+                    app:rippleColor="#33AAAAAA"
+                    app:strokeWidth="2dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

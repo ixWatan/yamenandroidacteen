@@ -248,7 +248,7 @@ public class ActivistHomeFragment extends Fragment implements SelectListener {
 
         // Use FragmentManager to replace the current fragment with the details fragment
         requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayoutActivist, activistShowPostFragment) // Use the container ID of your fragment container
+                .replace(R.id.frameLayoutActivist, activistShowPostFragment, "ActivistShowPostFragment") // Use the container ID of your fragment container
                 .addToBackStack(null)
                 .commit();
 

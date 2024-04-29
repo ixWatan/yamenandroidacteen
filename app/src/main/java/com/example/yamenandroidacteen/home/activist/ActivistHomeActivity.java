@@ -44,6 +44,7 @@ import com.example.yamenandroidacteen.classes.FragmentHelper;
 import com.example.yamenandroidacteen.classes.adapters.AdapterPosts;
 import com.example.yamenandroidacteen.classes.interfaces.SelectListener;
 import com.example.yamenandroidacteen.classes.models.ModelPost;
+import com.example.yamenandroidacteen.classes.other.BaseActivity;
 import com.example.yamenandroidacteen.databinding.ActivityActivistHomeBinding;
 import com.example.yamenandroidacteen.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -67,7 +68,7 @@ import java.util.List;
 
 
 
-public class ActivistHomeActivity extends AppCompatActivity {
+public class ActivistHomeActivity extends BaseActivity {
 
 
     private ActivityActivistHomeBinding binding;
@@ -77,6 +78,7 @@ public class ActivistHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         askNotificationPermission();
+
 
 
         binding = ActivityActivistHomeBinding.inflate(getLayoutInflater());

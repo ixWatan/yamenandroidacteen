@@ -58,7 +58,7 @@ public class ActivistSettingsFragment extends Fragment {
         textViewEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToFragment(new com.example.yamenandroidacteen.auth.activist.ActivistEditProfileFragment());
+                navigateToFragment(new ActivistEditProfileFragment());
             }
         });
 

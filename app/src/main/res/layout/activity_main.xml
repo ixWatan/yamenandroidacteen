@@ -7,6 +7,20 @@
     <!-- Other UI components in your activity -->
 
     <!-- Fragment container -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewLoad"
+        android:layout_centerInParent="true"
+        android:src="@drawable/acteen_logo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imageViewLoad"
+        android:text="Loading ..."/>
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"

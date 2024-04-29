@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/filter_option"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/filter_tag_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_marginRight="10dp"
+    android:foreground="?attr/selectableItemBackground"
+
+    android:padding="4dp">
+
+    <TextView
+        android:id="@+id/showTagLabel1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#Environment"
+        android:background="@drawable/filter_tag_bg"
+        android:paddingVertical="4dp"
+        android:paddingHorizontal="10dp"
+        android:textStyle="bold"
+        android:letterSpacing="0.1"
+        android:textColor="@android:color/black"
+        android:textSize="9sp"
+        android:maxLines="1"
+        />
+
+</LinearLayout>

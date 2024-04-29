@@ -31,6 +31,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,6 +77,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 
 import okhttp3.internal.Util;
@@ -138,6 +141,12 @@ public class ActivistShowPostFragment extends Fragment {
 
     DocumentReference userDocRef;
 
+    View orgPorfileView;
+
+    public boolean wentToShowInfo;
+
+    public String testTest;
+
 
 
     @Override
@@ -167,6 +176,33 @@ public class ActivistShowPostFragment extends Fragment {
 
         // Get a reference to the button
         addToCalender = view.findViewById(R.id.addToCalenderBtn);
+        orgPorfileView = view.findViewById(R.id.orgNameTvShowPost);
+
+        orgPorfileView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivistShowOrgInfo fragment = new ActivistShowOrgInfo();
+
+                // Create a bundle to pass data
+                Bundle bundle = new Bundle();
+                bundle.putString("orgName", orgName);
+
+                // Set the bundle to the fragment
+                fragment.setArguments(bundle);
+
+                // Replace the current fragment with ActivistShowOrgInfo
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                // Hide the system navigation bar
+                ((ActivistHomeActivity) requireActivity()).hideSystemNavigationBar();
+
+                fragmentTransaction.replace(R.id.frameLayoutActivist, fragment, "goingToShowOrgInfo");
+                check(fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
 
 
         // Set an onClick listener for the button
@@ -208,6 +244,8 @@ public class ActivistShowPostFragment extends Fragment {
 
         return view;
     }
+
+
 
     private void loadSaveStatus() {
         retrieveSavedPosts();
@@ -450,6 +488,11 @@ public class ActivistShowPostFragment extends Fragment {
         }
     }
 
+    // Method to reset the boolean value to false
+    public void resetWentToShowInfo() {
+        wentToShowInfo = false;
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -462,10 +505,26 @@ public class ActivistShowPostFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        // Show the system navigation bar when the fragment is destroyed
-        ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
+        if(Objects.equals(testTest, "fromShowInfo")) {
+            ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
+        }
+
+
     }
 
+    private void check(Fragment destinationFragment) {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        if (destinationFragment != null && destinationFragment.getTag() != null) {
+            if (destinationFragment.getTag().equals("goingToShowOrgInfo")) {
+                // Hide the system navigation bar when transitioning to fragment X
+                wentToShowInfo = true;
+                Toast.makeText(getActivity(), "maintaining nav hidden", Toast.LENGTH_SHORT).show();
+            } else {
+                ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
+
+            }
+        }
+    }
 
 }
 

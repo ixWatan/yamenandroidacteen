@@ -2,7 +2,9 @@ package com.example.yamenandroidacteen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.os.Bundle;
@@ -13,17 +15,22 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.yamenandroidacteen.auth.LoginFragment;
+import com.example.yamenandroidacteen.classes.other.BaseActivity;
 import com.example.yamenandroidacteen.home.activist.ActivistHomeActivity;
 import com.example.yamenandroidacteen.home.organization.OrganizationHomeActivity;
+import com.example.yamenandroidacteen.slideshow.MainSlideFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+
+    private SharedPreferences sharedPreferences;
+
 
 
     @Override
@@ -31,26 +38,49 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         FirebaseMessaging.getInstance().subscribeToTopic("notification");
 
-        // Check if the user is already logged in
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            autoLogin(currentUser.getUid());
-        } else {
+        checkIfFirstTime();
 
-            // if user is not logged in from before redirect him to login page like normal
-            if (findViewById(R.id.frameLayout) != null) {
-                if (savedInstanceState != null) {
-                    return;
+        // Check if the user is already logged in
+
+    }
+
+    private void checkIfFirstTime() {
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
+        // Check if it's the first time opening the app
+        boolean isFirstTime = sharedPreferences.getBoolean("isFirstTime", true);
+        if (isFirstTime) {
+            // Show introduction page
+            showIntroductionPage();
+
+            // Set flag to indicate that the user has opened the app before
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isFirstTime", false);
+            editor.apply();
+        } else {
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            if (currentUser != null) {
+                autoLogin(currentUser.getUid());
+            } else {
+                // if user is not logged in and is not first time redirect him to login page like normal
+                if (findViewById(R.id.frameLayout) != null) {
+                    LoginFragment loginFragment = new LoginFragment();
+                    getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, loginFragment).commit();
                 }
-                LoginFragment loginFragment = new LoginFragment();
-                getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, loginFragment).commit();
             }
         }
+    }
+
+    private void showIntroductionPage() {
+        MainSlideFragment mainSlideFragment = new MainSlideFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, mainSlideFragment).commit();
     }
 
     private void autoLogin(String userId) {

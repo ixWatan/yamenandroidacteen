@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.yamenandroidacteen.MainActivity;
 import com.example.yamenandroidacteen.R;
+import com.example.yamenandroidacteen.classes.other.BaseActivity;
 import com.example.yamenandroidacteen.databinding.ActivityActivistHomeBinding;
 import com.example.yamenandroidacteen.databinding.ActivityOrganizationHomeBinding;
 import com.example.yamenandroidacteen.home.activist.ActivistHomeFragment;
@@ -21,7 +22,7 @@ import com.example.yamenandroidacteen.home.activist.ActivistProfileFragment;
 import com.example.yamenandroidacteen.home.activist.ActivistSearchFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class OrganizationHomeActivity extends AppCompatActivity {
+public class OrganizationHomeActivity extends BaseActivity {
 
     private Button signOutBtn;
 
