@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- layout_onboarding_dots.xml -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutDots"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_horizontal|bottom"
+    android:layout_gravity="bottom"
+    android:paddingBottom="32dp"
+    >
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:src="@drawable/dot_inactive"
+        android:layout_margin="4dp" />
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:src="@drawable/dot_inactive"
+        android:layout_margin="4dp" />
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:src="@drawable/dot_inactive"
+        android:layout_margin="4dp" />
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:src="@drawable/dot_inactive"
+        android:layout_margin="4dp" />
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:src="@drawable/dot_inactive"
+        android:layout_margin="4dp" />
+
+</LinearLayout>

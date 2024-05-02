@@ -62,7 +62,7 @@
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_weight="1"
-                    android:id="@+id/Signup"
+                    android:id="@+id/SignupBtnSlideOrg"
                     android:layout_width="0dp"
                     android:layout_margin="10dp"
                     android:textAllCaps="false"
@@ -81,7 +81,7 @@
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_weight="1"
-                    android:id="@+id/Login"
+                    android:id="@+id/LoginBtnSlideOrg"
                     android:textAllCaps="false"
                     android:layout_width="0dp"
                     android:layout_margin="10dp"

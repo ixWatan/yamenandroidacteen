@@ -1,5 +1,6 @@
 package com.example.yamenandroidacteen.slideshow;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,25 @@ import com.example.yamenandroidacteen.R;
 
 public class MainSlideFragment extends Fragment {
 
+    // Define an interface for button click callbacks
+    public interface OnButtonClickListener {
+        void onActivistButtonClicked();
+        void onOrganizationButtonClicked();
+    }
+
+    private OnButtonClickListener buttonClickListener;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        // Ensure that the activity implements the interface
+        if (context instanceof OnButtonClickListener) {
+            buttonClickListener = (OnButtonClickListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnButtonClickListener");
+        }
+    }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_main_slide, container, false);
@@ -29,30 +49,28 @@ public class MainSlideFragment extends Fragment {
         View activistButton = view.findViewById(R.id.ActivistBtn);
         View organizationButton = view.findViewById(R.id.OrganizationBtn);
 
-        // Set onClickListener for the activist button
+
         activistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to the activist fragment with a slide animation
-/*
-                Navigation.findNavController(view).navigate(R.id.activistSlide1);
-*/
+                // Notify the activity that the activist button is clicked
+                if (buttonClickListener != null) {
+                    buttonClickListener.onActivistButtonClicked();
+                }
             }
         });
 
-        // Set onClickListener for the organization button
         organizationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to the organization fragment with a slide animation
-
-/*
-
-                Navigation.findNavController(view).navigate(R.id.orgSlide1);
-*/
-
-
+                // Notify the activity that the organization button is clicked
+                if (buttonClickListener != null) {
+                    buttonClickListener.onOrganizationButtonClicked();
+                }
             }
         });
+
+
+
     }
 }

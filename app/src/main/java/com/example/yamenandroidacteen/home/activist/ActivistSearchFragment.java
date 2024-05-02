@@ -1,4 +1,6 @@
 package com.example.yamenandroidacteen.home.activist;
+import java.util.Collections;
+
 
 import android.graphics.Rect;
 import android.media.Image;
@@ -54,6 +56,8 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
 
 
 
+
+
     RecyclerView recyclerView;
     List<ModelPost> postList;
     AdapterPosts adapterPosts;
@@ -96,7 +100,7 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
                 public void onClick(View v) {
                     // Access the text from the TextView
                     String selectedTag = textView.getText().toString();
-                    searchPosts(selectedTag);
+                    searchPosts(selectedTag, false);
                 }
             });
 
@@ -142,7 +146,8 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
         // search post stuff end
         // -=-=-=-=-=-
 
-        searchPosts(""); // Empty search query to retrieve all posts
+        searchPosts("", true); // Empty search query to retrieve all posts
+
 
 
         search.setQueryHint("Search");
@@ -183,7 +188,7 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
                 search.clearFocus();
 
                 if(!TextUtils.isEmpty(s)) {
-                    searchPosts(s);
+                    searchPosts(s, false);
                 }
                 return false;
             }
@@ -192,7 +197,7 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
             public boolean onQueryTextChange(String s) {
                 //user presses any button
                 // Call searchPosts with the current search query
-                searchPosts(s);
+                searchPosts(s, false);
                 return false;
             }
         });
@@ -254,7 +259,7 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
         }
     }
 
-    private void searchPosts(String searchQuery) {
+    private void searchPosts(String searchQuery, boolean shuffle) {
         //path of  all posts
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Posts");
 
@@ -289,6 +294,11 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
 
 
                 }
+
+                if(shuffle) {
+                    Collections.shuffle(postList);
+                }
+
 
                 recyclerView.setAdapter(adapterPosts);
 

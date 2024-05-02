@@ -4,27 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Other UI components in your activity -->
+    <!-- Include the ViewPager -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layoutDots" /> <!-- Align ViewPager above the dots layout -->
 
-    <!-- Fragment container -->
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageViewLoad"
-        android:layout_centerInParent="true"
-        android:src="@drawable/acteen_logo"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/imageViewLoad"
-        android:text="Loading ..."/>
-
+    <!-- Include the FrameLayout for other fragments -->
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
+
+    <!-- Include the dots layout and align it to the bottom -->
+    <include
+        android:id="@+id/layoutDotsOrg"
+        layout="@layout/layout_onboarding_dots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <include
+        android:id="@+id/layoutDotsAct"
+        layout="@layout/layout_onboarding_dots_activist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

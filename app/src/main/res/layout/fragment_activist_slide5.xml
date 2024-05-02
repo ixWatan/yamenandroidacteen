@@ -38,7 +38,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="Become the activist that you have always wanted to be!"
                 android:textColor="@android:color/black"
-                android:textSize="32sp"
+                android:textSize="26sp"
                 android:layout_marginHorizontal="20dp"
                 android:gravity="center"
                 android:textStyle="bold" />
@@ -64,7 +64,7 @@
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_weight="1"
-                    android:id="@+id/Signup"
+                    android:id="@+id/SignupBtnSlideAct"
                     android:layout_width="0dp"
                     android:textAllCaps="false"
                     android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_weight="1"
-                    android:id="@+id/Login"
+                    android:id="@+id/LoginBtnSlideAct"
                     android:textAllCaps="false"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
