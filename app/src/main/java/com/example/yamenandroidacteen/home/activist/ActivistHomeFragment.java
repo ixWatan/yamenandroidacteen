@@ -1,10 +1,10 @@
 package com.example.yamenandroidacteen.home.activist;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,11 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.yamenandroidacteen.MainActivity;
 import com.example.yamenandroidacteen.R;
-import com.example.yamenandroidacteen.auth.LoginFragment;
-import com.example.yamenandroidacteen.classes.FragmentHelper;
 import com.example.yamenandroidacteen.classes.adapters.AdapterPosts;
 import com.example.yamenandroidacteen.classes.interfaces.SelectListener;
 import com.example.yamenandroidacteen.classes.models.ModelPost;
@@ -255,6 +251,12 @@ public class ActivistHomeFragment extends Fragment implements SelectListener {
 
     }
 
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Hide the system navigation bar when the fragment is displayed
+        ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
+    }
 
 
 

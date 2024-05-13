@@ -1,5 +1,6 @@
 package com.example.yamenandroidacteen.home.activist;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -55,6 +56,8 @@ public class ActivistEditProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
+    ProgressDialog pd;
+
 
     @Nullable
     @Override
@@ -64,6 +67,8 @@ public class ActivistEditProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         currentUser = mAuth.getCurrentUser();
+        pd = new ProgressDialog(getActivity());
+
 
         // Initialize views
         editTextAge = view.findViewById(R.id.editTextAge);
@@ -96,7 +101,7 @@ public class ActivistEditProfileFragment extends Fragment {
             }
         });
         // Inside your fragment's onCreateView() method after initializing views
-        LinearLayout linearLayoutEditProfilePicture = view.findViewById(R.id.linearLayoutEditProfilePicture);
+        LinearLayout linearLayoutEditProfilePicture = view.findViewById(R.id.linearLayoutEditProfilePictureAct);
         linearLayoutEditProfilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,6 +154,8 @@ public class ActivistEditProfileFragment extends Fragment {
     }
 
     private void updateUserData(String age, String city, String email, String name, String password, String region) {
+        pd.setMessage("Uploading  info...");
+        pd.show();
         if (currentUser != null) {
             String userId = currentUser.getUid();
 
@@ -208,6 +215,7 @@ public class ActivistEditProfileFragment extends Fragment {
         db.collection("teenActivists").document(userId)
                 .update(userData)
                 .addOnSuccessListener(aVoid -> {
+                    pd.dismiss();
                     Toast.makeText(getContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
@@ -223,13 +231,7 @@ public class ActivistEditProfileFragment extends Fragment {
         ((ActivistHomeActivity) requireActivity()).hideSystemNavigationBar();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
 
-        // Show the system navigation bar when the fragment is destroyed
-        ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
-    }
 
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -243,6 +245,29 @@ public class ActivistEditProfileFragment extends Fragment {
 
             imageViewProfilePicture.setImageURI(resultUri);
         }
+    }
+
+
+
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Check if the hosting activity's fragment manager contains the fragment
+        Fragment fragment = requireActivity().getSupportFragmentManager().findFragmentByTag("actSettings");
+
+
+
+        // Check if the hosting activity's fragment manager contains the fragment
+
+        if (fragment instanceof ActivistSettingsFragment) {
+            ActivistSettingsFragment activistSettingsFragment = (ActivistSettingsFragment) fragment;
+            activistSettingsFragment.isActSettings = false;
+        }
+
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
 

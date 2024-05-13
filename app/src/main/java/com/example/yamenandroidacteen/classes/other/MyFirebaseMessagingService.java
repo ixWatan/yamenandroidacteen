@@ -1,4 +1,6 @@
 package com.example.yamenandroidacteen.classes.other;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -8,18 +10,28 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
 import com.example.yamenandroidacteen.R;
 import com.example.yamenandroidacteen.home.activist.ActivistHomeActivity;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
+
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
 
+
+    @Override
+    public void onNewToken(String token) {
+        super.onNewToken(token);
+        // Get updated InstanceID token.
+        Log.wtf(TAG, "Refreshed token: " + token);
+
+        // Now you have the device token. You can use it to subscribe the user to topics or send notifications.
+        // You can store it in SharedPreferences or send it to your server for further processing.
+    }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -34,6 +46,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         }
     }
+
+
 
 
     private void sendNotification(String title, String body) {

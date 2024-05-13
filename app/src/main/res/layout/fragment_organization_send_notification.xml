@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginVertical="5dp"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="13dp"
+        android:orientation="horizontal">
+
+
+
+
+        <ImageButton
+            android:id="@+id/backButtonFromSendNotif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:padding="6dp"
+            android:layout_gravity="center"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/icon_close"
+            android:layout_column="2"
+            />
+
+
+
+        <TextView
+            android:id="@+id/CreatePost"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:text="Send Notifcation"
+            android:textColor="@android:color/black"
+            android:textSize="18dp"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightGrayWatan">
+
+    </View>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="2dp"
+
+        >
+    <!-- Dropdown menu to select a post title -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Select Post"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/autocomplete_Tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="none"
+                app:expandedHintEnabled="false"
+                android:paddingLeft="15dp"
+                android:paddingTop="7dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <!-- Title of the notification -->
+    <EditText
+        android:id="@+id/edittext_notification_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:layout_marginBottom="15dp"
+
+        android:inputType="text" />
+
+    <!-- Notification body -->
+    <EditText
+        android:id="@+id/edittext_notification_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Body"
+        android:minHeight="55dp"
+        android:ems="10"
+        android:textSize="15sp"
+        android:inputType="textImeMultiLine|textMultiLine"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:layout_marginBottom="15dp" />
+
+    <!-- Optional link for the notification -->
+    <EditText
+        android:id="@+id/edittext_notification_link"
+        android:layout_width="match_parent"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:hint="Link"
+        android:inputType="text" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:paddingVertical="10dp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="7dp"
+            app:contentPadding="5dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:layout_marginBottom="30dp"
+            >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:orientation="vertical"
+            >
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/notification_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:padding="7dp"
+                android:src="@mipmap/ic_launcher"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                app:strokeColor="#725000"
+                app:strokeWidth="1dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/notification_title_preview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Notification Title"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center_horizontal"
+                                android:layout_marginBottom="2dp"/>
+
+                            <TextView
+                                android:id="@+id/notification_body_preview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Notification Body"
+                                android:textSize="12sp"
+                                android:gravity="center_horizontal"/>
+                </LinearLayout>
+            </LinearLayout>
+
+             </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:gravity="center_horizontal"
+            android:id="@+id/sendNotificationBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Notification"
+            app:iconGravity="textEnd"
+            app:iconTint="@color/white"
+            app:iconPadding="10dp"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:onClick="goToHome"
+            android:padding="12dp"/>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

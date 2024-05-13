@@ -2,73 +2,28 @@ package com.example.yamenandroidacteen.home.activist;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
-import android.view.WindowInsets;
-import android.view.WindowInsetsController;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 
-
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.yamenandroidacteen.R;
-import com.example.yamenandroidacteen.auth.LoginFragment;
-import com.example.yamenandroidacteen.auth.OrgOrActivistFragment;
-import com.example.yamenandroidacteen.auth.activist.InterestsFragment;
-import com.example.yamenandroidacteen.classes.FragmentHelper;
-import com.example.yamenandroidacteen.classes.adapters.AdapterPosts;
-import com.example.yamenandroidacteen.classes.interfaces.SelectListener;
-import com.example.yamenandroidacteen.classes.models.ModelPost;
-import com.example.yamenandroidacteen.classes.other.BaseActivity;
 import com.example.yamenandroidacteen.databinding.ActivityActivistHomeBinding;
-import com.example.yamenandroidacteen.databinding.ActivityMainBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-
-
-public class ActivistHomeActivity extends BaseActivity {
+public class ActivistHomeActivity extends AppCompatActivity  {
 
 
     private ActivityActivistHomeBinding binding;
@@ -170,8 +125,47 @@ public class ActivistHomeActivity extends BaseActivity {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
             }
         }
+      }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        showExitConfirmationDialog();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Handle back button press here
+        // For example, you can show a toast message
+        Toast.makeText(ActivistHomeActivity.this, "Back button pressed", Toast.LENGTH_SHORT).show();
+
+        // Call super.onBackPressed() to allow default back button behavior
+        super.onBackPressed();
     }
 
 
-
+        private void showExitConfirmationDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Exit");
+            builder.setMessage("Are you sure you want to exit?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Exit the app
+                    finish();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Dismiss the dialog and do nothing
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
 }
+
+
+

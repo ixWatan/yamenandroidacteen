@@ -43,7 +43,7 @@
 
 
                 <TextView
-                    android:id="@+id/CreatePost"
+                    android:id="@+id/NewPostTv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -134,6 +134,7 @@
                     android:ems="10"
                     android:textSize="15sp"
                     android:hint="Descreption"
+                    android:maxLines="6"
                     android:inputType="textImeMultiLine|textMultiLine"
                     android:paddingHorizontal="15dp"
                     android:textColorLink="@color/black"

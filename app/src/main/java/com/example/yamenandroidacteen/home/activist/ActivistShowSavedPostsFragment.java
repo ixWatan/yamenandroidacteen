@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -224,6 +225,14 @@ public class ActivistShowSavedPostsFragment extends Fragment implements SelectLi
                 .commit();
 
 
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Hide the system navigation bar when the fragment is displayed
+        ((ActivistHomeActivity) requireActivity()).hideSystemNavigationBar();
     }
 
 

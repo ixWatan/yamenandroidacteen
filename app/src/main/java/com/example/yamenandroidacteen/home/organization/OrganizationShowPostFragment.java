@@ -1,7 +1,10 @@
 package com.example.yamenandroidacteen.home.organization;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.CalendarContract;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.yamenandroidacteen.R;
 import com.example.yamenandroidacteen.home.activist.ActivistHomeActivity;
+import com.example.yamenandroidacteen.home.activist.ActivistShowPostFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -88,6 +94,7 @@ public class OrganizationShowPostFragment extends Fragment {
 
 
 
+    com.google.android.material.imageview.ShapeableImageView postImageIv;
 
 
 
@@ -106,6 +113,7 @@ public class OrganizationShowPostFragment extends Fragment {
         initViewsAndData(view);
 
 
+        postImageIv.setOnClickListener(v -> showPostImageDialog());
 
 
 
@@ -169,7 +177,7 @@ public class OrganizationShowPostFragment extends Fragment {
         TextView nameOrgTv = (TextView) view.findViewById(R.id.showNameOrg);
         TextView postDescreptionTv = (TextView) view.findViewById(R.id.showDescreption);
         TextView postTimePostedTv = (TextView) view.findViewById(R.id.showPostTimePosted);
-        ImageView postImageIv = (ImageView) view.findViewById(R.id.showImagePost);
+        postImageIv = (com.google.android.material.imageview.ShapeableImageView) view.findViewById(R.id.showImagePost);
         TextView postTitleTv = (TextView) view.findViewById(R.id.showPostTitle);
         ImageView postPorfileIv = (ImageView) view.findViewById(R.id.showPostProfileImg);
         TextView postLocation = (TextView) view.findViewById(R.id.locationTvShowPost);
@@ -281,16 +289,56 @@ public class OrganizationShowPostFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Hide the system navigation bar when the fragment is displayed
         ((OrganizationHomeActivity) requireActivity()).hideSystemNavigationBar();
+
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        /*Fragment fragment = requireActivity().getSupportFragmentManager().findFragmentByTag("goingToOrgShowPostFromMyPosts"");
 
-        ((OrganizationHomeActivity) requireActivity()).showSystemNavigationBar();
+        if (fragment instanceof OrganizationMyPostsFragment) {
+            OrganizationMyPostsFragment organizationPostFragment = (OrganizationMyPostsFragment) fragment;
+            organizationPostFragment.isPostClicked = false;
+
+        } else {
+            ((OrganizationHomeActivity) requireActivity()).showSystemNavigationBar();
+        }*/
     }
+
+    private void showPostImageDialog() {
+
+        // Create a dialog to show the profile image
+        Dialog dialog = new Dialog(requireContext()) {
+            public boolean onTouchEvent(MotionEvent event) {
+                // Tap anywhere to close dialog.
+                this.dismiss();
+                return true;
+            }
+        };
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_expanded_post_image);
+
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        // Find the ImageView in the dialog layout
+        ImageView expandedImageView = dialog.findViewById(R.id.expandedImageView);
+
+
+
+        // Set profile image to expandedImageView
+        expandedImageView.setImageDrawable(postImageIv.getDrawable());
+
+        dialog.show();
+    }
+
 
 
 }

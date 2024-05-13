@@ -1,6 +1,7 @@
 package com.example.yamenandroidacteen.home.organization;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -65,6 +66,9 @@ public class OrganizationEditProfileFragment extends Fragment {
     private FirebaseFirestore db;
     private FirebaseUser currentUser;
 
+    ProgressDialog pd;
+
+
 
     @Nullable
     @Override
@@ -75,6 +79,7 @@ public class OrganizationEditProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         currentUser = mAuth.getCurrentUser();
+        pd = new ProgressDialog(getActivity());
 
 
         // Initialize views
@@ -111,7 +116,7 @@ public class OrganizationEditProfileFragment extends Fragment {
             }
         });
         // Inside your fragment's onCreateView() method after initializing views
-        LinearLayout linearLayoutEditProfilePicture = view.findViewById(R.id.linearLayoutEditProfilePicture);
+        LinearLayout linearLayoutEditProfilePicture = view.findViewById(R.id.linearLayoutEditProfilePictureOrg);
         linearLayoutEditProfilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,6 +178,8 @@ public class OrganizationEditProfileFragment extends Fragment {
 
 
     private void updateUserData(String phone, String description, String email, String name, String password, String web) {
+        pd.setMessage("Updating Info..");
+        pd.show();
         if (currentUser != null) {
             String userId = currentUser.getUid();
 
@@ -240,6 +247,7 @@ public class OrganizationEditProfileFragment extends Fragment {
         db.collection("organizations").document(userId)
                 .update(userData)
                 .addOnSuccessListener(aVoid -> {
+                    pd.dismiss();
                     Toast.makeText(getContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
@@ -257,15 +265,6 @@ public class OrganizationEditProfileFragment extends Fragment {
         ((OrganizationHomeActivity) requireActivity()).hideSystemNavigationBar();
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-
-        // Show the system navigation bar when the fragment is destroyed
-        ((OrganizationHomeActivity) requireActivity()).showSystemNavigationBar();
-    }
 
 
 

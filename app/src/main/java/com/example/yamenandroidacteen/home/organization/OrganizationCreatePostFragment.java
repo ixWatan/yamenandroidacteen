@@ -59,6 +59,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,7 +79,10 @@ public class OrganizationCreatePostFragment extends Fragment {
 
 
     ImageView imageIv;
-    TextView  nextTv;
+    TextView  nextTv, newPostTv;
+
+    private static final String PREF_IMAGE_URI = "image_uri";
+
 
 
 
@@ -87,6 +91,11 @@ public class OrganizationCreatePostFragment extends Fragment {
     private String lastClickedButton = ""; // Variable to store the last clicked button
 
     Uri resultUri;
+
+    Bundle bundleEdit;
+
+    Boolean flag;
+
 
 
 
@@ -105,6 +114,19 @@ public class OrganizationCreatePostFragment extends Fragment {
         descripionEt = view.findViewById(R.id.addPostDescreptionTv);
         backButton = view.findViewById(R.id.backButton);
         nextTv = view.findViewById(R.id.NextTv);
+        newPostTv = view.findViewById(R.id.NewPostTv);
+        bundleEdit = getArguments();
+
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        String imageUriString = sharedPreferences.getString(PREF_IMAGE_URI, null);
+        if (imageUriString != null) {
+            resultUri = Uri.parse(imageUriString);
+            imageIv.setImageURI(resultUri);
+        }
+
+        checkIfComingToEditAndFillData();
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +178,42 @@ public class OrganizationCreatePostFragment extends Fragment {
         return view;
     }
 
+    private void checkIfComingToEditAndFillData() {
+        if (bundleEdit != null) {
+            if(bundleEdit.getString("comingToEdit").equals("T")) {
+                // Retrieve data from the bundle
+                flag = true;
+                Toast.makeText(getActivity(), "comingToEdit", Toast.LENGTH_SHORT).show();
+
+                String postImage = bundleEdit.getString("post_image");
+                String postDescreption = bundleEdit.getString("post_description");
+                String postTitle = bundleEdit.getString("post_title");
+                String postTags = bundleEdit.getString("post_tags");
+                String postLocationString = bundleEdit.getString("post_locationLink");
+                String locationLinkReal = bundleEdit.getString("post_location");
+                String postTimeS = bundleEdit.getString("post_startT");
+                String postTimeE = bundleEdit.getString("post_endT");
+                String postDateString = bundleEdit.getString("post_date");
+                String postId = bundleEdit.getString("post_id");
+
+
+                titleEt.setText(postTitle);
+                descripionEt.setText(postDescreption);
+                Picasso.get().load(postImage).into(imageIv);
+                resultUri = Uri.parse(postImage);
+                newPostTv.setText("Edit Post");
+            }
+        }
+
+    }
+
+    private void saveImageUri(Uri uri) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PREF_IMAGE_URI, uri.toString());
+        editor.apply();
+    }
+
     private void checkForEmptyInputAndMoveToNextStep() {
         //get data(title, description) from EditText
         String title = titleEt.getText().toString().trim();
@@ -175,12 +233,26 @@ public class OrganizationCreatePostFragment extends Fragment {
             Toast.makeText(getActivity(), "Add an image ...", Toast.LENGTH_SHORT).show();
             return;
         }
+        Bundle bundle = new Bundle();
 
         lastClickedButton = "Button Next";
 
+        if(flag != null) {
+                if(flag) {
+                    bundle.putSerializable("comingToEdit", "T");
+                    bundle.putSerializable("post_tags", bundleEdit.getString("post_tags"));
+                    bundle.putSerializable("post_locationLink", bundleEdit.getString("post_locationLink"));
+                    bundle.putSerializable("post_location", bundleEdit.getString("post_location"));
+                    bundle.putSerializable("post_startT", bundleEdit.getString("post_startT"));
+                    bundle.putSerializable("post_endT", bundleEdit.getString("post_endT"));
+                    bundle.putSerializable("post_date", bundleEdit.getString("post_date"));
+                    bundle.putSerializable("post_id", bundleEdit.getString("post_id"));
+                }}
 
-        Bundle bundle = new Bundle();
         bundle.putSerializable("pImage", String.valueOf(resultUri));
+
+        saveImageUri(resultUri);
+
         bundle.putSerializable("post_description", description);
         bundle.putSerializable("post_title", title);
 
@@ -188,6 +260,7 @@ public class OrganizationCreatePostFragment extends Fragment {
         organizationCreatePostSecondFragment.setArguments(bundle);
 
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_right);
         ft.replace(R.id.frameLayoutOrg, organizationCreatePostSecondFragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -197,7 +270,7 @@ public class OrganizationCreatePostFragment extends Fragment {
 
         // Begin the transaction
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-
+        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_right);
         ft.replace(R.id.frameLayoutOrg, fragment);
 
         // Add the transaction to the back stack (optional)

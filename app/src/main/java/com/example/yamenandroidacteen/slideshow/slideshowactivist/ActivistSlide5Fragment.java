@@ -1,6 +1,7 @@
 package com.example.yamenandroidacteen.slideshow.slideshowactivist;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,8 @@ public class ActivistSlide5Fragment extends Fragment {
     ViewPager viewPager;
     LinearLayout dotsLayout;
 
+    private SharedPreferences sharedPreferences;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +63,7 @@ public class ActivistSlide5Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                     MainActivity mainActivity = (MainActivity) getActivity();
-                    mainActivity.hideViewPagerAndDotsOrg();
+                    mainActivity.hideViewPagerAndDotsAct();
                 navigateToFragment(new SignupActivistFragment());
 
             }
@@ -74,6 +77,8 @@ public class ActivistSlide5Fragment extends Fragment {
             FragmentManager fragmentManager = activity.getSupportFragmentManager();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.frameLayout);
 
+            setFirstTimeToFalse();
+
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.frameLayout, fragment);
             ft.addToBackStack(null);
@@ -81,7 +86,9 @@ public class ActivistSlide5Fragment extends Fragment {
         }
     }
 
-
+    public void setFirstTimeToFalse() {
+        ((MainActivity) requireActivity()).setFirstTimeToFalse();
+    }
 
 
 }

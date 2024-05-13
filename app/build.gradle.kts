@@ -35,6 +35,7 @@ android {
 
 dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.0")
+    implementation("com.google.firebase:firebase-messaging:21.1.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.4.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")

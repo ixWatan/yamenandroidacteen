@@ -82,9 +82,14 @@ public class OrganizationCreatePostSecondFragment extends Fragment implements  O
 
     ImageButton backButton;
 
+    Boolean flag;
+
     private SearchView mapSearchView;
 
-    private static String TAG = "Info";
+             Bundle bundleEdit;
+
+
+             private static String TAG = "Info";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,8 +102,13 @@ public class OrganizationCreatePostSecondFragment extends Fragment implements  O
             Places.initialize(getContext(), "AIzaSyCA3V8IqoAIos01hitHRuBzwjD7qVkILJY");
         }
 
+        bundleEdit = getArguments();
 
-        backButton = view.findViewById(R.id.backButtonSecodStep);
+
+
+
+
+            backButton = view.findViewById(R.id.backButtonSecodStep);
         nextTv = view.findViewById(R.id.NextTvSecondStepSecond);
         locationShowTv = view.findViewById(R.id.locationShowTv);
         userLocationBtn = view.findViewById(R.id.btnMyLocation);
@@ -115,6 +125,17 @@ public class OrganizationCreatePostSecondFragment extends Fragment implements  O
 
         // Specify the types of place data to return.
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+
+
+
+        if(bundleEdit.getString("comingToEdit") != null) {
+            if(bundleEdit.getString("comingToEdit").equals("T")) {
+                Toast.makeText(getActivity(), "coming from edit", Toast.LENGTH_SHORT).show();
+                autocompleteFragment.setText(bundleEdit.getString("post_location"));
+                flag = true;
+
+            }
+        }
 
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -187,7 +208,8 @@ public class OrganizationCreatePostSecondFragment extends Fragment implements  O
 
     }
 
-    private void getLastLocation() {
+
+             private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_CODE);
             return;
@@ -225,7 +247,7 @@ public class OrganizationCreatePostSecondFragment extends Fragment implements  O
 
         // Begin the transaction
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-
+        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_right);
         ft.replace(R.id.frameLayoutOrg, fragment);
 
         // Add the transaction to the back stack (optional)
@@ -317,8 +339,21 @@ public class OrganizationCreatePostSecondFragment extends Fragment implements  O
                      return;
                  }
 
-
                  Bundle bundle = new Bundle();
+
+                 if(flag != null) {
+                     if (flag) {
+                         bundle.putSerializable("comingToEdit", "T");
+                         bundle.putSerializable("post_tags", bundleEdit.getString("post_tags"));
+                         bundle.putSerializable("post_startT", bundleEdit.getString("post_startT"));
+                         bundle.putSerializable("post_endT", bundleEdit.getString("post_endT"));
+                         bundle.putSerializable("post_date", bundleEdit.getString("post_date"));
+                         bundle.putSerializable("post_id", bundleEdit.getString("post_id"));
+                     }
+                 }
+
+
+
                  bundle.putSerializable("pLocationLinkReal", selectedLocationURL);
                  bundle.putSerializable("pLocationLink", mapsUri);
                  bundle.putSerializable("pImage", getArguments().getString("pImage"));
@@ -329,6 +364,7 @@ public class OrganizationCreatePostSecondFragment extends Fragment implements  O
                  organizationCreatePostThirdFragment.setArguments(bundle);
 
                  FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                 ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_right);
                  ft.replace(R.id.frameLayoutOrg, organizationCreatePostThirdFragment);
                  ft.addToBackStack(null);
                  ft.commit();

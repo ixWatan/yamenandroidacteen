@@ -28,7 +28,7 @@
                 android:layout_height="189dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
-                app:srcCompat="@drawable/icon_exit" />
+                app:srcCompat="@drawable/getstartedonboard" />
 
 
             <TextView
@@ -39,16 +39,16 @@
                 android:text="Become the activist that you have always wanted to be!"
                 android:textColor="@android:color/black"
                 android:textSize="26sp"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="25dp"
                 android:gravity="center"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/descriptionTV"
                 android:layout_width="wrap_content"
-                android:layout_height="107dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:layout_marginBottom="100dp"
                 android:text="Find your perfect match with the right activism opportunity for you!"
                 android:textColor="@android:color/darker_gray"

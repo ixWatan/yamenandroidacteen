@@ -408,6 +408,13 @@ public class ActivistSearchFragment extends Fragment implements SelectListener {
 
     }
 
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Hide the system navigation bar when the fragment is displayed
+        ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
+    }
+
 
 
 

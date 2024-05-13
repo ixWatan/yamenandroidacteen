@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.example.yamenandroidacteen.R;
 import com.example.yamenandroidacteen.classes.adapters.AdapterPosts;
 import com.example.yamenandroidacteen.classes.interfaces.SelectListener;
 import com.example.yamenandroidacteen.classes.models.ModelPost;
+import com.example.yamenandroidacteen.home.activist.ActivistHomeActivity;
 import com.example.yamenandroidacteen.home.activist.ActivistShowPostFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -69,6 +71,9 @@ public class OrganizationMyPostsFragment extends Fragment implements SelectListe
 
     private ImageButton notificationButton;
     private ImageButton searchButton;
+
+    public static boolean isPostClicked;
+
 
 
     private String profilePictureUrl, orgName, orgEmail;
@@ -141,8 +146,6 @@ public class OrganizationMyPostsFragment extends Fragment implements SelectListe
                                 orgName = document.getString("organization_name");
                                 orgEmail = document.getString("email");
 
-                                Toast.makeText(getActivity(), orgEmail, Toast.LENGTH_SHORT).show();
-
 
                             }
                         } else {
@@ -203,7 +206,9 @@ public class OrganizationMyPostsFragment extends Fragment implements SelectListe
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // in case of error
-                Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                if(getActivity() != null) {
+                    Toast.makeText(getActivity(), "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
 
 
@@ -234,17 +239,37 @@ public class OrganizationMyPostsFragment extends Fragment implements SelectListe
 
         // end of Putting data from the post into the fragment transfer
 
+        isPostClicked = true;
+
 
         // need to transition to fragment
-        OrganizationShowPostFragment organizationShowPostFragment = new OrganizationShowPostFragment();
+        OrganizationShowPostOwnerFragment organizationShowPostOwnerFragment = new OrganizationShowPostOwnerFragment();
 
-        organizationShowPostFragment.setArguments(bundle);
+        organizationShowPostOwnerFragment.setArguments(bundle);
 
         // Use FragmentManager to replace the current fragment with the details fragment
         requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayoutOrg, organizationShowPostFragment) // Use the container ID of your fragment container
+                .replace(R.id.frameLayoutOrg, organizationShowPostOwnerFragment, "goingToOrgShowPostFromMyPosts") // Use the container ID of your fragment container
                 .addToBackStack(null)
                 .commit();
+
+
+    }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Hide the system navigation bar when the fragment is displayed
+        ((OrganizationHomeActivity) requireActivity()).hideSystemNavigationBar();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if(!isPostClicked) {
+            ((OrganizationHomeActivity) requireActivity()).showSystemNavigationBar();
+        }
 
 
     }

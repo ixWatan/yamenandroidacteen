@@ -2,11 +2,15 @@ package com.example.yamenandroidacteen.home.activist;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,8 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -87,6 +93,9 @@ public class ActivistProfileFragment extends Fragment {
         settingsLayout = view.findViewById(R.id.settingsLayout);
         savedPostsLayout = view.findViewById(R.id.savedPostsLayout);
 
+        profileIv.setOnClickListener(v -> showProfileImageDialog());
+
+
         settingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +109,8 @@ public class ActivistProfileFragment extends Fragment {
                 navigateToFragment(new ActivistShowSavedPostsFragment());
             }
         });
+
+
 
 
 
@@ -162,6 +173,43 @@ public class ActivistProfileFragment extends Fragment {
 
         // Commit the transaction
         ft.commit();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Hide the system navigation bar when the fragment is displayed
+        ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
+    }
+
+    private void showProfileImageDialog() {
+        // Create a dialog to show the profile image
+        Dialog dialog = new Dialog(requireContext()) {
+            public boolean onTouchEvent(MotionEvent event) {
+                // Tap anywhere to close dialog.
+                this.dismiss();
+                return true;
+            }
+        };
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_expanded_profile_image);
+
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        // Find the ImageView in the dialog layout
+        ImageView expandedImageView = dialog.findViewById(R.id.expandedImageView);
+
+
+        // Set profile image to expandedImageView
+        expandedImageView.setImageDrawable(profileIv.getDrawable());
+
+        dialog.show();
     }
 
 

@@ -27,12 +27,12 @@
                 android:layout_height="189dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
-                app:srcCompat="@drawable/icon_search" />
+                app:srcCompat="@drawable/findonboard" />
 
             <TextView
                 android:id="@+id/welcomeTV"
                 android:layout_width="wrap_content"
-                android:layout_height="79dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Find an Opportunity!"
                 android:textColor="@android:color/black"
@@ -43,10 +43,10 @@
             <TextView
                 android:id="@+id/descriptionTV"
                 android:layout_width="wrap_content"
-                android:layout_height="107dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_marginBottom="100dp"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:text="We’ve got a collection of over 100 activism opportunities for you to choose from!"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18sp"

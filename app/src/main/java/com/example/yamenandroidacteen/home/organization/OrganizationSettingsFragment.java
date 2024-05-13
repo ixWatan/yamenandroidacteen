@@ -1,5 +1,15 @@
 package com.example.yamenandroidacteen.home.organization;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
+
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -21,13 +33,21 @@ import com.example.yamenandroidacteen.MainActivity;
 import com.example.yamenandroidacteen.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class OrganizationSettingsFragment extends Fragment {
 
 
     private FirebaseAuth mAuth;
 
-
+    private EditText postIDEditText;
+    private EditText msgTitleEditText;
+    private EditText msgBodyEditText;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +92,11 @@ public class OrganizationSettingsFragment extends Fragment {
 
 
 
-
         return view;
     }
+
+
+
 
 
     public void navigateToFragment(Fragment fragment) {
@@ -105,14 +127,6 @@ public class OrganizationSettingsFragment extends Fragment {
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-
-        // Show the system navigation bar when the fragment is destroyed
-        ((OrganizationHomeActivity) requireActivity()).showSystemNavigationBar();
-    }
 }
 
 

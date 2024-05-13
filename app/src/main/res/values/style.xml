@@ -4,6 +4,9 @@
     <style name="ShapeAppearanceOverlay.App.CornerSize20Percent" parent="">
         <item name="cornerSize">24%</item>
     </style>
+    <style name="BlurDialogStyle" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:windowBackground">@drawable/dialog_background_with_blur</item>
+    </style>
 
     <style name="ShapeAppearanceOverlay.App.CornerSize20PercentFeedPost" parent="">
         <item name="cornerSizeTopLeft">5%</item>

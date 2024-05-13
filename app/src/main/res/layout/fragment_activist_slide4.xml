@@ -29,12 +29,12 @@
                 android:layout_height="189dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
-                app:srcCompat="@drawable/icon_back" />
+                app:srcCompat="@drawable/attendonboard" />
 
             <TextView
                 android:id="@+id/welcomeTV"
                 android:layout_width="wrap_content"
-                android:layout_height="79dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Attend!"
                 android:textColor="@android:color/black"
@@ -45,10 +45,10 @@
             <TextView
                 android:id="@+id/descriptionTV"
                 android:layout_width="wrap_content"
-                android:layout_height="107dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_marginBottom="100dp"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:text="We’ve had many teens enjoy their experiences at different activism opportunities and give back to their communities!"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18sp"

@@ -1,10 +1,12 @@
 package com.example.yamenandroidacteen.home.organization;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -55,7 +57,7 @@ public class OrganizationHomeActivity extends BaseActivity {
             if (itemId == R.id.homeOrg) {
                 replaceFragment(new OrganizationHomeFragment());
             } else if (itemId == R.id.createOrg) {
-                replaceFragment(new OrganizationCreatePostFragment());
+                showCreateDialog();
             } else if (itemId == R.id.profileOrg) {
                 replaceFragment(new OrganizationPorfileFragment());
             }
@@ -95,5 +97,58 @@ public class OrganizationHomeActivity extends BaseActivity {
         startActivity(intent);
         finish(); // Optionally, call finish() to prevent the user from returning to the UserProfileActivity using the back button
     }
+
+    private void showCreateDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+                .setItems(R.array.create_options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (i == 0) {
+                            // Navigate to the Create Post fragment
+                            replaceFragment(new OrganizationCreatePostFragment());
+                        } else if (i == 1) {
+
+                            replaceFragment(new OrganizationSendNotificationFragment());
+                        }
+                    }
+                });
+        builder.create().show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            // If there are no fragments left in the back stack, show a confirmation dialog
+            showExitConfirmationDialog();
+        } else {
+            // If there are fragments left, proceed with the default back button behavior
+            super.onBackPressed();
+        }
+    }
+
+    private void showExitConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Exit");
+        builder.setMessage("Are you sure you want to exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Exit the app
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Dismiss the dialog and do nothing
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
 
 }

@@ -1,18 +1,24 @@
 package com.example.yamenandroidacteen.home.activist;
 
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -82,6 +88,9 @@ import java.util.Objects;
 
 import okhttp3.internal.Util;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
+
 public class ActivistShowPostFragment extends Fragment {
 
     String orgName;
@@ -145,8 +154,9 @@ public class ActivistShowPostFragment extends Fragment {
 
     public boolean wentToShowInfo;
 
-    public String testTest;
+    public boolean inShowOrgInfoFragment;
 
+    com.google.android.material.imageview.ShapeableImageView postImageIv;
 
 
     @Override
@@ -178,6 +188,9 @@ public class ActivistShowPostFragment extends Fragment {
         addToCalender = view.findViewById(R.id.addToCalenderBtn);
         orgPorfileView = view.findViewById(R.id.orgNameTvShowPost);
 
+        postImageIv.setOnClickListener(v -> showPostImageDialog());
+
+
         orgPorfileView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,15 +203,13 @@ public class ActivistShowPostFragment extends Fragment {
                 // Set the bundle to the fragment
                 fragment.setArguments(bundle);
 
+                inShowOrgInfoFragment = true;
+
                 // Replace the current fragment with ActivistShowOrgInfo
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                // Hide the system navigation bar
-                ((ActivistHomeActivity) requireActivity()).hideSystemNavigationBar();
-
                 fragmentTransaction.replace(R.id.frameLayoutActivist, fragment, "goingToShowOrgInfo");
-                check(fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
@@ -259,6 +270,19 @@ public class ActivistShowPostFragment extends Fragment {
     // --==--==--==--==--==--==--==--==--==
 
     private void addToCalenderFunc() {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference postsRef = database.getReference("posts");
+
+        FirebaseMessaging.getInstance().subscribeToTopic(postId)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getActivity(), "Successfully subscribed to topic" + postId, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Error subscribing to topic" + postId, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
         Date startDate = null;
         Date endDate = null;
@@ -378,7 +402,7 @@ public class ActivistShowPostFragment extends Fragment {
         TextView nameOrgTv = (TextView) view.findViewById(R.id.showNameOrg);
         TextView postDescreptionTv = (TextView) view.findViewById(R.id.showDescreption);
         TextView postTimePostedTv = (TextView) view.findViewById(R.id.showPostTimePosted);
-        ImageView postImageIv = (ImageView) view.findViewById(R.id.showImagePost);
+        postImageIv = (com.google.android.material.imageview.ShapeableImageView) view.findViewById(R.id.showImagePost);
         TextView postTitleTv = (TextView) view.findViewById(R.id.showPostTitle);
         ImageView postPorfileIv = (ImageView) view.findViewById(R.id.showPostProfileImg);
         TextView postLocation = (TextView) view.findViewById(R.id.locationTvShowPost);
@@ -501,29 +525,36 @@ public class ActivistShowPostFragment extends Fragment {
         ((ActivistHomeActivity) requireActivity()).hideSystemNavigationBar();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
 
-        if(Objects.equals(testTest, "fromShowInfo")) {
-            ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
-        }
+    private void showPostImageDialog() {
 
-
-    }
-
-    private void check(Fragment destinationFragment) {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        if (destinationFragment != null && destinationFragment.getTag() != null) {
-            if (destinationFragment.getTag().equals("goingToShowOrgInfo")) {
-                // Hide the system navigation bar when transitioning to fragment X
-                wentToShowInfo = true;
-                Toast.makeText(getActivity(), "maintaining nav hidden", Toast.LENGTH_SHORT).show();
-            } else {
-                ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
-
+        // Create a dialog to show the profile image
+        Dialog dialog = new Dialog(requireContext()) {
+            public boolean onTouchEvent(MotionEvent event) {
+                // Tap anywhere to close dialog.
+                this.dismiss();
+                return true;
             }
+        };
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_expanded_post_image);
+
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
+
+        // Find the ImageView in the dialog layout
+        ImageView expandedImageView = dialog.findViewById(R.id.expandedImageView);
+
+
+
+        // Set profile image to expandedImageView
+        expandedImageView.setImageDrawable(postImageIv.getDrawable());
+
+        dialog.show();
     }
 
 }

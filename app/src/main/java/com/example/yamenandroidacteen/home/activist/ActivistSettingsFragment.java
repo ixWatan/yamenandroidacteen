@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ public class ActivistSettingsFragment extends Fragment {
 
     private FirebaseAuth mAuth;
 
+    public boolean isActSettings;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +60,7 @@ public class ActivistSettingsFragment extends Fragment {
         textViewEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isActSettings = true;
                 navigateToFragment(new ActivistEditProfileFragment());
             }
         });
@@ -104,7 +107,12 @@ public class ActivistSettingsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        // Show the system navigation bar when the fragment is destroyed
-        ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
+        if(isActSettings) {
+            Toast.makeText(getActivity(), "maintaining nav hidden", Toast.LENGTH_SHORT).show();
+        } else {
+            ((ActivistHomeActivity) requireActivity()).showSystemNavigationBar();
+        }
+
+
     }
 }

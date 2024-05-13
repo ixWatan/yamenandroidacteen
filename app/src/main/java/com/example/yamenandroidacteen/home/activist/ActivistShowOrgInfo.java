@@ -139,6 +139,8 @@ public class ActivistShowOrgInfo extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
     }
 
     @Override
@@ -148,11 +150,13 @@ public class ActivistShowOrgInfo extends Fragment {
         // Check if the hosting activity's fragment manager contains the fragment
         Fragment fragment = requireActivity().getSupportFragmentManager().findFragmentByTag("ActivistShowPostFragment");
 
-        if (fragment != null && fragment instanceof ActivistShowPostFragment) {
+
+
+        // Check if the hosting activity's fragment manager contains the fragment
+
+        if (fragment instanceof ActivistShowPostFragment) {
             ActivistShowPostFragment showPostFragment = (ActivistShowPostFragment) fragment;
-            if (showPostFragment.wentToShowInfo) {
-                showPostFragment.testTest = "fromShowInfo";
-            }
+            showPostFragment.inShowOrgInfoFragment = false;
         }
 
     }

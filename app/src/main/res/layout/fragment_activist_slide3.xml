@@ -29,12 +29,12 @@
                 android:layout_height="189dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
-                app:srcCompat="@drawable/icon_edit" />
+                app:srcCompat="@drawable/saftetyonboard" />
 
             <TextView
                 android:id="@+id/welcomeTV"
                 android:layout_width="wrap_content"
-                android:layout_height="79dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Safety is #1"
                 android:textColor="@android:color/black"
@@ -45,9 +45,9 @@
             <TextView
                 android:id="@+id/descriptionTV"
                 android:layout_width="wrap_content"
-                android:layout_height="107dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:layout_marginBottom="100dp"
                 android:text="Your safety is our top priority! Only approved organizations are allowed to post events on the app, and users under 16 need to sign a parental consent waiver."
                 android:textColor="@android:color/darker_gray"

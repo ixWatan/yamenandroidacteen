@@ -16,8 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_marginHorizontal="10dp"
             android:gravity="center"
-         >
+           >
 
 
 
@@ -27,76 +28,32 @@
                 android:layout_height="189dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
-                app:srcCompat="@drawable/icon_location" />
+                app:srcCompat="@drawable/remindonboard" />
 
             <TextView
                 android:id="@+id/welcomeTV"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="Get Started"
+                android:text="Remind Your Audience"
                 android:textColor="@android:color/black"
-                android:textSize="36sp"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/descriptionTV"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:gravity="center"
                 android:layout_marginBottom="100dp"
-                android:text="Start posting your opportunities today!"
+                android:text="We give each organization the opportunity to send notifications for their campaigns and manage them in an easy way. to help manage campaigns more easily."
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18sp"
-                android:textAlignment="center"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:orientation="horizontal">
+                android:textStyle="bold" />
 
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_weight="1"
-                    android:id="@+id/SignupBtnSlideOrg"
-                    android:layout_width="0dp"
-                    android:layout_margin="10dp"
-                    android:textAllCaps="false"
-                    android:layout_height="wrap_content"
-                    android:text="Signup"
-                    android:textColor="@color/Black"
-                    android:textSize="15sp"
-                    android:layout_marginRight="20dp"
-                    android:padding="12dp"
-                    app:strokeColor="#8870BD"
-                    app:backgroundTint="@android:color/transparent"
-                    app:cornerRadius="3dp"
-                    app:rippleColor="#33AAAAAA"
-                    app:strokeWidth="2dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_weight="1"
-                    android:id="@+id/LoginBtnSlideOrg"
-                    android:textAllCaps="false"
-                    android:layout_width="0dp"
-                    android:layout_margin="10dp"
-                    android:layout_height="wrap_content"
-                    android:text="Login"
-                    android:textColor="@color/Black"
-                    android:textSize="15sp"
-                    android:padding="12dp"
-                    app:strokeColor="#8870BD"
-                    app:backgroundTint="@android:color/transparent"
-                    app:cornerRadius="3dp"
-                    app:rippleColor="#33AAAAAA"
-                    app:strokeWidth="2dp" />
-
-            </LinearLayout>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
