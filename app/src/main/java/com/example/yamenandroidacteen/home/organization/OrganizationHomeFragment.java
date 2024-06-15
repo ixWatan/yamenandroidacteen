@@ -40,9 +40,6 @@ import java.util.List;
 public class OrganizationHomeFragment extends Fragment implements SelectListener {
 
 
-    FirebaseAuth firebaseAuth;
-
-
     private ImageView profileImageView;
 
 
@@ -53,20 +50,6 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
     List<ModelPost> postList;
     AdapterPosts adapterPosts;
 
-
-    private ImageButton profileImageButton;
-
-
-    private ProgressDialog pd;
-
-    private Button signOutBtn;
-
-
-    private ImageButton homePageButton;
-
-
-    private ImageButton notificationButton;
-    private ImageButton searchButton;
 
 
     private String profilePictureUrl;
@@ -137,18 +120,19 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
                                 profilePictureUrl = document.getString("profilePictureUrl");
 
 
-                                // Update the profile picture ImageView with the new URL
-                                if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
-                                    Glide.with(this)
-                                            .load(profilePictureUrl)
-                                            .into(profileImageView);
-                                } else {
-                                    // Display the default profile picture
-                                    Glide.with(this)
-                                            .load(R.drawable.icon_account)
-                                            .into(profileImageView);
+                                if(getActivity() != null) {
+                                    // Update the profile picture ImageView with the new URL
+                                    if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
+                                        Glide.with(this)
+                                                .load(profilePictureUrl)
+                                                .into(profileImageView);
+                                    } else {
+                                        // Display the default profile picture
+                                        Glide.with(this)
+                                                .load(R.drawable.icon_account)
+                                                .into(profileImageView);
+                                    }
                                 }
-
 
                             }
                         } else {
@@ -245,7 +229,13 @@ public class OrganizationHomeFragment extends Fragment implements SelectListener
 
         // Use FragmentManager to replace the current fragment with the details fragment
         requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayoutOrg, organizationShowPostFragment) // Use the container ID of your fragment container
+                // Set custom animations
+                .setCustomAnimations(
+                        R.anim.slide_in_up, // Enter animation
+                        R.anim.slide_out_down, // Exit animation (reverse of enter)
+                        R.anim.slide_in_up, // Pop enter animation (same as enter animation)
+                        R.anim.slide_out_down // Pop exit animation (reverse of pop enter)
+                )                .replace(R.id.frameLayoutOrg, organizationShowPostFragment) // Use the container ID of your fragment container
                 .addToBackStack(null)
                 .commit();
 

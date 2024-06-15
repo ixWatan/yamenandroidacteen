@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -96,9 +97,15 @@ public class OrganizationEditProfileFragment extends Fragment {
         // Fetch and populate user data from Firestore
         fetchAndPopulateUserData();
 
+        ImageButton backBtn = view.findViewById(R.id.backButtonSignupAct);
 
-        // Set click listener for save button
-        // Set click listener for save button
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });        // Set click listener for save button
+
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

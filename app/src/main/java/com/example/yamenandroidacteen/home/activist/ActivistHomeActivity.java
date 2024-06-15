@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
@@ -28,11 +29,14 @@ public class ActivistHomeActivity extends AppCompatActivity  {
 
     private ActivityActivistHomeBinding binding;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         askNotificationPermission();
+
 
 
 
@@ -165,6 +169,41 @@ public class ActivistHomeActivity extends AppCompatActivity  {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+
+    public void navigateToFragmentWithAnimation(Fragment fragment) {
+
+        // Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                R.anim.slide_in,  // enter
+                R.anim.fade_out,  // exit
+                R.anim.fade_in,   // popEnter
+                R.anim.slide_out  // popExit
+        );
+
+        ft.replace(R.id.frameLayoutActivist, fragment);
+
+        // Add the transaction to the back stack (optional)
+        ft.addToBackStack(null);
+
+        // Commit the transaction
+        ft.commit();
+    }
+
+    public void navigateToFragment(Fragment fragment) {
+
+        // Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        ft.replace(R.id.frameLayoutActivist, fragment);
+
+        // Add the transaction to the back stack (optional)
+        ft.addToBackStack(null);
+
+        // Commit the transaction
+        ft.commit();
+    }
+
+
 }
 
 

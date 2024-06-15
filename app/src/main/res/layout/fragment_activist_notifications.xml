@@ -23,6 +23,8 @@
         android:layout_marginTop="16dp"
         android:text="Test Notification" />
 
+
+
     <!-- Switch to control notifications -->
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchNotifications"
@@ -33,5 +35,14 @@
         android:layout_marginTop="16dp"
         android:text="Allow Notifications"
         android:visibility="gone" /> <!-- Initially hidden -->
+
+    <Button
+        android:id="@+id/testloading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnAllowNotifications"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:text="Test Progress dIalong" />
 
 </RelativeLayout>

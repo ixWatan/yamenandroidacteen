@@ -39,6 +39,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.4.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.17")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-auth:22.2.0")
     implementation("com.google.firebase:firebase-database:20.3.0")

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -122,6 +123,15 @@ public class ActivistEditProfileFragment extends Fragment {
                 }
             }
         });
+
+        ImageButton backBtn = view.findViewById(R.id.backButtonSignupAct);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
 
         return view;
     }

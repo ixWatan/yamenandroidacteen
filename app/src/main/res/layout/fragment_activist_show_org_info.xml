@@ -6,6 +6,59 @@
     android:id="@+id/showOrgInfoFrag"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".home.activist.ActivistShowOrgInfo">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginVertical="5dp"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="13dp"
+        android:orientation="horizontal">
+
+
+
+        <ImageButton
+            android:id="@+id/backButtonSignupAct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:padding="6dp"
+            android:layout_gravity="center"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/icon_back"
+            android:layout_column="2"
+            />
+        <TextView
+            android:id="@+id/CreatePost"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:text="Post Owner Profile"
+            android:textColor="@android:color/black"
+            android:textSize="16dp"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="@color/lightGrayWatan">
+
+    </View>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -17,15 +70,18 @@
             android:id="@+id/imageViewProfilePictureOrgInfo"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
             android:src="@drawable/icon_account"
             />
 
         <TextView
+            android:layout_marginTop="30dp"
             android:id="@+id/orgNameTextView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="Organization Name:"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -34,14 +90,17 @@
             android:id="@+id/orgNameValueTextView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="16sp" />
+            android:text="name"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/orgTypeTextView2"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Organization Type:"
+            android:textColor="@color/black"
+
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -49,12 +108,15 @@
             android:id="@+id/orgTypeValueTextView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="16sp" />
+            android:text="type"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/descriptionTextView2"
             android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+
             android:layout_height="wrap_content"
             android:text="Description:"
             android:textSize="20sp"
@@ -64,11 +126,14 @@
             android:id="@+id/descriptionValueTextView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="16sp" />
+            android:text="desc"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/emailTextView2"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email:"
@@ -79,8 +144,9 @@
             android:id="@+id/emailValueTextView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="16sp"
+            android:text="xxxx@gmail.com"
+
+            android:textSize="14sp"
             android:autoLink="email"
             android:clickable="true"
             android:onClick="onEmailClicked" />
@@ -88,6 +154,9 @@
         <TextView
             android:id="@+id/phoneTextView2"
             android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+
             android:layout_height="wrap_content"
             android:text="Phone:"
             android:textSize="20sp"
@@ -97,8 +166,8 @@
             android:id="@+id/phoneValueTextView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="16sp"
+            android:text="0512349123"
+            android:textSize="14sp"
             android:autoLink="phone"
             android:clickable="true"
             android:onClick="onPhoneClicked" />
@@ -110,14 +179,18 @@
             android:layout_height="wrap_content"
             android:text="Website:"
             android:textSize="20sp"
+            android:layout_marginTop="10dp"
+
+            android:textColor="@color/black"
+
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/websiteValueTextView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="16sp"
+            android:text="wxawxaw.asdas.com"
+            android:textSize="14sp"
             android:autoLink="web"
             android:clickable="true"
             android:onClick="onWebsiteClicked" />
@@ -127,5 +200,6 @@
 
 
 
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

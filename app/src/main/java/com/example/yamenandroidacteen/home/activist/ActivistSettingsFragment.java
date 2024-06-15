@@ -1,33 +1,44 @@
 package com.example.yamenandroidacteen.home.activist;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.yamenandroidacteen.MainActivity;
 import com.example.yamenandroidacteen.R;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ActivistSettingsFragment extends Fragment {
 
     private FirebaseAuth mAuth;
 
+
+
+    private MaterialAlertDialogBuilder dialogBuilder; // Declare dialogBuilder variable
+    private AlertDialog dialog; // Declare dialog variable
+
     public boolean isActSettings;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+
+
     }
 
     @Nullable
@@ -49,6 +60,15 @@ public class ActivistSettingsFragment extends Fragment {
             }
         });
 
+        ImageButton backBtn = view.findViewById(R.id.backButtonSignupAct);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
+
         switchReminders.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -61,7 +81,8 @@ public class ActivistSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 isActSettings = true;
-                navigateToFragment(new ActivistEditProfileFragment());
+                ((ActivistHomeActivity) requireActivity()).navigateToFragmentWithAnimation(new ActivistEditProfileFragment());
+
             }
         });
 
@@ -69,12 +90,7 @@ public class ActivistSettingsFragment extends Fragment {
         textViewSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.signOut();
-                // Redirect user to the main activity
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                // Finish the current activity to prevent the user from navigating back to it
-                getActivity().finish();
+                showConfirmationAlertSignout();
             }
         });
 
@@ -101,6 +117,39 @@ public class ActivistSettingsFragment extends Fragment {
 
         // Hide the system navigation bar when the fragment is displayed
         ((ActivistHomeActivity) requireActivity()).hideSystemNavigationBar();
+    }
+
+    private void showConfirmationAlertSignout() {
+
+        dialogBuilder = new MaterialAlertDialogBuilder(getActivity())
+                .setTitle("Are You Sure?")
+                .setMessage("Are you sure that you want to signout?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle discard button click
+                        dialog.dismiss(); // Dismiss the dialog
+
+                        //logout
+                        mAuth.signOut();
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle discard button click
+                        dialog.dismiss(); // Dismiss the dialog
+                    }
+                })
+                .setCancelable(false);
+
+        dialog = dialogBuilder.create(); // Create the dialog
+
+        dialog.show(); // Show the dialog
     }
 
     @Override

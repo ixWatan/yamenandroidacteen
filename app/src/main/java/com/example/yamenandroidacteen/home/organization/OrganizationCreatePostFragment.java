@@ -260,7 +260,13 @@ public class OrganizationCreatePostFragment extends Fragment {
         organizationCreatePostSecondFragment.setArguments(bundle);
 
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_right);
+        ft.setCustomAnimations(
+                R.anim.slide_in,  // enter
+                R.anim.fade_out,  // exit
+                R.anim.fade_in,   // popEnter
+                R.anim.slide_out  // popExit
+        );
+
         ft.replace(R.id.frameLayoutOrg, organizationCreatePostSecondFragment);
         ft.addToBackStack(null);
         ft.commit();

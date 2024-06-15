@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -111,6 +112,14 @@ public class OrganizationShowPostFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         initViewsAndData(view);
+
+        ImageButton backBtn = view.findViewById(R.id.backButtonSignupAct);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
 
         postImageIv.setOnClickListener(v -> showPostImageDialog());

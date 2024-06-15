@@ -3,6 +3,7 @@ package com.example.yamenandroidacteen.home.activist;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -34,7 +35,10 @@ public class ActivistNotificationsFragment extends Fragment {
     private static final int NOTIFICATION_ID = 100;
 
     private Button btnAllowNotifications;
-    private Button btnTestNotification;
+    private Button btnTestNotification, testLoading;
+
+    private Dialog progressDialog;
+
     private SwitchCompat switchNotifications;
 
     @Override
@@ -45,6 +49,8 @@ public class ActivistNotificationsFragment extends Fragment {
         btnAllowNotifications = view.findViewById(R.id.btnAllowNotifications);
         btnTestNotification = view.findViewById(R.id.btnTestNotification);
         switchNotifications = view.findViewById(R.id.switchNotifications);
+        testLoading = view.findViewById(R.id.testloading);
+
 
         // Check if notifications permission is granted
         boolean isNotificationsEnabled = checkNotificationsEnabled();
@@ -53,6 +59,8 @@ public class ActivistNotificationsFragment extends Fragment {
         btnAllowNotifications.setOnClickListener(v -> requestNotificationsPermissions());
 
         btnTestNotification.setOnClickListener(v -> sendTestNotification());
+        testLoading.setOnClickListener(v -> showDialog());
+
 
         switchNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // Handle switch toggle for notifications
@@ -66,6 +74,15 @@ public class ActivistNotificationsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void showDialog() {
+        progressDialog = new Dialog(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        View view = inflater.inflate(R.layout.custom_progress_dialog, null);
+        progressDialog.setContentView(view);
+        progressDialog.setCancelable(true);
+        progressDialog.show();
     }
 
     private void updateUI(boolean isNotificationsEnabled) {

@@ -177,6 +177,15 @@ public class ActivistShowPostFragment extends Fragment {
 
         initViewsAndData(view);
 
+        ImageButton backBtn = view.findViewById(R.id.backButtonSignupAct);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
+
 
 
         FirebaseUser user = mAuth.getCurrentUser();

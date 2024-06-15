@@ -99,6 +99,15 @@ public class ActivistShowSavedPostsFragment extends Fragment implements SelectLi
         // set layout to recyclerview
         recyclerView.setLayoutManager(layoutManager);
 
+        ImageButton backBtn = view.findViewById(R.id.backButtonSignupAct);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
+
 
         ProgressDialog pd;
 
@@ -220,7 +229,13 @@ public class ActivistShowSavedPostsFragment extends Fragment implements SelectLi
 
         // Use FragmentManager to replace the current fragment with the details fragment
         requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayoutActivist, activistShowPostFragment) // Use the container ID of your fragment container
+                // Set custom animations
+                .setCustomAnimations(
+                        R.anim.slide_in_up, // Enter animation
+                        R.anim.slide_out_down, // Exit animation (reverse of enter)
+                        R.anim.slide_in_up, // Pop enter animation (same as enter animation)
+                        R.anim.slide_out_down // Pop exit animation (reverse of pop enter)
+                )                .replace(R.id.frameLayoutActivist, activistShowPostFragment) // Use the container ID of your fragment container
                 .addToBackStack(null)
                 .commit();
 

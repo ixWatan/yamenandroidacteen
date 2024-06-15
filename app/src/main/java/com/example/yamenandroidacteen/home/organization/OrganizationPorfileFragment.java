@@ -76,14 +76,14 @@ public class OrganizationPorfileFragment extends Fragment {
         myPostsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToFragment(new OrganizationMyPostsFragment());
+                ((OrganizationHomeActivity) requireActivity()).navigateToFragmentWithAnimation(new OrganizationMyPostsFragment());
             }
         });
 
         settingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToFragment(new OrganizationSettingsFragment());
+                ((OrganizationHomeActivity) requireActivity()).navigateToFragmentWithAnimation(new OrganizationSettingsFragment());
             }
         });
 
@@ -114,16 +114,18 @@ public class OrganizationPorfileFragment extends Fragment {
                                 orgTypeTv.setText(storedType);
                                 orgPhoneTv.setText(storedPhone);
 
-                                // Update the profile picture ImageView with the new URL
-                                if (profilePictureUrl != null && !profilePictureUrl.isEmpty() && getActivity() != null) {
-                                    Glide.with(this)
-                                            .load(profilePictureUrl)
-                                            .into(profileIv);
-                                } else {
-                                    // Display the default profile picture
-                                    Glide.with(this)
-                                            .load(R.drawable.icon_account)
-                                            .into(profileIv);
+                                if(getActivity() != null) {
+                                    // Update the profile picture ImageView with the new URL
+                                    if (profilePictureUrl != null && !profilePictureUrl.isEmpty() && getActivity() != null) {
+                                        Glide.with(this)
+                                                .load(profilePictureUrl)
+                                                .into(profileIv);
+                                    } else {
+                                        // Display the default profile picture
+                                        Glide.with(this)
+                                                .load(R.drawable.icon_account)
+                                                .into(profileIv);
+                                    }
                                 }
 
 

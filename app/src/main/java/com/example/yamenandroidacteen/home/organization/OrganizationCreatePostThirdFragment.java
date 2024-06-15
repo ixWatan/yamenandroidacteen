@@ -417,7 +417,12 @@ public class OrganizationCreatePostThirdFragment extends Fragment {
 
         // Begin the transaction
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_right);
+        ft.setCustomAnimations(
+                R.anim.slide_in,  // enter
+                R.anim.fade_out,  // exit
+                R.anim.fade_in,   // popEnter
+                R.anim.slide_out  // popExit
+        );
         ft.replace(R.id.frameLayoutOrg, fragment);
 
         // Add the transaction to the back stack (optional)
@@ -773,11 +778,6 @@ public class OrganizationCreatePostThirdFragment extends Fragment {
         outState.putStringArrayList("selectedHashtags", new ArrayList<>(selectedHashtags));
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-    }
 
 
 }

@@ -5,12 +5,13 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 
 
-
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -45,6 +48,11 @@ public class OrganizationSettingsFragment extends Fragment {
 
     private FirebaseAuth mAuth;
 
+
+
+    private MaterialAlertDialogBuilder dialogBuilder; // Declare dialogBuilder variable
+    private AlertDialog dialog; // Declare dialog variable
+
     private EditText postIDEditText;
     private EditText msgTitleEditText;
     private EditText msgBodyEditText;
@@ -63,6 +71,15 @@ public class OrganizationSettingsFragment extends Fragment {
 
         // Initialize views
 
+        ImageButton backBtn = view.findViewById(R.id.backButtonSignupAct);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
+
         TextView textViewEditProfile = view.findViewById(R.id.textViewEditProfile);
         TextView textViewSignOut = view.findViewById(R.id.textViewSignOut);
 
@@ -72,7 +89,7 @@ public class OrganizationSettingsFragment extends Fragment {
         textViewEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToFragment(new OrganizationEditProfileFragment());
+                ((OrganizationHomeActivity) requireActivity()).navigateToFragmentWithAnimation(new OrganizationEditProfileFragment());
             }
         });
 
@@ -81,12 +98,7 @@ public class OrganizationSettingsFragment extends Fragment {
         textViewSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAuth.signOut();
-                // Redirect user to the main activity
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                // Finish the current activity to prevent the user from navigating back to it
-                getActivity().finish();
+                showConfirmationAlertSignout();
             }
         });
 
@@ -124,6 +136,38 @@ public class OrganizationSettingsFragment extends Fragment {
 
         // Hide the system navigation bar when the fragment is displayed
         ((OrganizationHomeActivity) requireActivity()).hideSystemNavigationBar();
+    }
+
+    private void showConfirmationAlertSignout() {
+
+        dialogBuilder = new MaterialAlertDialogBuilder(getActivity())
+                .setTitle("Are You Sure?")
+                .setMessage("Are you sure that you want to signout?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle discard button click
+                        dialog.dismiss(); // Dismiss the dialog
+
+                        mAuth.signOut();
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle discard button click
+                        dialog.dismiss(); // Dismiss the dialog
+                    }
+                })
+                .setCancelable(false);
+
+        dialog = dialogBuilder.create(); // Create the dialog
+
+        dialog.show(); // Show the dialog
     }
 
 

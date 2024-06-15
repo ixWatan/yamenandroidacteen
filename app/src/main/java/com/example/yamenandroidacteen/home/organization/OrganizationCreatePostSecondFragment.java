@@ -364,7 +364,13 @@ public class OrganizationCreatePostSecondFragment extends Fragment implements  O
                  organizationCreatePostThirdFragment.setArguments(bundle);
 
                  FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                 ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_right);
+                 ft.setCustomAnimations(
+                         R.anim.slide_in,  // enter
+                         R.anim.fade_out,  // exit
+                         R.anim.fade_in,   // popEnter
+                         R.anim.slide_out  // popExit
+                 );
+
                  ft.replace(R.id.frameLayoutOrg, organizationCreatePostThirdFragment);
                  ft.addToBackStack(null);
                  ft.commit();

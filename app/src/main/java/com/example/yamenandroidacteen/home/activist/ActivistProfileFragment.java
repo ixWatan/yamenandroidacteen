@@ -99,14 +99,14 @@ public class ActivistProfileFragment extends Fragment {
         settingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToFragment(new ActivistSettingsFragment());
+                ((ActivistHomeActivity) requireActivity()).navigateToFragmentWithAnimation(new ActivistSettingsFragment());
             }
         });
 
         savedPostsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateToFragment(new ActivistShowSavedPostsFragment());
+                ((ActivistHomeActivity) requireActivity()).navigateToFragmentWithAnimation(new ActivistShowSavedPostsFragment());
             }
         });
 
@@ -137,17 +137,18 @@ public class ActivistProfileFragment extends Fragment {
                                 regionTv.setText(storedRegion);
 
                                 // Update the profile picture ImageView with the new URL
-                                if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
-                                    Glide.with(this)
-                                            .load(profilePictureUrl)
-                                            .into(profileIv);
-                                } else {
-                                    // Display the default profile picture
-                                    Glide.with(this)
-                                            .load(R.drawable.icon_account)
-                                            .into(profileIv);
+                                if(getActivity() != null) {
+                                    if (profilePictureUrl != null && !profilePictureUrl.isEmpty()) {
+                                        Glide.with(this)
+                                                .load(profilePictureUrl)
+                                                .into(profileIv);
+                                    } else {
+                                        // Display the default profile picture
+                                        Glide.with(this)
+                                                .load(R.drawable.icon_account)
+                                                .into(profileIv);
+                                    }
                                 }
-
 
                             } else {
                                 Log.d(TAG, "Failed to get user document.", task1.getException());
@@ -161,19 +162,7 @@ public class ActivistProfileFragment extends Fragment {
 
     }
 
-    public void navigateToFragment(Fragment fragment) {
 
-        // Begin the transaction
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-
-        ft.replace(R.id.frameLayoutActivist, fragment);
-
-        // Add the transaction to the back stack (optional)
-        ft.addToBackStack(null);
-
-        // Commit the transaction
-        ft.commit();
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

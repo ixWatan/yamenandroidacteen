@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -165,7 +166,17 @@ public class OrganizationShowPostOwnerFragment extends Fragment {
 
 
 
+
         View view = inflater.inflate(R.layout.fragment_organization_show_post_owner, container, false);
+
+
+        ImageButton backBtn = view.findViewById(R.id.backButtonSignupAct);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
 
 
         mAuth = FirebaseAuth.getInstance();

@@ -2,6 +2,7 @@ package com.example.yamenandroidacteen.auth.activist;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -57,6 +58,8 @@ public class InterestsFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
+    private ProgressDialog pd;
+
     User person;
 
 
@@ -66,6 +69,7 @@ public class InterestsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_interests, container, false);
+        pd = new ProgressDialog(getActivity());
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -111,6 +115,10 @@ public class InterestsFragment extends Fragment {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                pd.setMessage("Creating Account...");
+                pd.show();
+
                 // Get selected interests
                 List<String> selectedInterests = new ArrayList<>();
                 for (int i = 0; i < interestsLayout.getChildCount(); i++) {

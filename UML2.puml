@@ -1,0 +1,617 @@
+@startuml
+class OrganizationCreatePostThirdFragment {
+~ FirebaseAuth firebaseAuth
+~ Boolean done
+- MaterialAlertDialogBuilder dialogBuilder
+- AlertDialog dialog
+~ Button selectStartTimeBtn
+~ ImageView backButton
+~ TextView showStartTimeDataTv
+~ String[] hashTagsList
+~ AutoCompleteTextView autoCompleteTextView
+~ ArrayAdapter<String> adapterItems
+~ String selectedDate
+~ List<String> selectedHashtags
+- TextView postTv
+~ FlexboxLayout hashtagsContainer
+~ ProgressDialog pd
+~ SharedPreferences sharedPreferences
+~ Bundle bundleEdit
+~ Boolean flag
+~ FirebaseFirestore db
+~ HashMap<Object,String> hashMap
+}
+
+class ForgotPasswordFragment {
+- FirebaseAuth mAuth
+- EditText etEmail
+- Button btnReset
+}
+
+class ActivistSlide2Fragment {
+}
+class ActivistShowOrgInfo {
+- FirebaseFirestore db
+~ String orgNameData
+}
+
+class NotificationPublisher {
++ {static} String NOTIFICATION_ID
++ {static} String NOTIFICATION_TITLE
++ {static} String NOTIFICATION_TEXT
+}
+
+class ActivistSlide4Fragment {
+}
+class OrgOrActivistFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
+- TextView TvCreateAccount
+- Button goToSignupActivistBtn
+- Button goToSignupOrganizationBtn
+- TextView TvGoToLogin
+}
+
+interface SelectListener {
+}
+class ActivistSettingsFragment {
+- FirebaseAuth mAuth
++ boolean isActSettings
+}
+
+class OrgSlide3Fragment {
+}
+class ActivistSearchFragment {
+- FirebaseAuth mAuth
+~ ImageView profileImageView
+- String profilePictureUrl
+~ RecyclerView recyclerView
+~ List<ModelPost> postList
+~ AdapterPosts adapterPosts
++ SearchView search
++ boolean isSearchBarOpen
+- View rootView
+- LinearLayout filterContainer
+}
+
+class OrgSlide1Fragment {
+}
+abstract class BaseActivity {
+- NetworkChangeReceiver networkChangeReceiver
+}
+
+class BaseActivity$NetworkChangeReceiver {
+}
+class CustomViewHolder {
+~ ImageView uPictureIv
+~ TextView uNameTv
+~ ImageButton moreBtn
+~ Button likeBtn
+~ CardView cardView
+}
+
+class OrganizationShowPostOwnerFragment {
+~ String orgName
+~ String postImage
+~ RecyclerView recyclerView
+~ ProgressDialog pd
+~ String postDescreption
+~ String postTimePosted
+- MaterialAlertDialogBuilder dialogBuilder
+- AlertDialog dialog
+~ String postTitle
+~ String uDp
+~ String postTags
+~ String postLocationString
+~ String locationLinkReal
+~ String postTimeS
+~ String postTimeE
+- LinearLayout deletePostView
+- LinearLayout editPostView
+~ String postDateString
+~ String LocationAndTime
+~ Button addToCalender
+- FirebaseAuth mAuth
+- View nav
+~ com.google.android.material.imageview.ShapeableImageView postImageIv
+}
+
+class OrganizationHomeFragment {
+~ FirebaseAuth firebaseAuth
+- ImageView profileImageView
+- FirebaseAuth mAuth
+~ RecyclerView recyclerView
+~ List<ModelPost> postList
+~ AdapterPosts adapterPosts
+- ImageButton profileImageButton
+- ProgressDialog pd
+- Button signOutBtn
+- ImageButton homePageButton
+- ImageButton notificationButton
+- ImageButton searchButton
+- String profilePictureUrl
+}
+
+class KeyboardUtils {
+- {static} int MAGIC_NUMBER
+- SoftKeyboardToggleListener mCallback
+- View mRootView
+- Boolean prevValue
+- float mScreenDensity
+- {static} HashMap<SoftKeyboardToggleListener,KeyboardUtils> sListenerMap
+}
+
+interface KeyboardUtils$SoftKeyboardToggleListener {
+}
+class ActivistHomeFragment {
+- ImageView profileImageView
+- FirebaseAuth mAuth
+~ RecyclerView recyclerView
+~ List<ModelPost> postList
+~ AdapterPosts adapterPosts
+- ImageButton profileImageButton
+- ProgressDialog pd
+- Button signOutBtn
+- ImageButton homePageButton
+- ImageButton notificationButton
+- ImageButton searchButton
+- String profilePictureUrl
+}
+
+class ActivistShowPostFragment {
+~ String orgName
+~ String postImage
+~ RecyclerView recyclerView
+~ ProgressDialog pd
+~ String postDescreption
+~ String postTimePosted
+~ String postTitle
+~ String uDp
+~ String postTags
+~ String postLocationString
+~ String locationLinkReal
+~ String postTimeS
+~ String postTimeE
+~ String postDateString
+~ String LocationAndTime
+~ Button addToCalender
+~ boolean isPostSaved
+- FirebaseAuth mAuth
+- View nav
+~ ImageView saveBtn
+~ String userId
+~ DocumentReference userDocRef
+~ View orgPorfileView
++ boolean wentToShowInfo
++ boolean inShowOrgInfoFragment
+~ com.google.android.material.imageview.ShapeableImageView postImageIv
+}
+
+class SignupActivistFragment {
+- {static} String TAG
+~ FirebaseAuth firebaseAuth
+~ FirebaseUser currentUser
+- FirebaseAuth mAuth
+- EditText emailEditText
+- ProgressDialog pd
+~ String[] regionsList
+~ AutoCompleteTextView autoCompleteTextView
+~ ArrayAdapter<String> adapterItems
+- CheckBox checkBox
+- Button ContinueBtn
+- Boolean checkBoxState
+- TextView checkBoxText
+- TextView guideLinesTv
+- View goToLoginBtn
+- EditText passwordEditText
+- EditText nameEditText
+- EditText ageEditText
+- EditText cityEditText
+- EditText password
+~ String selectedRegion
+- User person
+}
+
+class OnboardingPagerAdapter {
+- List<Fragment> fragments
+- LinearLayout dotsLayout
+- ViewPager viewPager
+}
+
+class OrganizationEditProfileFragment {
+- EditText editTextPhone
+- EditText editTextDescription
+- EditText editTextEmail
+- EditText editTextName
+- EditText editTextPassword
+- EditText editTextWeb
+- ImageView imageViewProfilePicture
+- Button buttonSave
+~ Uri resultUri
+~ ActivityResultLauncher<String> mGetContent
+- FirebaseAuth mAuth
+- FirebaseFirestore db
+- FirebaseUser currentUser
+~ ProgressDialog pd
+}
+
+class NoConnectionDialog {
+}
+class InterestsFragment {
+~ String[] hashTagsList
+- List<String> interestsList
+- LinearLayout interestsLayout
+- int selectedCount
+- String name
+- String email
+- String password
+- int age
+- String city
+- String region
+- FirebaseAuth mAuth
+- FirebaseFirestore db
+~ User person
+}
+
+class SignupOrganizationFragment {
+- {static} String TAG
+- FirebaseAuth mAuth
+- CheckBox checkBox
+- Boolean checkBoxState
+- ProgressDialog pd
+~ EditText email
+~ EditText descriptionOfOrg
+~ EditText password
+~ EditText phoneNum
+~ EditText orgname
+~ EditText websiteLink
+~ String selectedType
+~ String[] typeList
+~ AutoCompleteTextView autoCompleteTextView
+~ ArrayAdapter<String> adapterItems
+- TextView checkBoxText
+- TextView guideLinesTv
+- View goToLoginBtn
+~ Button signupBtn
+- EditText password1
+}
+
+class OrganizationHomeActivity {
+- Button signOutBtn
+- ActivityOrganizationHomeBinding binding
+}
+
+class OrganizationMyPostsFragment {
+~ FirebaseAuth firebaseAuth
+- ImageView profileImageView
+- FirebaseAuth mAuth
+~ RecyclerView recyclerView
+~ FirebaseUser user
+~ List<ModelPost> postList
+~ AdapterPosts adapterPosts
+- ImageButton profileImageButton
+- ProgressDialog pd
+- Button signOutBtn
+- ImageButton homePageButton
+- ImageButton notificationButton
+- ImageButton searchButton
++ {static} boolean isPostClicked
+- String profilePictureUrl
+}
+
+class ActivistSlide3Fragment {
+}
+class ActivistShowSavedPostsFragment {
+~ FirebaseAuth firebaseAuth
+- ImageView profileImageView
+- FirebaseAuth mAuth
+~ RecyclerView recyclerView
+~ FirebaseUser user
+~ List<ModelPost> postList
+~ AdapterPosts adapterPosts
+- ImageButton profileImageButton
+- ProgressDialog pd
+- Button signOutBtn
+- ImageButton homePageButton
+- ImageButton notificationButton
+- ImageButton searchButton
+- String profilePictureUrl
+}
+
+class OrganizationCreatePostSecondFragment {
+- int FINE_PERMISSION_CODE
+~ ImageView userLocationBtn
+~ TextView locationShowTv
+~ Location currentLocation
+- LatLng selectedLocationLatLang
+- String selectedLocationURL
+- String selectedLocationText
+- String mapsUri
+~ FusedLocationProviderClient fusedLocationProviderClient
+- GoogleMap myMap
+~ TextView nextTv
+- Marker selectedMarker
+~ ImageButton backButton
+~ Boolean flag
+- SearchView mapSearchView
+~ Bundle bundleEdit
+- {static} String TAG
+}
+
+class ActivistHomeActivity {
+- ActivityActivistHomeBinding binding
+- ActivityResultLauncher<String> requestPermissionLauncher
+}
+
+class ActivistNotificationsFragment {
+- {static} String CHANNEL_ID
+- {static} int NOTIFICATION_ID
+- Button btnAllowNotifications
+- Button btnTestNotification
+- SwitchCompat switchNotifications
+}
+
+class ModelPost {
+~ String pId
+}
+
+class User {
+- String name
+- String email
+- String password
+- String city
+- String region
+- String age
+- int followers
+- int following
+- int posts
+- List<String> savedPosts
+}
+
+class OrganizationSettingsFragment {
+- FirebaseAuth mAuth
+- EditText postIDEditText
+- EditText msgTitleEditText
+- EditText msgBodyEditText
+}
+
+class ActivistEditProfileFragment {
+- EditText editTextAge
+- EditText editTextCity
+- EditText editTextEmail
+- EditText editTextName
+- EditText editTextPassword
+- EditText editTextRegion
+- ImageView imageViewProfilePicture
+- Button buttonSave
+~ Uri resultUri
+~ ActivityResultLauncher<String> mGetContent
+- FirebaseAuth mAuth
+- FirebaseFirestore db
+- FirebaseUser currentUser
+~ ProgressDialog pd
+}
+
+class ActivistSlide5Fragment {
+- Button login
+~ ViewPager viewPager
+~ LinearLayout dotsLayout
+- SharedPreferences sharedPreferences
+}
+
+class MainActivity {
+- FirebaseAuth mAuth
+- FirebaseFirestore db
+- Button orgBtn
+- View dotsOrg
+- SharedPreferences sharedPreferences
+}
+
+class OrgSlide2Fragment {
+}
+class LoginFragment {
+- {static} String TAG
+- FirebaseAuth mAuth
+- EditText email
+- EditText password
+- TextView TvCreateAccount
+- TextView TvForgotPassword
+- Button loginBtn
+- ProgressDialog pd
+}
+
+class ActivistSlide1Fragment {
+}
+class AdapterComments {
+~ Context context
+~ List<ModelComment> commentList
+}
+
+class AdapterComments$MyHolder {
+~ ImageView pfpIv
+~ TextView usernameTv
+}
+
+class OrganizationPorfileFragment {
+~ TextView usernameTv
+~ ImageView profileIv
+- FirebaseAuth mAuth
+- View myPostsLayout
+- View settingsLayout
+}
+
+class OrganizationShowPostFragment {
+~ String orgName
+~ String postImage
+~ RecyclerView recyclerView
+~ ProgressDialog pd
+~ String postDescreption
+~ String postTimePosted
+~ String postTitle
+~ String uDp
+~ String postTags
+~ String postLocationString
+~ String locationLinkReal
+~ String postTimeS
+~ String postTimeE
+~ String postDateString
+~ String LocationAndTime
+~ Button addToCalender
+- FirebaseAuth mAuth
+- View nav
+~ com.google.android.material.imageview.ShapeableImageView postImageIv
+}
+
+class MainSlideFragment {
+- OnButtonClickListener buttonClickListener
+}
+
+interface MainSlideFragment$OnButtonClickListener {
+}
+class ActivistProfileFragment {
+~ TextView usernameTv
+~ ImageView profileIv
+- FirebaseAuth mAuth
+- View savedPostsLayout
+- View settingsLayout
+}
+
+class OrganizationSendNotificationFragment {
+~ FirebaseUser user
+~ List<ModelPost> postList
+~ FirebaseAuth mAuth
+~ List<Pair<String,String>> pairsList
+~ List<String> postsTitlesList
+~ AutoCompleteTextView autoCompleteTextView
+~ ArrayAdapter<String> adapterItems
+~ String selectedPostTitle
+~ String selectedPostId
+~ Button sendNotificationBtn
+~ EditText notificationTitleEditText
+~ EditText notificationBodyEditText
+~ EditText notificationLinkEditText
+~ TextView previewTitle
+~ TextView previewBody
+~ ImageButton backBtn
+~ ProgressDialog pd
+}
+
+class OrgSlide4Fragment {
+- Button login
+~ View view
+~ ViewPager viewPager
+~ LinearLayout dotsLayout
+}
+
+class ModelComment {
+~ String cId
+}
+
+class MyFirebaseMessagingService {
+- {static} String TAG
+}
+
+class CropperActivity {
+~ String result
+~ Uri fileUri
+}
+
+class OrganizationCreatePostFragment {
+~ EditText titleEt
+~ ImageButton backButton
+~ ImageView imageIv
+~ TextView nextTv
+- {static} String PREF_IMAGE_URI
+~ ActivityResultLauncher<String> mGetContent
+- String lastClickedButton
+~ Uri resultUri
+~ Bundle bundleEdit
+~ Boolean flag
+}
+
+class AdapterPosts {
+- List<ModelPost> posts
+- OnPostClickListener onPostClickListener
+}
+
+class AdapterPosts$PostViewHolder {
+- ImageView pImageIv
+- TextView pTitleTv
+}
+
+interface AdapterPosts$OnPostClickListener {
+}
+class NetworkUtils {
+}
+
+
+Fragment <|-- OrganizationCreatePostThirdFragment
+Fragment <|-- ForgotPasswordFragment
+Fragment <|-- ActivistSlide2Fragment
+Fragment <|-- ActivistShowOrgInfo
+BroadcastReceiver <|-- NotificationPublisher
+Fragment <|-- ActivistSlide4Fragment
+Fragment <|-- OrgOrActivistFragment
+Fragment <|-- ActivistSettingsFragment
+Fragment <|-- OrgSlide3Fragment
+SelectListener <|.. ActivistSearchFragment
+Fragment <|-- ActivistSearchFragment
+Fragment <|-- OrgSlide1Fragment
+AppCompatActivity <|-- BaseActivity
+BaseActivity +.. BaseActivity$NetworkChangeReceiver
+BroadcastReceiver <|-- BaseActivity$NetworkChangeReceiver
+ViewHolder <|-- CustomViewHolder
+Fragment <|-- OrganizationShowPostOwnerFragment
+SelectListener <|.. OrganizationHomeFragment
+Fragment <|-- OrganizationHomeFragment
+OnGlobalLayoutListener <|.. KeyboardUtils
+KeyboardUtils +.. KeyboardUtils$SoftKeyboardToggleListener
+SelectListener <|.. ActivistHomeFragment
+Fragment <|-- ActivistHomeFragment
+Fragment <|-- ActivistShowPostFragment
+Fragment <|-- SignupActivistFragment
+FragmentPagerAdapter <|-- OnboardingPagerAdapter
+Fragment <|-- OrganizationEditProfileFragment
+Fragment <|-- InterestsFragment
+Fragment <|-- SignupOrganizationFragment
+BaseActivity <|-- OrganizationHomeActivity
+SelectListener <|.. OrganizationMyPostsFragment
+Fragment <|-- OrganizationMyPostsFragment
+Fragment <|-- ActivistSlide3Fragment
+SelectListener <|.. ActivistShowSavedPostsFragment
+Fragment <|-- ActivistShowSavedPostsFragment
+OnMapReadyCallback <|.. OrganizationCreatePostSecondFragment
+OnMapClickListener <|.. OrganizationCreatePostSecondFragment
+Fragment <|-- OrganizationCreatePostSecondFragment
+AppCompatActivity <|-- ActivistHomeActivity
+Fragment <|-- ActivistNotificationsFragment
+Serializable <|.. User
+Fragment <|-- OrganizationSettingsFragment
+Fragment <|-- ActivistEditProfileFragment
+Fragment <|-- ActivistSlide5Fragment
+OnButtonClickListener <|.. MainActivity
+BaseActivity <|-- MainActivity
+Fragment <|-- OrgSlide2Fragment
+Fragment <|-- LoginFragment
+Fragment <|-- ActivistSlide1Fragment
+Adapter <|-- AdapterComments
+AdapterComments +.. AdapterComments$MyHolder
+ViewHolder <|-- AdapterComments$MyHolder
+Fragment <|-- OrganizationPorfileFragment
+Fragment <|-- OrganizationShowPostFragment
+Fragment <|-- MainSlideFragment
+MainSlideFragment +.. MainSlideFragment$OnButtonClickListener
+Fragment <|-- ActivistProfileFragment
+Fragment <|-- OrganizationSendNotificationFragment
+Fragment <|-- OrgSlide4Fragment
+FirebaseMessagingService <|-- MyFirebaseMessagingService
+AppCompatActivity <|-- CropperActivity
+Fragment <|-- OrganizationCreatePostFragment
+Adapter <|-- AdapterPosts
+AdapterPosts +.. AdapterPosts$PostViewHolder
+OnClickListener <|.. AdapterPosts$PostViewHolder
+ViewHolder <|-- AdapterPosts$PostViewHolder
+AdapterPosts +.. AdapterPosts$OnPostClickListener
+@enduml

@@ -26,7 +26,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class OrganizationHomeActivity extends BaseActivity {
 
-    private Button signOutBtn;
 
     private ActivityOrganizationHomeBinding binding;
 
@@ -72,6 +71,12 @@ public class OrganizationHomeActivity extends BaseActivity {
         fragmentTransaction.commit();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        showExitConfirmationDialog();
+    }
+
     public void hideSystemNavigationBar() {
         binding.bottomNavMenuOrg.setVisibility(View.GONE);
 
@@ -84,19 +89,7 @@ public class OrganizationHomeActivity extends BaseActivity {
 
     }
 
-    private void signOut() {
-        // Sign out from Firebase Authentication
-        FirebaseAuth.getInstance().signOut();
 
-        // Show a toast message
-        Toast.makeText(this, "Signed out successfully", Toast.LENGTH_SHORT).show();
-
-        // Start the MainActivity
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("profilePictureUrl", ""); // Clear the current profile picture URL
-        startActivity(intent);
-        finish(); // Optionally, call finish() to prevent the user from returning to the UserProfileActivity using the back button
-    }
 
     private void showCreateDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -148,6 +141,40 @@ public class OrganizationHomeActivity extends BaseActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    public void navigateToFragmentWithAnimation(Fragment fragment) {
+
+        // Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                R.anim.slide_in,  // enter
+                R.anim.fade_out,  // exit
+                R.anim.fade_in,   // popEnter
+                R.anim.slide_out  // popExit
+        );
+
+        ft.replace(R.id.frameLayoutOrg, fragment);
+
+        // Add the transaction to the back stack (optional)
+        ft.addToBackStack(null);
+
+        // Commit the transaction
+        ft.commit();
+    }
+
+    public void navigateToFragment(Fragment fragment) {
+
+        // Begin the transaction
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        ft.replace(R.id.frameLayoutOrg, fragment);
+
+        // Add the transaction to the back stack (optional)
+        ft.addToBackStack(null);
+
+        // Commit the transaction
+        ft.commit();
+    }
+
 
 
 
